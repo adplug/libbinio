@@ -2,7 +2,7 @@ Makefile
 Makefile.in
 mdate-sh
 texinfo.tex
-*.info
+*.info*
 stamp-vti
 version.texi
 libbinio.vrs
@@ -18,3 +18,4 @@ libbinio.dvi
 libbinio.cps
 libbinio.cp
 libbinio.aux
+libbinio.tps

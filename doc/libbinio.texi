@@ -53,8 +53,9 @@ Software Foundation raise funds for GNU development.''
 * Copying This Manual::         Your rights and freedoms.
 
 * Concept Index::
-* Methods Index::
-* Types and Variables Index::
+* Class Index::
+* Method Index::
+* Type Variable and Macro Index::
 @end menu
 
 @node Introduction
@@ -105,6 +106,7 @@ doesn't work with your system/compiler combination, please tell me!
 
 @node Usage
 @chapter Usage
+@cindex Usage
 
 This chapter covers common usage of libbinio and mostly everything you
 need to know to interface with the library. For very advanced usage,
@@ -126,9 +128,15 @@ C++ iostream facility before.
 
 @node Basics
 @section Basics
+@cindex Basics
 
 The binary stream class framework divides streams into
-@dfn{input-only}, @dfn{output-only} and @dfn{input/output} supporting
+@cindex input-only
+@dfn{input-only},
+@cindex output-only
+@dfn{output-only} and
+@cindex input/output
+@dfn{input/output} supporting
 streams. All derived classes also inherit this partition.
 
 All derived classes that come with the library follow a uniform naming
@@ -146,6 +154,7 @@ supporting stream.
 
 @node Files
 @section Files
+@cindex Files
 
 For the most part, you will want to use libbinio to access normal
 binary files on your filesystem.
@@ -164,6 +173,9 @@ To create a binary stream on a file, just instantiate one of the three
 classes, according to what I/O facilities the stream should provide
 (see @ref{Basics} for information on the class naming conventions).
 
+@cindex Opening files
+@cindex File open mode
+@cindex Appending to files
 To open a file, you use the @code{open(@var{filename}, [@var{mode}])}
 method of one of the classes. @var{filename} is a string (both C style
 @acronym{ASCIIZ} strings and @acronym{STL} @code{string} objects can
@@ -174,6 +186,7 @@ later. There's also a special constructor, provided for convenience,
 that opens up a file automatically when the object is created. It has
 exactly the same syntax as @code{open()}.
 
+@cindex Closing files
 After usage, you can explicitly close the file with the @code{close()}
 method. It is always a good idea to do this explicitly, though not
 needed because the file automatically will be closed on object
@@ -181,6 +194,7 @@ deconstruction.
 
 @node Binary stream I/O
 @section Binary stream I/O
+@cindex Binary stream I/O
 
 Every binary stream class offers the same set of binary I/O methods,
 inherited from one of the general stream base classes
@@ -191,6 +205,7 @@ methods, as well as some important type declarations.
 The binary I/O methods differenciate between integers, floating-point
 numbers and character strings.
 
+@cindex Reading
 To read an integer from a binary stream, you would use
 @code{readInt(@var{size})}. The @var{size} argument specifies the size
 of the integer in bytes. The method returns the integer, that has just
@@ -225,12 +240,15 @@ returns a @code{string} object, containing all characters up to, but
 not including, @var{delimiter} or the end of the stream, whichever was
 encountered first.
 
+@cindex Writing
 All the above mentioned ``read'' methods have a ``write'' equivalent,
 with the same options and features. All ``write'' methods take the
 data to be written as first argument, as in (for example)
 @code{writeInt(@var{value}, @var{size})}, @var{value} is the actual
 value to be written to the stream.
 
+@cindex Seeking
+@cindex Positioning
 Sometimes, you need to reposition within your stream. To do this, you
 use the @code{seek(@var{position}, [@var{offset}])}
 method. @var{position} is the new position in the stream, counted
@@ -247,16 +265,20 @@ within the stream, which is returned by the method.
 
 @node Alien architectures
 @section Alien architectures
+@cindex Alien architectures
 
 All the above mentioned procedures expect the data to be in the format
 of your machine's own idea of how the data has to be stored. However,
 there are situations where you have to read and even write binary data
 for some other, incompatible architecture.
 
+@cindex Other Architectures
 All architectures that are incompatible with the architecture,
 libbinio is currently running on, are called @dfn{alien}
 architectures.
 
+@cindex Data conversion
+@cindex Converting from other architectures
 libbinio makes the process of converting between your architecture's
 and the alien architecture's idea of binary storage completely
 transparent to you. All you have to do is to specify some
@@ -265,6 +287,9 @@ opened it. All newly created streams are initialized with the current
 system's binary characteristics, so you don't have to do anything if
 you just want to access data of your own architecture.
 
+@cindex Setting flags
+@cindex Reading flags
+@cindex Flags
 You use the @code{setFlag(@var{flag}, [@var{set}])} and
 @code{getFlag(@var{flag})} methods to set and read a stream's
 characteristics. @var{flag} specifies the flag to be set or read
@@ -286,6 +311,8 @@ values instantly with the next data access.
 
 @node Wrapping around iostream
 @section Wrapping around iostream
+@cindex Wrapping around iostream
+@cindex iostream wrappers
 
 libbinio provides a set of classes, called @code{binwstream},
 @code{biniwstream} and @code{binowstream}, that can be wrapped around
@@ -314,6 +341,7 @@ binary stream.
 
 @node Errors
 @section Errors
+@cindex Errors
 
 When doing stream I/O, some unpredictable situations can occur at
 runtime. Binary streams are no exception to this phenomenon. To
@@ -349,6 +377,7 @@ again.
 
 @node Examples
 @section Examples
+@cindex Examples
 
 To read some data (namely integers, floats and strings) from an
 ordinary binary file on your filesystem, which was also created on
@@ -447,6 +476,7 @@ while(!bfile.eof())
 
 @node Reference
 @chapter Reference
+@cindex Reference
 
 This chapter comprises a complete reference of all classes, methods,
 types and variables inside libbinio.
@@ -462,16 +492,19 @@ types and variables inside libbinio.
 
 @node Concepts
 @section Concepts
+@cindex Concepts
 
 The libbinio stream classes can be divided into two layers of
 functionality:
 
 @enumerate
+@cindex Conversion layer
 @item The @dfn{conversion layer} provides methods for transparently
 converting the data, that has just been read from or is to be written
 to a stream, between the current and the alien architecture. The
 @code{binistream}, @code{binostream} and @code{binstream} classes
 belong to this layer.
+@cindex Stream layer
 @item The @dfn{stream layer} faciliates functionality on the stream
 level. It provides methods for byte-by-byte access to the data,
 seeking, opening and closing a stream and anything else related to the
@@ -479,12 +512,15 @@ maintenance of a stream. The @code{binfstream}, @code{binwstream} and
 @code{binsstream} related classes belong to this layer.
 @end enumerate
 
+@cindex Administrative classes
 Additionally, there are some administrative and auxiliary classes
 provided, which do not belong to any of the above defined layers. The
 @code{binio} base class belongs here, for example.
 
 @node Configuration
 @section Configuration
+@cindex Configuration
+@cindex Compile-time configuration
 
 libbinio can be configured in various ways at compile time and some
 parts of the library can be disabled to save disk space and/or
@@ -523,6 +559,7 @@ macros, not whether they are defined or not.
 
 @node Base classes
 @section Base classes
+@cindex Base classes
 
 The base classes provide a common base for all derived libbinio stream
 classes. They define important methods, types and variables.
@@ -539,10 +576,13 @@ One general and three stream base classes are defined in the file
 
 @node binio
 @subsection binio
+@tindex binio
 
 @code{binio} is the general base class, containing important method,
 type and variable declarations. As a user, you normally do not need it
 directly, expect for scoping types and variables to it.
+
+@subheading Header file: @file{binio.h}
 
 @subheading Public methods:
 
@@ -615,6 +655,26 @@ notation. Otherwise, little endian notation is used.
 If set, all floating-point access to the stream will assume
 @acronym{IEEE-754} standardized floating-point numbers. Only this type
 of data is expected from and written to the stream.
+
+If your architecture does not support @acronym{IEEE-754}
+floating-point numbers, the value will be converted. Various
+conversion errors can occur and sometimes the conversion is not
+possible at all. In this case, the @code{Unsupported} error is issued
+and a specific value is returned. The following table summarizes all
+possible return codes for certain problematic values:
+
+@multitable {@samp{Not a Number (NaN)}} {Return value}
+@item Real value @tab Return value
+@item @samp{Infinity} @tab @samp{1.0}
+@item @samp{-Infinity} @tab @samp{-1.0}
+@item @samp{Not a Number (NaN)} @tab @samp{0.0}
+@end multitable
+
+Both positive and negative zero (@samp{0}) are mapped to the same zero
+value, if your architecture does not support both positive and
+negative zeroes. There is no way to distinguish between the two values
+in this case.
+
 @end vtable
 
 @item enum Error
@@ -714,8 +774,11 @@ This variable holds the error status of a stream.
 
 @node binistream
 @subsection binistream
+@tindex binistream
 
 @code{binistream} provides an input-only binary stream.
+
+@subheading Header file: @file{binio.h}
 
 @subheading Public methods:
 
@@ -733,12 +796,19 @@ maximum number of bytes that can be read at once equals the size (in
 bytes) of the largest integer type, supported by the system.
 
 @item Float readFloat(FType ft)
-Reads a floating-point number from the stream an returns it. Takes the
-floating-point format to read as the argument @code{ft}. Refer to the
-list of public types of the @code{binio} class for information about
-what floating-point formats are supported. The return value is
+Reads a floating-point number from the stream and returns it. Takes
+the floating-point format to read as the argument @code{ft}. Refer to
+the list of public types of the @code{binio} class for information
+about what floating-point formats are supported. The return value is
 undefined if an error occured. The value from the stream is always
 rendered to the biggest floating-point type, supported by the system.
+
+If your architecture is incompatible with the floating-point number
+that has just been read, @code{readFloat()} tries to convert it. This
+is sometimes not possible or not as accurate as the original value and
+an error will be issued in these cases. Refer to the list of public
+types of the @code{binio} class for information about what errors
+could be issued.
 
 @item unsigned long readString(char *str, unsigned long maxlen, char delim = '\0')
 @itemx std::string readString(char delim = '\0')
@@ -779,8 +849,11 @@ returned. Implemented by the stream layer.
 
 @node binostream
 @subsection binostream
+@tindex binostream
 
 @code{binostream} provides an output-only binary stream.
+
+@subheading Header file: @file{binio.h}
 
 @subheading Public methods:
 
@@ -799,6 +872,11 @@ the stream.
 Writes the floating-point value @code{f} of type @code{ft} to the
 stream. Refer to the list of public types of the @code{binio} class
 for information about what floating-point formats are supported.
+
+If the requested floating-point type is not supported by your
+architecture, @code{writeFloat()} tries to convert it. This is not
+always possible and an @code{Unsupported} error is issued if the
+conversion fails and nothing is written to the stream in this case.
 
 @item void writeString(const char *str);
 @itemx void writeString(const std::string &str);
@@ -821,6 +899,7 @@ layer.
 
 @node binstream
 @subsection binstream
+@tindex binstream
 
 @code{binstream} provides a both input and output supporting binary
 stream. It inherits the interface from both @code{binistream} and
@@ -829,6 +908,7 @@ documentation of these two classes for more information instead.
 
 @node File streams
 @section File streams
+@cindex File streams
 
 File streams provide access to ordinary files on a filesystem. They
 consist of the classes @code{binifstream}, @code{binofstream} and
@@ -842,9 +922,12 @@ consist of the classes @code{binifstream}, @code{binofstream} and
 
 @node binfbase
 @subsection binfbase
+@tindex binfbase
 
 @code{binfbase} provides the common base class for all file I/O binary
 streams. It defines important data types, variables and methods.
+
+@subheading Header file: @file{binfile.h}
 
 @subheading Public methods:
 
@@ -908,6 +991,11 @@ Pointer to the currently opened file of this stream.
 
 @node File stream classes
 @subsection File stream classes
+@cindex File stream classes
+@tindex binifstream
+@tindex binofstream
+@tindex binfstream
+@tindex binfbase
 
 The binary file streams consist of the classes @code{binifstream},
 @code{binofstream} and @code{binfstream}. They all inherit the
@@ -947,6 +1035,10 @@ specified file on object construction.
 For your information, here is a list of some important redefined
 methods of these classes, as explained above:
 
+@subheading Header file: @file{binfile.h}
+
+@subheading Public methods:
+
 @ftable @code
 @item binifstream()
 @itemx binofstream()
@@ -982,17 +1074,72 @@ information.
 
 @node String streams
 @section String streams
+@cindex String streams
+@tindex binisstream
+@tindex binosstream
+@tindex binsstream
+@tindex binsbase
 
-This section still needs to be written.
+The string stream classes provide a means of turning arbitrary strings
+(or ``blocks'') in memory into a binary stream, similary to what
+@code{strstream} does in the iostream library.
+
+Unlike @code{strstream} from the iostream library, these streams
+@emph{do not} support automatic enlarging of the memory area. If the
+user tries to write beyond the end of the stream, nothing is actually
+written and an @code{Eof} error is issued.
+
+@subheading Header file: @file{binstr.h}
+
+@subheading Public methods:
+
+@ftable @code
+@item binsbase(void *str, unsigned long len)
+@item binisstream(void *str, unsigned long len)
+@item binosstream(void *str, unsigned long len)
+@item binsstream(void *str, unsigned long len)
+All constructors take two arguments. @code{str} is a pointer to a
+previously initialized data string in memory. @code{len} specifies the
+length in bytes of the string.
+
+@item ~binsbase()
+@item ~binisstream()
+@item ~binosstream()
+@item ~binsstream()
+All deconstructors.
+
+@item virtual void seek(long pos, Offset offs = Set)
+@itemx virtual long pos()
+Implementation of the abstract virtual methods, inherited from
+@code{binio}. Refer to the reference of that class for more
+information.
+@end ftable
+
+@subheading Protected data types and variables in @code{binsbase}:
+
+@vtable @code
+@item Byte *data
+This pointer is always pointing to the beginning of the initialized
+data string in memory, passed to the constructor.
+@item Byte *spos
+This pointer points to the current position in the string stream.
+@item long length
+Holds the length in bytes for the whole data string in memory, as
+passed to the constructor.
+@end vtable
 
 @node iostream wrappers
 @section iostream wrappers
+@cindex iostream wrappers
+@tindex biniwstream
+@tindex binowstream
+@tindex binwstream
 
 The iostream wrapper classes provide a way to @dfn{wrap} around an
 already existing stream of the standard or traditional C++ iostream
 library, thus providing binary access to such a stream. The wrapper
-classes reside in the file @file{binwrap.h} and consist of
-@code{biniwstream}, @code{binowstream} and @code{binwstream}.
+classes consist of @code{biniwstream}, @code{binowstream} and
+@code{binwstream}.
 
 The iostream wrapper classes do not provide any extra methods by
 themselves. They just inherit the interface of the general binary
@@ -1006,6 +1153,8 @@ else you will get strange errors on some operating systems.
 
 All other flags you set on the iostream stream will also indirectly
 affect the wrapped binary stream, so be careful.
+
+@subheading Header file: @file{binwrap.h}
 
 @subheading Public methods:
 
@@ -1031,30 +1180,33 @@ information.
 
 @node FAQ
 @appendix FAQ
+@cindex FAQ
 
 @itemize @bullet
 @item Q: Why don't you supply general data block I/O methods, taking
 @code{void} pointers as arguments, so i can read all my data into a
 @code{struct} at once?
-@item This, in general, is a broken idea. It only makes sense if you
-plan to write your program for only one architecture and want a fast
-way to read your whole data into memory. This is not what libbinio was
-meant for, so such methods will never be implemented. libbinio cannot
-know what data types your @code{struct} is made of and thus cannot do
-any transparent data conversion. And there's even more: Most compilers
-align their @code{struct}s to a special multiple of bytes (mostly the
-current architecture's data word size). libbinio doesn't (and cannot)
-know about all this and would just read the data byte by byte,
-completely ignoring the alignment and causing you to be unable to read
-any of your data.
+@item A: This, in general, is a broken idea. It only makes sense if
+you plan to write your program for only one architecture and want a
+fast way to read your whole data into memory. This is not what
+libbinio was meant for, so such methods will never be
+implemented. libbinio cannot know what data types your @code{struct}
+is made of and thus cannot do any transparent data conversion. And
+there's even more: Most compilers align their @code{struct}s to a
+special multiple of bytes (mostly the current architecture's data word
+size). libbinio doesn't (and cannot) know about all this and would
+just read the data byte by byte, completely ignoring the alignment and
+causing you to be unable to read any of your data.
 
 @item Q: Why haven't you implemented error reporting using exceptions,
 instead of this darn @code{error()} method polling?
-@item Because exceptions aren't supported on all compiler platforms.
+@item A: Because exceptions aren't supported on all compiler
+platforms.
 @end itemize
 
 @node Copying This Manual
 @appendix Copying This Manual
+@cindex Copying this manual
 
 @menu
 * GNU Free Documentation License::  License for copying this manual.
@@ -1067,13 +1219,18 @@ instead of this darn @code{error()} method polling?
 
 @printindex cp
 
-@node Methods Index
-@unnumbered Methods Index
+@node Class Index
+@unnumbered Class Index
+
+@printindex tp
+
+@node Method Index
+@unnumbered Method Index
 
 @printindex fn
 
-@node Types and Variables Index
-@unnumbered Types and Variables Index
+@node Type Variable and Macro Index
+@unnumbered Type, Variable and Macro Index
 
 @printindex vr
 
