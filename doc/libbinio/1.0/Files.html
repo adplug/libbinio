@@ -1,0 +1,73 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.0</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.0">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.0. It was last updated on 18 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Files">Files</a>,
+Next:<a rel="next" accesskey="n" href="Binary-stream-I-O.html#Binary%20stream%20I%2fO">Binary stream I/O</a>,
+Previous:<a rel="previous" accesskey="p" href="Basics.html#Basics">Basics</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Files</h3>
+
+   <p>For the most part, you will want to use libbinio to access normal
+binary files on your filesystem.
+
+   <p>This is what the <code>binfstream</code> related classes are for. To use
+them, you first have to include the file <code>binfile.h</code> within your
+code.
+
+   <p>This file contains four class declarations - <code>binfbase</code>,
+<code>binifstream</code>, <code>binofstream</code> and
+<code>binfstream</code>. <code>binfbase</code> is a base class for the others and
+normally not used by an ordinary libbinio user. This leaves us with
+three usable classes.
+
+   <p>To create a binary stream on a file, just instantiate one of the three
+classes, according to what I/O facilities the stream should provide
+(see <a href="Basics.html#Basics">Basics</a> for information on the class naming conventions).
+
+   <p>To open a file, you use the <code>open(</code><var>filename</var><code>, [</code><var>mode</var><code>])</code>
+method of one of the classes. <var>filename</var> is a string (both C style
+<small>ASCIIZ</small> strings and <small>STL</small> <code>string</code> objects can
+be passed, if supported by your compiler) containing the name of the
+file to open. Additionally, you can pass a <var>mode</var> argument to
+specify a special way to open the file - this is described
+later. There's also a special constructor, provided for convenience,
+that opens up a file automatically when the object is created. It has
+exactly the same syntax as <code>open()</code>.
+
+   <p>After usage, you can explicitly close the file with the <code>close()</code>
+method. It is always a good idea to do this explicitly, though not
+needed because the file automatically will be closed on object
+deconstruction.
+
+   </body></html>
+

@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.0</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.0">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.0. It was last updated on 18 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Binary%20stream%20I%2fO">Binary stream I/O</a>,
+Next:<a rel="next" accesskey="n" href="Alien-architectures.html#Alien%20architectures">Alien architectures</a>,
+Previous:<a rel="previous" accesskey="p" href="Files.html#Files">Files</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Binary stream I/O</h3>
+
+   <p>Every binary stream class offers the same set of binary I/O methods,
+inherited from one of the general stream base classes
+<code>binistream</code>, <code>binostream</code> or both of them. These, in turn,
+inherit from the <code>binio</code> class, which provides additional general
+methods, as well as some important type declarations.
+
+   <p>The binary I/O methods differenciate between integers, floating-point
+numbers and character strings.
+
+   <p>To read an integer from a binary stream, you would use
+<code>readInt(</code><var>size</var><code>)</code>. The <var>size</var> argument specifies the size
+of the integer in bytes. The method returns the integer, that has just
+been read.
+
+   <p><code>readFloat(</code><var>type</var><code>)</code> reads a floating-point number of type
+<var>type</var> from the stream. As all floating-point formats are well
+defined, you just have to specify the right floating-point type to
+this method and it will figure out the correct size by itself. Refer
+to <a href="Reference.html#Reference">Reference</a> for information of what floating-point formats are
+supported and how to specify them. The method returns the
+floating-point number, that has just been read.
+
+   <p>A character string can be read by using the <code>readString()</code>
+method. To read a character string into a pre-allocated C style
+<small>ASCIIZ</small> string buffer, you would use
+<code>readString(</code><var>string</var><code>, </code><var>max-length</var><code>, [</code><var>delimiter</var><code>])</code>
+and give a pointer to the string buffer with <var>string</var>, the maximum
+length of the string (<em>not</em> including the final <code>\0</code>) in
+<var>max-length</var> and optionally a delimiter character <var>delimiter</var>,
+at which libbinio would stop reading the string, even if it could read
+more characters. The delimiter is extracted from the stream and then
+discarded. It will not appear in the final string. If you do not
+supply a <var>delimiter</var>, it is <code>\0</code> by default. The method
+returns the number of characters actually read from the stream.
+
+   <p>You can also read an <small>STL</small> <code>string</code> object from the
+stream, using an overloaded version of <code>readString()</code>. The syntax
+is <code>readString([</code><var>delimiter</var><code>])</code>. Again, you do not need to
+supply the <var>delimiter</var>, as it is <code>\0</code> by default. The method
+returns a <code>string</code> object, containing all characters up to, but
+not including, <var>delimiter</var> or the end of the stream, whichever was
+encountered first.
+
+   <p>All the above mentioned "read" methods have a "write" equivalent,
+with the same options and features. All "write" methods take the
+data to be written as first argument, as in (for example)
+<code>writeInt(</code><var>value</var><code>, </code><var>size</var><code>)</code>, <var>value</var> is the actual
+value to be written to the stream.
+
+   <p>Sometimes, you need to reposition within your stream. To do this, you
+use the <code>seek(</code><var>position</var><code>, [</code><var>offset</var><code>])</code>
+method. <var>position</var> is the new position in the stream, counted
+byte-wise and starting at <code>0</code>. The optional argument <var>offset</var>
+specifies from where the method should seek. If it is <code>Set</code>,
+counting is started at the beginning of the stream. <code>Add</code>
+indicates to seek from the current stream position and <code>End</code>
+means seeking from the end of the stream. Note that <var>position</var> is
+a signed integer value and you can also seek backwards by inserting a
+negative number.
+
+   <p>You can use the <code>pos()</code> method to determine your current position
+within the stream, which is returned by the method.
+
+   </body></html>
+

@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.0</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.0">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.0. It was last updated on 18 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="FAQ">FAQ</a>,
+Next:<a rel="next" accesskey="n" href="Copying-This-Manual.html#Copying%20This%20Manual">Copying This Manual</a>,
+Previous:<a rel="previous" accesskey="p" href="Reference.html#Reference">Reference</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="appendix">FAQ</h2>
+
+     <ul>
+<li>Q: Why don't you supply general data block I/O methods, taking
+<code>void</code> pointers as arguments, so i can read all my data into a
+<code>struct</code> at once? 
+<li>A: This, in general, is a broken idea. It only makes sense if
+you plan to write your program for only one architecture and want a
+fast way to read your whole data into memory. This is not what
+libbinio was meant for, so such methods will never be
+implemented. libbinio cannot know what data types your <code>struct</code>
+is made of and thus cannot do any transparent data conversion. And
+there's even more: Most compilers align their <code>struct</code>s to a
+special multiple of bytes (mostly the current architecture's data word
+size). libbinio doesn't (and cannot) know about all this and would
+just read the data byte by byte, completely ignoring the alignment and
+causing you to be unable to read any of your data.
+
+     <li>Q: Why haven't you implemented error reporting using exceptions,
+instead of this darn <code>error()</code> method polling? 
+<li>A: Because exceptions aren't supported on all compiler
+platforms. 
+</ul>
+
+   </body></html>
+

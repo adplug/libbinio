@@ -1,0 +1,77 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.0</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.0">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.0. It was last updated on 18 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Alien%20architectures">Alien architectures</a>,
+Next:<a rel="next" accesskey="n" href="Wrapping-around-iostream.html#Wrapping%20around%20iostream">Wrapping around iostream</a>,
+Previous:<a rel="previous" accesskey="p" href="Binary-stream-I-O.html#Binary%20stream%20I%2fO">Binary stream I/O</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Alien architectures</h3>
+
+   <p>All the above mentioned procedures expect the data to be in the format
+of your machine's own idea of how the data has to be stored. However,
+there are situations where you have to read and even write binary data
+for some other, incompatible architecture.
+
+   <p>All architectures that are incompatible with the architecture,
+libbinio is currently running on, are called <dfn>alien</dfn>
+architectures.
+
+   <p>libbinio makes the process of converting between your architecture's
+and the alien architecture's idea of binary storage completely
+transparent to you. All you have to do is to specify some
+characteristics about the stream's binary format, after you have
+opened it. All newly created streams are initialized with the current
+system's binary characteristics, so you don't have to do anything if
+you just want to access data of your own architecture.
+
+   <p>You use the <code>setFlag(</code><var>flag</var><code>, [</code><var>set</var><code>])</code> and
+<code>getFlag(</code><var>flag</var><code>)</code> methods to set and read a stream's
+characteristics. <var>flag</var> specifies the flag to be set or read
+(refer to <a href="Reference.html#Reference">Reference</a> for information on what flags are available
+and their meaning). The optional argument <var>set</var> specifies whether
+the flag should be set (the default) or erased.
+
+   <p>After you have set up all flags to sufficiently specify the alien
+architecture, you can proceed to do binary I/O, just as described in
+the previous chapter (<a href="Binary-stream-I-O.html#Binary%20stream%20I%2fO">Binary stream I/O</a>) and libbinio will do
+all the necessary conversion between your own and the alien
+architecture for you.
+
+   <p>If you ever happen to have binary data of multiple, incompatbile,
+alien architectures in a single stream (very unlikely), you can re-set
+any of the flags to any other value, in between any of the other
+stream access method calls. The stream will adhere to the new flag
+values instantly with the next data access.
+
+   </body></html>
+

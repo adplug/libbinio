@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.0</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.0">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.0. It was last updated on 18 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="String%20streams">String streams</a>,
+Next:<a rel="next" accesskey="n" href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>,
+Previous:<a rel="previous" accesskey="p" href="File-streams.html#File%20streams">File streams</a>,
+Up:<a rel="up" accesskey="u" href="Reference.html#Reference">Reference</a>
+<hr><br>
+</div>
+
+<h3 class="section">String streams</h3>
+
+   <p>The string stream classes provide a means of turning arbitrary strings
+(or "blocks") in memory into a binary stream, similary to what
+<code>strstream</code> does in the iostream library.
+
+   <p>Unlike <code>strstream</code> from the iostream library, these streams
+<em>do not</em> support automatic enlarging of the memory area. If the
+user tries to write beyond the end of the stream, nothing is actually
+written and an <code>Eof</code> error is issued.
+
+<h4 class="subheading">Header file: <code>binstr.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>binsbase(void *str, unsigned long len)</code>
+     <dd><br><dt><code>binisstream(void *str, unsigned long len)</code>
+     <dd><br><dt><code>binosstream(void *str, unsigned long len)</code>
+     <dd><br><dt><code>binsstream(void *str, unsigned long len)</code>
+     <dd>All constructors take two arguments. <code>str</code> is a pointer to a
+previously initialized data string in memory. <code>len</code> specifies the
+length in bytes of the string.
+
+     <br><dt><code>~binsbase()</code>
+     <dd><br><dt><code>~binisstream()</code>
+     <dd><br><dt><code>~binosstream()</code>
+     <dd><br><dt><code>~binsstream()</code>
+     <dd>All deconstructors.
+
+     <br><dt><code>virtual void seek(long pos, Offset offs = Set)</code>
+     <dd><dt><code>virtual long pos()</code>
+     <dd>Implementation of the abstract virtual methods, inherited from
+<code>binio</code>. Refer to the reference of that class for more
+information. 
+</dl>
+
+<h4 class="subheading">Protected data types and variables in <code>binsbase</code>:</h4>
+
+     <dl>
+<dt><code>Byte *data</code>
+     <dd>This pointer is always pointing to the beginning of the initialized
+data string in memory, passed to the constructor. 
+<br><dt><code>Byte *spos</code>
+     <dd>This pointer points to the current position in the string stream. 
+<br><dt><code>long length</code>
+     <dd>Holds the length in bytes for the whole data string in memory, as
+passed to the constructor. 
+</dl>
+
+   </body></html>
+
