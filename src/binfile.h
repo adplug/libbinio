@@ -24,11 +24,6 @@
 
 #include "binio.h"
 
-// Disable annoying multiple inheritance compiler warning on MSVC6
-#ifdef _MSC_VER
-#	pragma warning(disable: 4250)
-#endif
-
 class binfbase: virtual public binio
 {
 public:
@@ -43,7 +38,7 @@ public:
   virtual ~binfbase();
 
   virtual void open(const char *filename, const Mode mode) = 0;
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   virtual void open(const std::string &filename, const Mode mode) = 0;
 #endif
   void close();
@@ -60,14 +55,14 @@ class binifstream: public binistream, virtual public binfbase
 public:
   binifstream();
   binifstream(const char *filename, const Mode mode = NoCreate);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   binifstream(const std::string &filename, const Mode mode = NoCreate);
 #endif
 
   virtual ~binifstream();
 
   virtual void open(const char *filename, const Mode mode = NoCreate);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   virtual void open(const std::string &filename, const Mode mode = NoCreate);
 #endif
 
@@ -80,14 +75,14 @@ class binofstream: public binostream, virtual public binfbase
 public:
   binofstream();
   binofstream(const char *filename, const Mode mode = 0);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   binofstream(const std::string &filename, const Mode mode = 0);
 #endif
 
   virtual ~binofstream();
 
   virtual void open(const char *filename, const Mode mode = 0);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   virtual void open(const std::string &filename, const Mode mode = 0);
 #endif
 
@@ -100,14 +95,14 @@ class binfstream: public binifstream, public binofstream
 public:
   binfstream();
   binfstream(const char *filename, const Mode mode = 0);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   binfstream(const std::string &filename, const Mode mode = 0);
 #endif
 
   virtual ~binfstream();
 
   virtual void open(const char *filename, const Mode mode = 0);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   virtual void open(const std::string &filename, const Mode mode = 0);
 #endif
 };

@@ -52,6 +52,11 @@
 
 /***** Implementation *****/
 
+// Disable annoying multiple inheritance compiler warning on MSVC6
+#ifdef _MSC_VER
+#	pragma warning(disable: 4250)
+#endif
+
 #if BINIO_ENABLE_STRING
 #include <string>
 #endif

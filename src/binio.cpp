@@ -89,7 +89,7 @@ void binio::setFlag(Flag f, bool set)
 
 bool binio::getFlag(Flag f)
 {
-  return my_flags & f;
+	return (my_flags & f ? true : false);
 }
 
 binio::Error binio::error()
@@ -115,7 +115,7 @@ binistream::~binistream()
 {
 }
 
-binio::Int binistream::readInt(unsigned int size)
+binistream::Int binistream::readInt(unsigned int size)
 {
   unsigned int	i;
   Int		val = 0, in;
@@ -138,7 +138,7 @@ binio::Int binistream::readInt(unsigned int size)
   return val;
 }
 
-binio::Float binistream::readFloat(FType ft)
+binistream::Float binistream::readFloat(FType ft)
 {
   if(getFlag(FloatIEEE)) {	// Read IEEE-754 floating-point value
     unsigned int	i, size;
@@ -182,7 +182,7 @@ binio::Float binistream::readFloat(FType ft)
   err = Unsupported; return 0.0;
 }
 
-binio::Float binistream::ieee_single2float(Byte *data)
+binistream::Float binistream::ieee_single2float(Byte *data)
 {
   signed int	sign = data[0] >> 7 ? -1 : 1;
   unsigned int	exp = ((data[0] << 1) & 0xff) | ((data[1] >> 7) & 1),
@@ -217,7 +217,7 @@ binio::Float binistream::ieee_single2float(Byte *data)
   err = Fatal; return 0.0;
 }
 
-binio::Float binistream::ieee_double2float(Byte *data)
+binistream::Float binistream::ieee_double2float(Byte *data)
 {
   signed int	sign = data[0] >> 7 ? -1 : 1;
   unsigned int	exp = ((unsigned int)(data[0] & 0x7f) << 4) | (data[1] >> 4),

@@ -68,7 +68,7 @@ binisstream::~binisstream()
 {
 }
 
-binio::Byte binisstream::getByte()
+binisstream::Byte binisstream::getByte()
 {
   Byte in = *spos;
 

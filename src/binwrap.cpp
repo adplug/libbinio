@@ -41,7 +41,7 @@ void biniwstream::seek(long pos, Offset offs)
   }
 }
 
-binio::Byte biniwstream::getByte()
+biniwstream::Byte biniwstream::getByte()
 {
   int i = in->get();
   if(i == EOF || in->eof()) err = Eof;
@@ -105,14 +105,14 @@ long binwstream::pos()
   return (long)io->tellg();
 }
 
-binio::Byte binwstream::getByte()
+binwstream::Byte binwstream::getByte()
 {
   Byte in = biniwstream::getByte();
   binowstream::seek(biniwstream::pos(), Set);	// sync stream position
   return in;
 }
 
-void binwstream::putByte(binio::Byte b)
+void binwstream::putByte(Byte b)
 {
   binowstream::putByte(b);
   biniwstream::seek(binowstream::pos(), Set);	// sync stream position

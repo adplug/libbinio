@@ -105,6 +105,10 @@ SOURCE=.\binio.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\binstr.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\binwrap.cpp
 # End Source File
 # End Group
@@ -122,6 +126,37 @@ SOURCE=.\binio.h
 # Begin Source File
 
 SOURCE=.\binio.h.in
+
+!IF  "$(CFG)" == "libbinio - Win32 Release"
+
+# Begin Custom Build - Rewriting $(InputName)...
+InputDir=.
+InputPath=.\binio.h.in
+InputName=binio.h
+
+"$(InputDir)\binio.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	copy /Y $(InputPath) $(InputDir)\$(InputName)
+
+# End Custom Build
+
+!ELSEIF  "$(CFG)" == "libbinio - Win32 Debug"
+
+# Begin Custom Build - Rewriting $(InputName)...
+InputDir=.
+InputPath=.\binio.h.in
+InputName=binio.h
+
+"$(InputDir)\binio.h" : $(SOURCE) "$(INTDIR)" "$(OUTDIR)"
+	copy /Y $(InputPath) $(InputDir)\$(InputName)
+
+# End Custom Build
+
+!ENDIF 
+
+# End Source File
+# Begin Source File
+
+SOURCE=.\binstr.h
 # End Source File
 # Begin Source File
 

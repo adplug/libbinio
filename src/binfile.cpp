@@ -78,7 +78,7 @@ binifstream::binifstream(const char *filename, const Mode mode)
   open(filename, mode);
 }
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 binifstream::binifstream(const std::string &filename, const Mode mode)
 {
   open(filename, mode);
@@ -104,14 +104,14 @@ void binifstream::open(const char *filename, const Mode mode)
     }
 }
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 void binifstream::open(const std::string &filename, const Mode mode)
 {
   open(filename.c_str(), mode);
 }
 #endif
 
-binio::Byte binifstream::getByte()
+binifstream::Byte binifstream::getByte()
 {
   int read;
 
@@ -136,7 +136,7 @@ binofstream::binofstream(const char *filename, const Mode mode)
   open(filename, mode);
 }
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 binofstream::binofstream(const std::string &filename, const Mode mode)
 {
   open(filename, mode);
@@ -172,7 +172,7 @@ void binofstream::open(const char *filename, const Mode mode)
     }
 }
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 void binofstream::open(const std::string &filename, const Mode mode)
 {
   open(filename.c_str(), mode);
@@ -196,7 +196,7 @@ binfstream::binfstream(const char *filename, const Mode mode)
   open(filename, mode);
 }
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 binfstream::binfstream(const std::string &filename, const Mode mode)
 {
   open(filename, mode);
@@ -242,7 +242,7 @@ void binfstream::open(const char *filename, const Mode mode)
     }
 }
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 void binfstream::open(const std::string &filename, const Mode mode)
 {
   open(filename.c_str(), mode);
