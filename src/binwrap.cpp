@@ -17,9 +17,11 @@
  * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
  */
 
-#include <iostream.h>
-
 #include "binwrap.h"
+
+#if BINIO_WITH_IOSTREAM
+
+#include <iostream.h>
 
 /***** biniwstream *****/
 
@@ -70,3 +72,5 @@ void binowstream::putByte(binio::Byte b)
 {
   out->put((char)b);
 }
+
+#endif

@@ -20,9 +20,11 @@
 #ifndef H_BINWRAP
 #define H_BINWRAP
 
-#include <iostream.h>
-
 #include "binio.h"
+
+#if BINIO_WITH_IOSTREAM
+
+#include <iostream.h>
 
 class biniwstream: public binistream
 {
@@ -59,5 +61,7 @@ private:
 class binwstream
 {
 };
+
+#endif
 
 #endif

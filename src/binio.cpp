@@ -30,7 +30,13 @@
 
 /***** binio *****/
 
-binio::Flags binio::system_flags = binio::detect_system_flags();
+const binio::Flags binio::system_flags =
+#ifdef WORDS_BIGENDIAN
+BigEndian
+#else
+0
+#endif
+;
 
 binio::binio()
   : my_flags(system_flags), err(NoError)
@@ -39,25 +45,6 @@ binio::binio()
 
 binio::~binio()
 {
-}
-
-binio::Flags binio::detect_system_flags()
-{
-  Flags f = 0;
-  union {
-    Word word;
-    Byte byte;
-  } endian_test;
-
-  // Endian test
-  endian_test.word = 0x0102;
-  switch(endian_test.byte) {
-  case 0x01: f |= BigEndian; break;
-  case 0x02: f &= !BigEndian; break;
-  default: /* Fatal error! Bail out! */ break;
-  }
-
-  return f;
 }
 
 void binio::set_flag(Flag f, bool set)

@@ -1,4 +1,10 @@
 .deps
+.libs
 Makefile
 Makefile.in
 binio.h
+config.h
+config.h.in
+*.lo
+*.la
+stamp-h1

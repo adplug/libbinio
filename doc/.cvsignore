@@ -2,3 +2,6 @@ Makefile
 Makefile.in
 mdate-sh
 texinfo.tex
+*.info
+stamp-vti
+version.texi

@@ -2,6 +2,7 @@ AC_INIT(binio,1.0)
 AC_CONFIG_SRCDIR(src/binio.cpp)
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h])
 AM_INIT_AUTOMAKE
+AM_CONFIG_HEADER(src/config.h)
 AM_MAINTAINER_MODE
 AM_PROG_LIBTOOL
 AC_LANG(C++)
@@ -11,8 +12,64 @@ AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 AC_PROG_CXX
 
-# Sanitize some compiler features, which may be broken...
-AC_C_CONST
+# Check for system and compiler characteristics.
+AC_C_BIGENDIAN
+
+# Determine basic type sizes.
+AC_CHECK_SIZEOF(char)
+AC_CHECK_SIZEOF(short)
+AC_CHECK_SIZEOF(int)
+AC_CHECK_SIZEOF(long)
+AC_CHECK_SIZEOF(long long)
+AC_CHECK_SIZEOF(float)
+AC_CHECK_SIZEOF(double)
+AC_CHECK_SIZEOF(long double)
+
+# BINIO_SIZE_INT(SUBST, SIZE)
+# ---------------------------
+# Macro substitutes SUBST by the smallest integer type, which is at least
+# SIZE bytes long.
+AC_DEFUN([BINIO_SIZE_INT],[
+if expr ${ac_cv_sizeof_char} '>=' $2 > /dev/null ; then
+   AC_SUBST([$1],[char])
+elif expr ${ac_cv_sizeof_short} '>=' $2 > /dev/null ; then
+     AC_SUBST([$1],[short])
+elif expr ${ac_cv_sizeof_int} '>=' $2 > /dev/null ; then
+     AC_SUBST([$1],[int])
+elif expr ${ac_cv_sizeof_long} '>=' $2 > /dev/null ; then
+     AC_SUBST([$1],[long])
+elif expr ${ac_cv_sizeof_long_long} '>=' $2 > /dev/null ; then
+     AC_SUBST([$1],"long long")
+else
+	AC_SUBST([$1],[void])
+fi
+])
+
+# BINIO_SIZE_FLOAT(SUBST, SIZE)
+# -----------------------------
+# Macro substitutes SUBST by the smallest float type, which is at least
+# SIZE bytes long.
+AC_DEFUN([BINIO_SIZE_FLOAT],[
+if expr ${ac_cv_sizeof_float} '>=' $2 > /dev/null ; then
+   AC_SUBST([$1],[float])
+elif expr ${ac_cv_sizeof_double} '>=' $2 > /dev/null ; then
+   AC_SUBST([$1],[double])
+elif expr ${ac_cv_sizeof_long_double} '>=' $2 > /dev/null ; then
+   AC_SUBST([$1],"long double")
+else
+	AC_SUBST([$1],[void])
+fi
+])
+
+# substitute fixed-size abstract types for binio.h.
+BINIO_SIZE_INT(TYPE_INT8,1)
+BINIO_SIZE_INT(TYPE_INT16,2)
+BINIO_SIZE_INT(TYPE_INT32,4)
+BINIO_SIZE_INT(TYPE_INT64,8)
+
+BINIO_SIZE_FLOAT(TYPE_FLOAT32,4)
+BINIO_SIZE_FLOAT(TYPE_FLOAT64,8)
+BINIO_SIZE_FLOAT(TYPE_FLOAT96,12)
 
 # Conditionally build iostream wrappers
 AC_ARG_WITH([iostream],AC_HELP_STRING([--with-iostream],
@@ -20,8 +77,11 @@ AC_ARG_WITH([iostream],AC_HELP_STRING([--with-iostream],
 
 if test ${with_iostream:=no} = yes; then
    AC_CHECK_LIB(stdc++,main,
-	extras=$extras' binwrap.$(OBJEXT)',
-	AC_MSG_ERROR([libstdc++ not installed - iostream wrappers disabled]))
+	AC_SUBST(WITH_IOSTREAM,1),
+	AC_MSG_ERROR([libstdc++ not installed - iostream wrappers disabled])
+	AC_SUBST(WITH_IOSTREAM,0))
+else
+	AC_SUBST(WITH_IOSTREAM,0)
 fi
 
 # Conditionally build std::string methods

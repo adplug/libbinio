@@ -20,7 +20,17 @@
 #ifndef H_BINIO
 #define H_BINIO
 
+// BINIO_WITH_STRING - Build std::string supporting methods
+//
+// Set to 1 to build std::string supporting methods. You need the STL to
+// do this.
 #define BINIO_WITH_STRING	@WITH_STRING@
+
+// BINIO_WITH_IOSTREAM - Build iostream wrapper classes
+//
+// Set to 1 to build the iostream wrapper classes. You need the standard
+// C++ library to do this.
+#define BINIO_WITH_IOSTREAM	@WITH_IOSTREAM@
 
 #if BINIO_WITH_STRING
 #include <string>
@@ -36,12 +46,13 @@ public:
   typedef enum { NoError = 0, Fatal, NotOpen, Denied, Eof } Error;
   typedef enum { Set, Add, End } Offset;
 
-  typedef char		Byte;		// 8 bit
-  typedef short		Word;		// 16 bit
-  typedef long		DWord;		// 32 bit
-  typedef long long	QWord;		// 64 bit
-  typedef float		Float;		// 32 bit
-  typedef double	Double;		// 64 bit
+  typedef @TYPE_INT8@		Byte;		// 8 bit
+  typedef @TYPE_INT16@		Word;		// 16 bit
+  typedef @TYPE_INT32@		DWord;		// 32 bit
+  typedef @TYPE_INT64@		QWord;		// 64 bit
+  typedef @TYPE_FLOAT32@	Float;		// 32 bit
+  typedef @TYPE_FLOAT64@	Double;		// 64 bit
+  typedef @TYPE_FLOAT96@	LDouble;	// 96 bit
 
   typedef unsigned long	SeekP;
 
@@ -64,8 +75,7 @@ protected:
   Error err;
 
 private:
-  static Flags system_flags;
-  static Flags detect_system_flags();
+  static const Flags system_flags;
 };
 
 class binistream: virtual public binio
