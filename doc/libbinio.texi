@@ -373,6 +373,7 @@ field of error values for that stream. Refer to @ref{Reference} for
 information about the possible values of this variable and their
 meaning.
 
+@cindex Simple error checking
 A status of no error is always reported with a value of @samp{0}, so
 you can easily check if everything is still okay in a simple @code{if}
 construct, like this:
@@ -386,6 +387,7 @@ else
 
 Two convenience error reporting methods are also included:
 
+@cindex End of file error checking
 @code{eof()} only checks for the @code{Eof} error status, indicating
 whether the end of the stream has just been passed. It returns a
 boolean value, indicating the past the end of the stream.
@@ -609,7 +611,7 @@ One general and three stream base classes are defined in the file
 
 @code{binio} is the general base class, containing important method,
 type and variable declarations. As a user, you normally do not need it
-directly, expect for scoping types and variables to it.
+directly, except for scoping types and variables to it.
 
 @subheading Header file: @file{binio.h}
 
@@ -1060,9 +1062,6 @@ Pointer to the currently opened file of this stream.
 @node File stream classes
 @subsection File stream classes
 @cindex File stream classes
-@tindex binifstream
-@tindex binofstream
-@tindex binfstream
 @tindex binfbase
 
 The binary file streams consist of the classes @code{binifstream},
@@ -1071,6 +1070,7 @@ interface from both @code{binfbase} and @code{binistream} and/or
 @code{binostream}. Refer to the class reference of these classes for
 more information on the interface instead.
 
+@tindex binifstream
 @code{binifstream} provides an input-only binary file stream. It is
 inherited from @code{binistream}. The @code{open()} method of this
 class ignores all passed @code{mode} arguments, the open mode is
@@ -1078,6 +1078,7 @@ always @code{NoCreate}. The stream pointer is always positioned at the
 beginning of the stream and no files will ever be created, if they
 don't exist.
 
+@tindex binofstream
 @code{binofstream} provides an output-only binary file stream. It is
 inherited from @code{binostream}. The default open mode is
 @samp{0}. A file is truncated to zero length or created if it did not
@@ -1087,6 +1088,7 @@ file. The @code{NoCreate} mode flag has no effect with the
 positioning the stream at the end of the file and not truncating
 it. The file is still created, if it did not exist.
 
+@tindex binfstream
 @code{binfstream} provides an input and output supporting binary file
 stream. It is inherited from both @code{binifstream} and
 @code{binofstream}. The default open mode is @samp{0}. A file is
