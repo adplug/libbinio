@@ -1,3 +1,80 @@
+2003-01-16 22:04  dynamite
+
+	* src/: binfile.cpp, binfile.h, binio.cpp, binio.h.in, binstr.cpp,
+	binwrap.cpp, libbinio.dsp: Windows build fixes.
+
+2003-01-16 19:16  dynamite
+
+	* src/: .cvsignore, Makefile.bt: Synced DOS build.
+
+2003-01-16 18:44  dynamite
+
+	* AUTHORS, TODO, configure.in, doc/libbinio.texi, src/binio.cpp,
+	src/binio.h.in, src/binwrap.cpp, src/binwrap.h: Implemented all
+	remaining IEEE-754 conversion routines.
+
+2003-01-12 17:27  dynamite
+
+	* doc/.cvsignore: Added some more files to cvsignore.
+
+2003-01-11 19:27  dynamite
+
+	* TODO, doc/libbinio.texi, src/Makefile.am, src/binfile.cpp,
+	src/binfile.h, src/binio.cpp, src/binio.h.in, src/binstr.cpp,
+	src/binstr.h, src/binwrap.cpp, src/binwrap.h: Added preliminary
+	binsstream classes. Wrote documentation.
+
+2003-01-07 16:47  dynamite
+
+	* src/: .cvsignore, binfile.h, binio.cpp, libbinio.dsp: Windows
+	fixes.
+
+2003-01-07 11:34  dynamite
+
+	* INSTALL, configure.in, src/binio.h.in, src/binwrap.cpp,
+	src/binwrap.h: Fixed iostream wrappers.
+
+2003-01-04 17:39  dynamite
+
+	* src/config.bat: Removed config.bat from CVS, which was there by
+	mistake.
+
+2003-01-04 17:37  dynamite
+
+	* src/: binfile.cpp, binfile.h, binio.cpp, binio.h.in, binwrap.cpp,
+	binwrap.h: Finalized binfstream and made the iostream wrappers.
+
+2003-01-03 23:39  dynamite
+
+	* .cvsignore, INSTALL.dos, Makefile.bt, Makefile.wat,
+	src/.cvsignore, src/Makefile.bt: Added DOS build target.
+
+2003-01-03 23:16  dynamite
+
+	* src/: binio.cpp, libbinio.dsp, vc6inst.bat: Windows build fixes.
+
+2003-01-03 18:48  dynamite
+
+	* configure.in, src/binfile.cpp, src/binio.cpp, src/binio.h.in,
+	src/binwrap.cpp, src/binwrap.h: Implemented IEEE float reading and
+	writing.
+
+2003-01-01 22:48  dynamite
+
+	* INSTALL, INSTALL.dos, INSTALL.unix, INSTALL.win32, README,
+	src/.cvsignore, src/binfile.cpp, src/config.bat, src/libbinio.dsp:
+	Added preliminary windows build.
+
+2002-12-28 22:52  dynamite
+
+	* configure.in, doc/.cvsignore, src/.cvsignore, src/Makefile.am,
+	src/binio.cpp, src/binio.h.in, src/binwrap.cpp, src/binwrap.h:
+	Implemented type size check.
+
+2002-12-25 22:36  dynamite
+
+	* ChangeLog, README, TODO, doc/libbinio.texi: Documentation fixes.
+
 2002-12-21 13:51  dynamite
 
 	* .cvsignore, doc/.cvsignore, src/.cvsignore: Added .cvsignore

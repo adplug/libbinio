@@ -453,6 +453,7 @@ types and variables inside libbinio.
 
 @menu
 * Concepts::
+* Configuration::
 * Base classes::
 * File streams::
 * String streams::
@@ -481,6 +482,44 @@ maintenance of a stream. The @code{binfstream}, @code{binwstream} and
 Additionally, there are some administrative and auxiliary classes
 provided, which do not belong to any of the above defined layers. The
 @code{binio} base class belongs here, for example.
+
+@node Configuration
+@section Configuration
+
+libbinio can be configured in various ways at compile time and some
+parts of the library can be disabled to save disk space and/or
+processing speed.
+
+In some cases, these configuration options directly change parts of
+the interface and must thus also be known by the library user.
+
+To make these options available to the library user, libbinio defines
+some C preprocessor macros in @file{binio.h}. These are:
+
+@vtable @code
+@item BINIO_ENABLE_STRING
+If this macro expands to @samp{1}, @acronym{STL} @code{string} object
+support is enabled and can be used instead of traditional C
+@acronym{ASCIIZ} pointers with all functions that expect a string
+somewhere. It expands to @samp{0} otherwise.
+@item BINIO_ENABLE_IOSTREAM
+If this macro expands to @samp{1}, the iostream wrapper classes are
+enabled and can be used by the library user. It expands to @samp{0}
+otherwise and no iostream wrapper classes are present in this case.
+@item BINIO_ISO_STDLIB
+If this macro expands to @samp{1}, libbinio's iostream wrapper classes
+are taylored for the @acronym{ISO} standard C++ library, instead of a
+``traditional'' iostream implementation. It expands to @samp{0}
+otherwise. This macro is merely for libbinio's internal use and should
+not be used by an application programmer.
+@item BINIO_WITH_MATH
+This macro is for libbinio's internal use and should not be used by an
+application programmer.
+@end vtable
+
+All macros are @emph{always} defined. The decision whether a feature
+is enabled in the library has to be based on the value of these
+macros, not whether they are defined or not.
 
 @node Base classes
 @section Base classes
