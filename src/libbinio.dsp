@@ -50,7 +50,12 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo
+# ADD LIB32 /nologo /out:"Release\binio.lib"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Desc=Installing library and headers...
+PostBuild_Cmds=call vc6inst l "Release\binio.lib"	call vc6inst i *.h
+# End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "libbinio - Win32 Debug"
 
@@ -74,7 +79,12 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LIB32=link.exe -lib
 # ADD BASE LIB32 /nologo
-# ADD LIB32 /nologo
+# ADD LIB32 /nologo /out:"Debug\biniod.lib"
+# Begin Special Build Tool
+SOURCE="$(InputPath)"
+PostBuild_Desc=Installing library and headers...
+PostBuild_Cmds=call vc6inst l "Debug\biniod.lib"	call vc6inst i *.h
+# End Special Build Tool
 
 !ENDIF 
 

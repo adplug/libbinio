@@ -179,16 +179,13 @@ binio::Float binistream::ieee_single2float(Byte *data)
   // Signed and unsigned zero
   if(!exp && !fracthi7 && !data[2] && !data[3]) return sign * 0.0;
 
-  // Signed and unsigned infinity
+  // Signed and unsigned infinity (unsupported on non-IEEE systems)
   if(exp == 255)
     if(!fracthi7 && !data[2] && !data[3]) {
-      if(sign == -1) return -1.0 / 0.0; else return 1.0 / 0.0;
-    } else {	  // Not a number
-#ifdef NAN
-      return NAN;
-#else
+      err = Unsupported;
+      if(sign == -1) return -1.0; else return 1.0;
+    } else {	  // Not a number (unsupported on non-IEEE systems)
       err = Unsupported; return 0.0;
-#endif
     }
 
   if(!exp)	// Unnormalized float values
@@ -212,13 +209,10 @@ binio::Float binistream::ieee_double2float(Byte *data)
   // Signed and unsigned infinity
   if(exp == 255)
     if(!fracthi7 && !data[2] && !data[3]) {
-      if(sign == -1) return -1.0 / 0.0; else return 1.0 / 0.0;
+      err = Unsupported;
+      if(sign == -1) return -1.0; else return 1.0;
     } else {	  // Not a number
-#ifdef NAN
-      return NAN;
-#else
       err = Unsupported; return 0.0;
-#endif
     }
 
   if(!exp)	// Unnormalized float values
