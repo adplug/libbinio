@@ -32,9 +32,12 @@
     <p>Click <a href="doc/latest/libbinio/index.html">here</a> to view
     the latest documentation online.</p>
 
-    <p align=right><font size=-1>Last modified on
-    <!--#echo var="LAST_MODIFIED" --><br>
-    Copyright &copy Simon Peter</font></p>
+    <p align=right><a href="http://sourceforge.net"><img
+    src="http://sourceforge.net/sflogo.php?group_id=69728&amp;type=2"
+    width="125" height="37" border="0" alt="SourceForge.net Logo"></a><br>
+
+    <font size=-1>Last modified on <!--#echo var="LAST_MODIFIED" -->
+    <br>Copyright &copy Simon Peter</font></p>
 
   </body>
 </html>
