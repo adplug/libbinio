@@ -1,0 +1,40 @@
+AC_INIT(binio,1.0)
+AC_CONFIG_SRCDIR(src/binio.cpp)
+AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h])
+AM_INIT_AUTOMAKE
+AM_MAINTAINER_MODE
+AM_PROG_LIBTOOL
+AC_LANG(C++)
+
+# Check for a sane C/C++ build environment.
+AC_PROG_MAKE_SET
+AC_PROG_INSTALL
+AC_PROG_CXX
+
+# Sanitize some compiler features, which may be broken...
+AC_C_CONST
+
+# Conditionally build iostream wrappers
+AC_ARG_WITH([iostream],AC_HELP_STRING([--with-iostream],
+	[Build iostream wrappers]))
+
+if test ${with_iostream:=no} = yes; then
+   AC_CHECK_LIB(stdc++,main,
+	extras=$extras' binwrap.$(OBJEXT)',
+	AC_MSG_ERROR([libstdc++ not installed - iostream wrappers disabled]))
+fi
+
+# Conditionally build std::string methods
+AC_ARG_WITH([string],AC_HELP_STRING([--without-string],
+	[Do not try to build std::string methods]))
+
+if test ${with_string:=yes} = yes; then
+   AC_CHECK_LIB(stdc++,main,
+	AC_SUBST(WITH_STRING,1),
+	AC_MSG_ERROR([libstdc++ not installed - std::string methods disabled])
+	AC_SUBST(WITH_STRING,0))
+else
+	AC_SUBST(WITH_STRING,0)
+fi
+
+AC_OUTPUT
