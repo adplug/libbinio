@@ -22,7 +22,7 @@
 
 #include "binio.h"
 
-#if BINIO_WITH_IOSTREAM
+#if BINIO_ENABLE_IOSTREAM
 
 #if BINIO_ISO_STDLIB
 #include <iostream>

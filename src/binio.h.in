@@ -22,17 +22,17 @@
 
 /***** Configuration *****/
 
-// BINIO_WITH_STRING - Build std::string supporting methods
+// BINIO_ENABLE_STRING - Build std::string supporting methods
 //
 // Set to 1 to build std::string supporting methods. You need the STL to
 // do this.
-#define BINIO_WITH_STRING	@WITH_STRING@
+#define BINIO_ENABLE_STRING	@ENABLE_STRING@
 
-// BINIO_WITH_IOSTREAM - Build iostream wrapper classes
+// BINIO_ENABLE_IOSTREAM - Build iostream wrapper classes
 //
 // Set to 1 to build the iostream wrapper classes. You need the standard
 // C++ library to do this.
-#define BINIO_WITH_IOSTREAM	@WITH_IOSTREAM@
+#define BINIO_ENABLE_IOSTREAM	@ENABLE_IOSTREAM@
 
 // BINIO_ISO_STDLIB - Build with ISO C++ standard library compliance
 //
@@ -40,9 +40,19 @@
 // templatized iostream). Set to 0 to build for the traditional C++ library.
 #define BINIO_ISO_STDLIB	@ISO_STDLIB@
 
+// BINIO_WITH_MATH - Build with 'math.h' dependency to allow float conversions
+//
+// Set to 1 to also build routines that depend on the 'math.h' standard C header
+// file (this sometimes also implies a 'libm' or 'libmath' dependency). These
+// routines are needed in order to write IEEE-754 floating-point numbers on a
+// system that doesn't support this format natively. For only reading these
+// numbers, however, these routines are not needed. If set to 0, writing
+// IEEE-754 numbers on an incompatible system will be disabled.
+#define BINIO_WITH_MATH		@WITH_MATH@
+
 /***** Implementation *****/
 
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
 #include <string>
 #endif
 
@@ -56,7 +66,7 @@ public:
 
   typedef enum { NoError = 0, Fatal, Unsupported, NotOpen, Denied, Eof } Error;
   typedef enum { Set, Add, End } Offset;
-  typedef enum { Single, Double, Extended } FType;
+  typedef enum { Single, Double } FType;
 
   binio();
   virtual ~binio();
@@ -81,7 +91,11 @@ protected:
   static const Flags	system_flags;
   Error			err;
 
+  // Some math.h emulation functions...
+#if !BINIO_WITH_MATH
   Float pow(Float base, signed int exp);
+  Float ldexp(Float x, signed int exp) { return x * pow(2, exp); }
+#endif
 
 private:
   static const Flags detect_system_flags();
@@ -96,7 +110,7 @@ public:
   Int readInt(unsigned int size);
   Float readFloat(FType ft);
   unsigned long readString(char *str, unsigned long maxlen, char delim = '\0');
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   std::string readString(char delim = '\0');
 #endif
 
@@ -108,7 +122,6 @@ protected:
 private:
   Float ieee_single2float(Byte *data);
   Float ieee_double2float(Byte *data);
-  Float ieee_extended2float(Byte *data);
 };
 
 class binostream: virtual public binio
@@ -120,12 +133,16 @@ public:
   void writeInt(Int val, unsigned int size);
   void writeFloat(Float f, FType ft);
   void writeString(const char *str);
-#if BINIO_WITH_STRING
+#if BINIO_ENABLE_STRING
   void writeString(const std::string &str);
 #endif
 
 protected:
   virtual void putByte(Byte) = 0;
+
+private:
+  void float2ieee_single(Float f, Byte *data);
+  void float2ieee_double(Float f, Byte *data);
 };
 
 class binstream: public binistream, public binostream

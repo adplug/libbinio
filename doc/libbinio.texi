@@ -85,10 +85,10 @@ the following features:
 @itemize @bullet
 @item The ability to read arbitrary-sized integers, as long as the
 underlying system can hold the final value.
-@item Conversion between Big- and Little-Endian notation.
+@item Conversion between Big- and Little-Endian storage.
 @item Reading and writing of @acronym{IEEE-754} single and double
 precision floating-point numbers and the conversion to/from any
-system-internal representation thereof.
+system-internal floating-point representation.
 @end itemize
 
 libbinio provides classes for streaming access to normal files,
@@ -258,7 +258,7 @@ libbinio is currently running on, are called @dfn{alien}
 architectures.
 
 libbinio makes the process of converting between your architecture's
-and the alien architecture's idea of binary notation completely
+and the alien architecture's idea of binary storage completely
 transparent to you. All you have to do is to specify some
 characteristics about the stream's binary format, after you have
 opened it. All newly created streams are initialized with the current
@@ -272,7 +272,7 @@ characteristics. @var{flag} specifies the flag to be set or read
 and their meaning). The optional argument @var{set} specifies whether
 the flag should be set (the default) or erased.
 
-After you have set up all flags to sufficiently specify the other
+After you have set up all flags to sufficiently specify the alien
 architecture, you can proceed to do binary I/O, just as described in
 the previous chapter (@ref{Binary stream I/O}) and libbinio will do
 all the necessary conversion between your own and the alien
@@ -633,8 +633,8 @@ Specifies what type of floating-point number is to be accessed next,
 using the @code{readFloat()} or @code{writeFloat()} methods. Most
 floating-point formats specify multiple data types to support a
 broader range of precision. libbinio generalizes the idea by
-categorizing them only into single, double and extended double
-precision numbers. This type defines the following values:
+categorizing them only into single and double precision numbers. This
+type defines the following values:
 
 @vtable @code
 @item Single
@@ -642,9 +642,6 @@ Access a single precision floating-point number.
 
 @item Double
 Access a double precision floating-point number.
-
-@item Extended
-Access an extended double precision floating-point number.
 @end vtable
 @end vtable
 

@@ -19,34 +19,30 @@ AC_CHECK_TYPE(long double, AC_SUBST(TYPE_FLOAT,"long double"),
 		   AC_SUBST(TYPE_FLOAT,double))
 
 # Conditionally build iostream wrappers
-AC_ARG_WITH([iostream],AC_HELP_STRING([--without-iostream],
-	[Do not try to build iostream wrappers]))
+AC_ARG_ENABLE([iostream], AC_HELP_STRING([--disable-iostream],
+	[Do not build iostream wrapper streams]))
 
-if test ${with_iostream:=yes} = yes; then
-   AC_CHECK_LIB(stdc++,main,
-	AC_SUBST(WITH_IOSTREAM,1),
-	AC_MSG_ERROR([libstdc++ not installed - iostream wrappers disabled])
-	AC_SUBST(WITH_IOSTREAM,0))
+if test ${enable_iostream:=yes} = yes; then
+   AC_CHECK_LIB(stdc++,main, AC_SUBST(ENABLE_IOSTREAM,1),
+      AC_SUBST(ENABLE_IOSTREAM,0))
 else
-	AC_SUBST(WITH_IOSTREAM,0)
+	AC_SUBST(ENABLE_IOSTREAM,0)
 fi
 
 # Conditionally build std::string methods
-AC_ARG_WITH([string],AC_HELP_STRING([--without-string],
-	[Do not try to build std::string methods]))
+AC_ARG_ENABLE([string], AC_HELP_STRING([--disable-string],
+	[Do not build std::string methods]))
 
-if test ${with_string:=yes} = yes; then
-   AC_CHECK_LIB(stdc++,main,
-	AC_SUBST(WITH_STRING,1),
-	AC_MSG_ERROR([libstdc++ not installed - std::string methods disabled])
-	AC_SUBST(WITH_STRING,0))
+if test ${enable_string:=yes} = yes; then
+   AC_CHECK_LIB(stdc++, main, AC_SUBST(ENABLE_STRING,1),
+			      AC_SUBST(ENABLE_STRING,0))
 else
-	AC_SUBST(WITH_STRING,0)
+	AC_SUBST(ENABLE_STRING,0)
 fi
 
 # Check if we are using the ISO standard C++ library
 AC_ARG_WITH([iso],AC_HELP_STRING([--with-iso],
-	[Build with ISO C++ standard library compliance]))
+	[Force ISO C++ standard library compliance]))
 
 if test x${with_iso} = xyes; then
    AC_SUBST(ISO_STDLIB,1)
@@ -57,6 +53,16 @@ else
 		AC_SUBST(ISO_STDLIB,1),
 		AC_SUBST(ISO_STDLIB,0),
 		[#include <iostream>])
+fi
+
+# Conditionally build with 'math.h' (and maybe library) dependencies
+AC_ARG_WITH([math],AC_HELP_STRING([--without-math],
+	[Do not build routines depending on 'math.h']))
+
+if test ${with_math:=yes} = yes; then
+   AC_CHECK_FUNC(ldexp, AC_SUBST(WITH_MATH,1), AC_SUBST(WITH_MATH,0))
+else
+	AC_SUBST(WITH_MATH,0)
 fi
 
 AC_OUTPUT

@@ -19,7 +19,7 @@
 
 #include "binwrap.h"
 
-#if BINIO_WITH_IOSTREAM
+#if BINIO_ENABLE_IOSTREAM
 
 /***** biniwstream *****/
 
