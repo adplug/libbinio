@@ -5,3 +5,16 @@ texinfo.tex
 *.info
 stamp-vti
 version.texi
+libbinio.vrs
+libbinio.vr
+libbinio.tp
+libbinio.toc
+libbinio.pg
+libbinio.log
+libbinio.ky
+libbinio.fns
+libbinio.fn
+libbinio.dvi
+libbinio.cps
+libbinio.cp
+libbinio.aux
