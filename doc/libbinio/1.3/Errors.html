@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.3</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.3">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.3. It was last updated on 18 August 2004.
+
+   <p>Copyright &copy; 2002 - 2004 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Errors">Errors</a>,
+Next:<a rel="next" accesskey="n" href="Examples.html#Examples">Examples</a>,
+Previous:<a rel="previous" accesskey="p" href="Wrapping-around-iostream.html#Wrapping%20around%20iostream">Wrapping around iostream</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Errors</h3>
+
+   <p>When doing stream I/O, some unpredictable, erroneus situations can
+occur at runtime. Binary streams are no exception to this
+phenomenon. To provide some sort of protection against this, all
+libbinio stream classes inherit an error reporting method called
+<code>error()</code>.
+
+   <p>It is a good idea to check the error status of a stream once in a
+while to see if everything is still in place. <code>error()</code> returns a
+variable of type <code>Error</code>, which is an integer that holds a bit
+field of error values for that stream. Refer to <a href="Reference.html#Reference">Reference</a> for
+information about the possible values of this variable and their
+meaning.
+
+   <p>A status of no error is always reported with a value of <code>0</code>, so
+you can easily check if everything is still okay in a simple <code>if</code>
+construct, like this:
+
+<pre class="example">     if(mystream.error())
+       // an error occured, do something to cure it...
+     else
+       // everything is still okay!
+     </pre>
+
+   <p>Two convenience error reporting methods are also included:
+
+   <p><code>eof()</code> only checks for the <code>Eof</code> error status, indicating
+whether the end of the stream has just been passed. It returns a
+boolean value, indicating the past the end of the stream.
+
+   <p><code>ateof()</code> is like <code>eof()</code> but returns true already when the
+stream pointer is at the last byte of the stream, not past it. This is
+useful when you want to read an entire file into memory in a
+<code>while(!ateof())</code> loop. This method is only defined on streams
+that support reading. On write-only streams, it is not defined and not
+useful.
+
+   <p>Whenever you call <code>error()</code>, the internal error variable is reset
+to the <code>NoError</code> state, indicating no error at all, and a
+subsequent call to any of the error reporting methods will return
+<code>NoError</code> again. <code>eof()</code> and <code>ateof()</code> do not reset the
+internal error variable. The last error status of the stream is
+retained.
+
+   </body></html>
+

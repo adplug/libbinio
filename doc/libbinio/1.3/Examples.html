@@ -1,0 +1,132 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.3</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.3">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.3. It was last updated on 18 August 2004.
+
+   <p>Copyright &copy; 2002 - 2004 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Examples">Examples</a>,
+Previous:<a rel="previous" accesskey="p" href="Errors.html#Errors">Errors</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Examples</h3>
+
+   <p>To read some data (namely integers, floats and strings) from an
+ordinary binary file on your filesystem, which was also created on
+your architecture:
+
+<pre class="example">     #include &lt;binfile.h&gt;
+     
+     binifstream     file("test.dat");
+     int             i;
+     float           f;
+     char            string[256];
+     
+     // Read a 32-bit integer
+     i = file.readInt(4);
+     
+     // Read an IEEE-754 single (32 bits)
+     f = file.readFloat(binio::Single);
+     
+     // Read a string until newline or max. number of chars exceeded
+     file.readString(string, 256, '\n');
+     </pre>
+
+   <p>To do I/O on a file that was created on an x86 machine (i.e. Little
+Endian, <small>IEEE-754</small> floats), while your own architecture is
+something different:
+
+<pre class="example">     #include &lt;binfile.h&gt;
+     
+     binfstream     file;
+     int            i = 1234567;
+     long           pos;
+     
+     // open the file "x86.dat" for reading and writing, but do not create
+     // it if it's not there.
+     file.open("x86.dat", binfbase::NoCreate);
+     
+     // Check if we could cleanly open the file and bail out, if we
+     // couldn't.
+     if(file.error())
+       return ERROR;
+     
+     // Set Little Endian mode, with IEEE-754 floats.
+     file.setFlag(binio::BigEndian, false);   // remove flag
+     file.setFlag(binio::FloatIEEE);          // set flag
+     
+     // as we just want a demonstration, we discard all read data right away.
+     
+     // Read a 16-bit integer
+     file.readInt(2);
+     
+     // Read an IEEE-754 double (64 bits)
+     file.readFloat(binio::Double);
+     
+     // Remember our current position in the stream
+     pos = file.pos();
+     
+     // Seek to the end of the file
+     file.seek(0, binio::End);
+     
+     // Write our variable i, determining its size using sizeof()
+     file.writeInt(i, sizeof(i));
+     
+     // Seek back to our former position
+     file.seek(pos);
+     
+     // Read a byte from here
+     file.readInt(1);
+     
+     // close the file again
+     file.close();
+     
+     // and we're finished
+     return SUCCESS;
+     </pre>
+
+   <p>To wrap around a stream from the iostream library, reading data until
+the end of the stream:
+
+<pre class="example">     #include &lt;fstream&gt;
+     #include &lt;binwrap.h&gt;
+     
+     // Open the iostream stream for reading and writing in binary mode.
+     fstream file("test.dat", ios::in | ios::out | ios::bin);
+     
+     // Wrap a binary input-only stream around it.
+     biniwstream bfile(&amp;file);
+     
+     // Read (and immediately discard) 24-bit integers until the end
+     // of the stream.
+     while(!bfile.eof())
+       bfile.readInt(3);
+     </pre>
+
+   </body></html>
+
