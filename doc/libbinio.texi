@@ -25,6 +25,11 @@ Software Foundation raise funds for GNU development.''
 @end quotation
 @end copying
 
+@dircategory Software Libraries
+@direntry
+* libbinio: (libbinio)          Binary I/O stream class library @value{VERSION}
+@end direntry
+
 @titlepage
 @title Binary I/O stream class library
 @subtitle Version @value{VERSION}
