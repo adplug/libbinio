@@ -1,0 +1,12 @@
+# libbinio Makefile for WATCOM C/C++
+# Copyright (c) 2003 Simon Peter <dn.tlp@gmx.net>
+
+SUBDIRS = src
+
+AUX = doc\*.* README AUTHORS NEWS COPYING TODO ChangeLog
+DIST = src\*.cpp src\*.h src\binioh~1.in src\Makefile.bt $(AUX) INSTALL
+BINARYDIST = src\*.h src\binio.lib $(AUX)
+
+distfile = binio01s.zip
+binarydistfile = binio01.zip
+installfile = INSTALL.dos

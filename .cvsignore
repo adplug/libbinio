@@ -13,3 +13,4 @@ libtool
 ltmain.sh
 missing
 mkinstalldirs
+config.mif
