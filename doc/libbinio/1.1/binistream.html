@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.1</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.1">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.1. It was last updated on 30 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="binistream">binistream</a>,
+Next:<a rel="next" accesskey="n" href="binostream.html#binostream">binostream</a>,
+Previous:<a rel="previous" accesskey="p" href="binio.html#binio">binio</a>,
+Up:<a rel="up" accesskey="u" href="Base-classes.html#Base%20classes">Base classes</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">binistream</h4>
+
+   <p><code>binistream</code> provides an input-only binary stream.
+
+<h4 class="subheading">Header file: <code>binio.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>binistream()</code>
+     <dd>The constructor.
+
+     <br><dt><code>~binistream()</code>
+     <dd>The destructor.
+
+     <br><dt><code>Int readInt(unsigned int size)</code>
+     <dd>Reads an integer of size <code>size</code> (in bytes) from the stream and
+returns it. The return value is undefined if an error occured. The
+maximum number of bytes that can be read at once equals the size (in
+bytes) of the largest integer type, supported by the system.
+
+     <br><dt><code>Float readFloat(FType ft)</code>
+     <dd>Reads a floating-point number from the stream and returns it. Takes
+the floating-point format to read as the argument <code>ft</code>. Refer to
+the list of public types of the <code>binio</code> class for information
+about what floating-point formats are supported. The return value is
+undefined if an error occured. The value from the stream is always
+rendered to the biggest floating-point type, supported by the system.
+
+     <p>If your architecture is incompatible with the floating-point number
+that has just been read, <code>readFloat()</code> tries to convert it. This
+is sometimes not possible or not as accurate as the original value and
+an error will be issued in these cases. Refer to the list of public
+types of the <code>binio</code> class for information about what errors
+could be issued.
+
+     <br><dt><code>unsigned long readString(char *str, unsigned long maxlen, char delim)</code>
+     <dd><dt><code>std::string readString(char delim = '\0')</code>
+     <dd>Reads a character string from the stream. Both pre-allocated standard
+C <small>ASCIIZ</small> strings and <small>STL</small> <code>string</code> objects are
+supported.
+
+     <p>The <small>ASCIIZ</small> version takes a pointer to the pre-allocated
+string buffer as the <code>str</code> argument. <code>maxlen</code> specifies the
+maximum number of characters to be read from the stream (<em>not</em>
+including the trailing <code>\0</code> that is always appended to the string
+buffer). The optional argument <code>delim</code> is a delimiter
+character. If this character is encountered in the stream, no more
+characters will be read. The delimiter character itself is
+discarded. It will not appear in the final string. If the <code>delim</code>
+argument is omitted, always up to <code>maxlen</code> characters are read.
+
+     <p>The <code>string</code> object version just takes one optional argument, the
+delimiter character, explained above. Characters are always read until
+the delimiter character or the end of the stream is encountered. If
+<code>delim</code> is omitted, it defaults to <code>\0</code>. It returns a
+<code>string</code> object, containing the final string.
+
+     <br><dt><code>Int peekInt(unsigned int size)</code>
+     <dd>Like <code>readInt()</code>, but doesn't modify the stream position, so any
+later access to the stream will appear as if <code>peekInt()</code> has
+never been called.
+
+     <br><dt><code>Float peekFloat(FType ft)</code>
+     <dd>Like <code>readFloat()</code>, but doesn't modify the stream position, so
+any later access to the stream will appear as if <code>peekFloat()</code>
+has never been called.
+
+     <br><dt><code>bool ateof()</code>
+     <dd>Returns <code>true</code> if the current stream position is at the last byte
+of the stream. <code>false</code> is returned otherwise.
+
+     <br><dt><code>void ignore(unsigned long amount = 1)</code>
+     <dd>Reads and then immediately discards the specified amount of bytes from
+the stream. If the optional argument <code>amount</code> is omitted, it
+defaults to <code>1</code>, ignoring exactly 1 byte from the stream. 
+</dl>
+
+<h4 class="subheading">Protected methods:</h4>
+
+     <dl>
+<dt><code>virtual Byte getByte()</code>
+     <dd>Abstract virtual method to extract exactly one byte (8 bits) from the
+stream and advance stream pointer accordingly. The byte is
+returned. Implemented by the stream layer. 
+</dl>
+
+   </body></html>
+

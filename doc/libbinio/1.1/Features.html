@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.1</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.1">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.1. It was last updated on 30 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Features">Features</a>,
+Up:<a rel="up" accesskey="u" href="Introduction.html#Introduction">Introduction</a>
+<hr><br>
+</div>
+
+<h3 class="section">Features</h3>
+
+   <p>libbinio implements a generalized binary stream class framework, with
+the following features:
+
+     <ul>
+<li>The ability to read arbitrary-sized integers, as long as the
+underlying system can hold the final value. 
+<li>Conversion between Big- and Little-Endian storage. 
+<li>Reading and writing of <small>IEEE-754</small> single and double
+precision floating-point numbers and the conversion to/from any
+system-internal floating-point representation. 
+</ul>
+
+   <p>libbinio provides classes for streaming access to normal files,
+arbitrary data strings in memory and a wrapper around standard
+iostreams from either the <small>ISO</small> standard C++ library, or a
+"traditional" iostream implementation.
+
+   <p>In addition, convenience methods for the <small>STL</small> <code>string</code>
+class can be enabled that support reading and writing of arbitrary
+length strings with dynamic memory allocation.
+
+   <p>libbinio should compile and run on as much systems as possible. If it
+doesn't work with your system/compiler combination, please tell me!
+
+   </body></html>
+

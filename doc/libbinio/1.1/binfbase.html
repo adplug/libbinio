@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.1</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.1">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.1. It was last updated on 30 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="binfbase">binfbase</a>,
+Next:<a rel="next" accesskey="n" href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>,
+Up:<a rel="up" accesskey="u" href="File-streams.html#File%20streams">File streams</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">binfbase</h4>
+
+   <p><code>binfbase</code> provides the common base class for all file I/O binary
+streams. It defines important data types, variables and methods.
+
+<h4 class="subheading">Header file: <code>binfile.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>binfbase()</code>
+     <dd>The constructor.
+
+     <br><dt><code>~binfbase()</code>
+     <dd>The destructor. Automatically closes an eventually open stream.
+
+     <br><dt><code>virtual void open(const char *filename, const Mode mode)</code>
+     <dd><dt><code>virtual void open(const std::string &amp;filename, const Mode mode)</code>
+     <dd>Two versions of an abstract virtual method to open a binary file
+stream. <code>filename</code> is the filename of the file to open and
+<code>mode</code> specifies in which mode to do so. Refer to the list of
+data types for this class for more information on this argument. You
+can combine multiple mode flags together, using the <code>|</code>
+operator.
+
+     <br><dt><code>void close()</code>
+     <dd>Method to explicitly close the stream.
+
+     <br><dt><code>void seek(long pos, Offset offs = Set)</code>
+     <dd><dt><code>long pos()</code>
+     <dd>Implementation of the abstract virtual methods, inherited from
+<code>binio</code>. Look there for reference. 
+</dl>
+
+<h4 class="subheading">Public data types and variables:</h4>
+
+     <dl>
+<dt><code>enum ModeFlags</code>
+     <dd>Enumeration of all defined file stream open mode flags, defining how a
+file should be opened when the <code>open()</code> method is called. This
+type defines the following flags:
+
+          <dl>
+<dt><code>Append</code>
+          <dd>Open the stream for appending. The stream pointer is positioned at the
+end of the stream. Also, do not truncate a file to zero length, if it
+already exists. 
+<br><dt><code>NoCreate</code>
+          <dd>Do not automatically create a nonexistant file on first access and
+fail instead. Also, do not truncate a file to zero length, if it
+already exists. 
+</dl>
+
+     <br><dt><code>Mode</code>
+     <dd>Type of the variable to hold the mode specification flags that are
+passed to one of the <code>open()</code> methods to open a file
+stream. Refer to <code>enum ModeFlags</code> above for information on what
+flags are defined. 
+</dl>
+
+<h4 class="subheading">Protected data types and variables:</h4>
+
+     <dl>
+<dt><code>FILE *f</code>
+     <dd>Pointer to the currently opened file of this stream. 
+</dl>
+
+   </body></html>
+

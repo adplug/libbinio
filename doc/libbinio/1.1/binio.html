@@ -1,0 +1,247 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.1</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.1">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.1. It was last updated on 30 January 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="binio">binio</a>,
+Next:<a rel="next" accesskey="n" href="binistream.html#binistream">binistream</a>,
+Up:<a rel="up" accesskey="u" href="Base-classes.html#Base%20classes">Base classes</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">binio</h4>
+
+   <p><code>binio</code> is the general base class, containing important method,
+type and variable declarations. As a user, you normally do not need it
+directly, expect for scoping types and variables to it.
+
+<h4 class="subheading">Header file: <code>binio.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>binio()</code>
+     <dd>The constructor.
+
+     <br><dt><code>~binio()</code>
+     <dd>The destructor.
+
+     <br><dt><code>void setFlag(Flag f, bool set = true)</code>
+     <dd>Is used to set or erase flags to change the behaviour of the
+stream. Available flags and their meaning are listed in the types
+table for this class, below. The optional argument <code>set</code> is used
+to set or erase the specified flag. If it is not specified, it
+defaults to <code>true</code>, setting (activating) the specified flag.
+
+     <br><dt><code>bool getFlag(Flag f)</code>
+     <dd>Returns whether the specified flag is set (active) or not. Refer to
+<code>setFlag</code>, above, for more information.
+
+     <br><dt><code>Error error()</code>
+     <dd>Returns the current error status of the stream. A status of no error
+is always indicated with a value of <code>0</code>, as to allow easy error
+checks with a simple <code>if</code> construct.
+
+     <br><dt><code>bool eof()</code>
+     <dd>Returns <code>true</code> if the last access to the stream was unsuccessful
+because the stream pointer was already past the end of the
+stream. <code>false</code> is returned otherwise. Synonymous to checking if
+the return value of a call to <code>error()</code> sets the <code>Eof</code> error
+code flag.
+
+     <br><dt><code>virtual void seek(long, Offset = Set)</code>
+     <dd>Abstract virtual method for seeking into streams. Implemented by the
+stream layer. The first argument specifies the relative position to
+seek to. Use a negative value to seek backwards. The optional second
+argument specifies from where to start seeking. <code>Set</code> specifies
+the beginning of a stream, <code>Add</code> specifies the current position
+and <code>End</code> specifies the end of the stream. If it is omitted, it
+defaults to <code>Set</code>, seeking from the beginning of the stream.
+
+     <br><dt><code>virtual long pos()</code>
+     <dd>Abstract virtual method that returns the current position inside the
+stream. Implemented by the stream layer. 
+</dl>
+
+<h4 class="subheading">Protected methods:</h4>
+
+     <dl>
+<dt><code>Float pow(Float base, signed int exp)</code>
+     <dd>Is a stripped-down version of the <code>pow()</code> function from the
+<code>math.h</code> standard C math library include file. It is used during
+conversion between floating-point formats and can calculate powers of
+a floating-point base argument, using a signed integer exponent. 
+</dl>
+
+<h4 class="subheading">Public data types and variables:</h4>
+
+     <dl>
+<dt><code>enum Flag</code>
+     <dd>Enumeration of all defined stream flags that can be set using the
+<code>setFlag()</code> and <code>getFlag()</code> methods. This type defines the
+following values:
+
+          <dl>
+<dt><code>BigEndian</code>
+          <dd>If set, sets the stream's byte-ordering to big endian
+notation. Otherwise, little endian notation is used.
+
+          <br><dt><code>FloatIEEE</code>
+          <dd>If set, all floating-point access to the stream will assume
+<small>IEEE-754</small> standardized floating-point numbers. Only this type
+of data is expected from and written to the stream.
+
+          <p>If your architecture does not support <small>IEEE-754</small>
+floating-point numbers, the value will be converted. Various
+conversion errors can occur and sometimes the conversion is not
+possible at all. In this case, the <code>Unsupported</code> error is issued
+and a specific value is returned. The following table summarizes all
+possible return codes for certain problematic values:
+
+          <p><table><tr align="left"><td valign="top">Real value </td><td valign="top">Return value
+<br></td></tr><tr align="left"><td valign="top"><code>Infinity</code> </td><td valign="top"><code>1.0</code>
+<br></td></tr><tr align="left"><td valign="top"><code>-Infinity</code> </td><td valign="top"><code>-1.0</code>
+<br></td></tr><tr align="left"><td valign="top"><code>Not a Number (NaN)</code> </td><td valign="top"><code>0.0</code>
+          <br></td></tr></table>
+
+          <p>Both positive and negative zero (<code>0</code>) are mapped to the same zero
+value, if your architecture does not support both positive and
+negative zeroes. There is no way to distinguish between the two values
+in this case.
+
+     </dl>
+
+     <br><dt><code>enum ErrorCode</code>
+     <dd>Enumeration of all possible error values. This type defines the
+following values:
+
+          <dl>
+<dt><code>NoError</code>
+          <dd>No error at all. This is always mapped to an integer value of
+<code>0</code>.
+
+          <br><dt><code>Fatal</code>
+          <dd>An unspecified, fatal error occured. This error is issued only if
+something really strange happened (i.e. on internal logic errors in
+the library, or if something else, undefined happens, etc.). It is
+advised to immediately terminate any binary stream I/O activity and
+fail with an error message to the application user, maybe even
+terminate the application completely.
+
+          <br><dt><code>Unsupported</code>
+          <dd>You tried to access stream data in an unsupported way. This error is
+issued whenever an (explicit or implicit) conversion between two types
+of data storage is requested, that isn't supported by libbinio yet.
+
+          <br><dt><code>NotOpen</code>
+          <dd>The stream you tried to access is not open yet.
+
+          <br><dt><code>Denied</code>
+          <dd>Access to this stream is denied. This error is normally issued when
+you try to open a file on a filesystem, but you have insufficient
+rights to access it.
+
+          <br><dt><code>NotFound</code>
+          <dd>The stream you tried to access was not found. This is mostly issued
+on a file not found error, when accessing normal files on a
+filesystem.
+
+          <br><dt><code>Eof</code>
+          <dd>The end of the stream has been passed. Issued when you tried to read
+past the last byte of a stream. 
+</dl>
+
+     <br><dt><code>enum Offset</code>
+     <dd>Specifies the position inside a stream, from where a seek is started
+with the <code>seek()</code> method. This type defines the following values:
+
+          <dl>
+<dt><code>Set</code>
+          <dd>Start seeking at the beginning of the stream.
+
+          <br><dt><code>Add</code>
+          <dd>Start seeking from the current position in the stream.
+
+          <br><dt><code>End</code>
+          <dd>Start seeking from the end of the stream. 
+</dl>
+
+     <br><dt><code>enum FType</code>
+     <dd>Specifies what type of floating-point number is to be accessed next,
+using the <code>readFloat()</code> or <code>writeFloat()</code> methods. Most
+floating-point formats specify multiple data types to support a
+broader range of precision. libbinio generalizes the idea by
+categorizing them only into single and double precision numbers. This
+type defines the following values:
+
+          <dl>
+<dt><code>Single</code>
+          <dd>Access a single precision floating-point number.
+
+          <br><dt><code>Double</code>
+          <dd>Access a double precision floating-point number. 
+</dl>
+
+     <br><dt><code>int Error</code>
+     <dd>This integer holds a bit field of all error values for a
+stream. Returned by <code>error()</code>. A status of "no error" is always
+indicated when the whole field is set to <code>0</code> (zero), i.e. the
+integer is <code>0</code>. Test for an error by binary or'ing this integer
+with one of the error values from <code>ErrorCode</code>. 
+</dl>
+
+<h4 class="subheading">Protected data types and variables:</h4>
+
+     <dl>
+<dt><code>Int</code>
+     <dd>The largest integer type supported by the architecture.
+
+     <br><dt><code>Float</code>
+     <dd>The largest floating-point type supported by the architecture.
+
+     <br><dt><code>Byte</code>
+     <dd>This type is always one byte (8 bits) wide.
+
+     <br><dt><code>Flags</code>
+     <dd>Type to hold a flag variable, containing the status of all flags of a
+stream.
+
+     <br><dt><code>Flags my_flags</code>
+     <dd>This variable holds the current status of all flags for the stream.
+
+     <br><dt><code>static const Flags system_flags</code>
+     <dd>This variable holds the status of the flags, defining the standard
+behaviour of the system. This is determined once at runtime, at
+startup of the library.
+
+     <br><dt><code>Error err</code>
+     <dd>This variable holds the error status of a stream. 
+</dl>
+
+   </body></html>
+
