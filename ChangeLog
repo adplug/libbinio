@@ -1,3 +1,17 @@
+2003-03-04 13:46  dynamite
+
+	* binio.spec: Fixed groups in redhat spec file.
+
+2003-03-03 21:38  dynamite
+
+	* doc/libbinio.texi: Added info directory entry in Software
+	Libraries group.
+
+2003-03-03 18:48  dynamite
+
+	* AUTHORS, ChangeLog, INSTALL, NEWS, binio.spec, binio_mdk.spec:
+	Added Red Hat & Mandrake .spec files. Thanks to Goetz Waschk!
+
 2003-03-03 13:24  dynamite
 
 	* TODO, doc/libbinio.texi: Updated documentation.
