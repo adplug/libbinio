@@ -125,9 +125,9 @@ public:
   Int readInt(unsigned int size);
   Float readFloat(FType ft);
   unsigned long readString(char *str, unsigned long amount);
-  unsigned long readString(char *str, unsigned long maxlen, char delim);
+  unsigned long readString(char *str, unsigned long maxlen, const char delim);
 #if BINIO_ENABLE_STRING
-  std::string readString(char delim);
+  std::string readString(const char delim = '\0');
 #endif
 
   Int peekInt(unsigned int size);

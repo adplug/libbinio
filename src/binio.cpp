@@ -295,7 +295,7 @@ unsigned long binistream::readString(char *str, unsigned long maxlen)
 }
 
 unsigned long binistream::readString(char *str, unsigned long maxlen,
-				     char delim)
+				     const char delim)
 {
   unsigned long i;
 
@@ -309,7 +309,7 @@ unsigned long binistream::readString(char *str, unsigned long maxlen,
 }
 
 #if BINIO_ENABLE_STRING
-std::string binistream::readString(char delim)
+std::string binistream::readString(const char delim)
 {
   char buf[STRINGBUFSIZE + 1];
   std::string tempstr;

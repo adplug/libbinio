@@ -860,8 +860,8 @@ an error will be issued in these cases. Refer to the list of public
 types of the @code{binio} class for information about what errors
 could be issued.
 
-@item unsigned long readString(char *str, unsigned long maxlen, char delim)
-@itemx std::string readString(char delim = '\0')
+@item unsigned long readString(char *str, unsigned long maxlen, const char delim)
+@itemx std::string readString(const char delim = '\0')
 Reads a character string from the stream. Both pre-allocated standard
 C @acronym{ASCIIZ} strings and @acronym{STL} @code{string} objects are
 supported.
