@@ -1,3 +1,7 @@
+2003-02-03 15:11  dynamite
+
+	* ChangeLog, src/binio.cpp: GCC 3.2 fixes. RC1.
+
 2003-02-03 14:48  dynamite
 
 	* ChangeLog: Updated ChangeLog.
