@@ -34,6 +34,8 @@ biniwstream::~biniwstream()
 
 void biniwstream::seek(long pos, Offset offs)
 {
+  if(!in) { err = NotOpen; return; }
+
   switch(offs) {
   case Set: in->seekg(pos, ios::beg); break;
   case Add: in->seekg(pos, ios::cur); break;
@@ -43,13 +45,16 @@ void biniwstream::seek(long pos, Offset offs)
 
 biniwstream::Byte biniwstream::getByte()
 {
+  if(!in) { err = NotOpen; return 0; }
+
   int i = in->get();
-  if(i == EOF || in->eof()) err = Eof;
+  if(i == EOF) err |= Eof;
   return (Byte)i;
 }
 
 long biniwstream::pos()
 {
+  if(!in) { err = NotOpen; return 0; }
   return (long)in->tellg();
 }
 
@@ -66,6 +71,8 @@ binowstream::~binowstream()
 
 void binowstream::seek(long pos, Offset offs)
 {
+  if(!out) { err = NotOpen; return; }
+
   switch(offs) {
   case Set: out->seekp(pos, ios::beg); break;
   case Add: out->seekp(pos, ios::cur); break;
@@ -75,11 +82,13 @@ void binowstream::seek(long pos, Offset offs)
 
 void binowstream::putByte(binio::Byte b)
 {
+  if(!out) { err = NotOpen; return; }
   out->put((char)b);
 }
 
 long binowstream::pos()
 {
+  if(!out) { err = NotOpen; return 0; }
   return (long)out->tellp();
 }
 
@@ -102,6 +111,7 @@ void binwstream::seek(long pos, Offset offs)
 
 long binwstream::pos()
 {
+  if(!io) { err = NotOpen; return 0; }
   return (long)io->tellg();
 }
 

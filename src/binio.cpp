@@ -25,6 +25,7 @@
 
 #include <math.h>
 
+// If 'math.h' doesn't define HUGE_VAL, we try to use HUGE instead.
 #ifndef HUGE_VAL
 # define HUGE_VAL HUGE
 #endif HUGE_VAL
@@ -89,7 +90,7 @@ void binio::setFlag(Flag f, bool set)
 
 bool binio::getFlag(Flag f)
 {
-	return (my_flags & f ? true : false);
+  return (my_flags & f ? true : false);
 }
 
 binio::Error binio::error()
@@ -102,7 +103,7 @@ binio::Error binio::error()
 
 bool binio::eof()
 {
-  return (err == Eof);
+  return (err & Eof ? true : false);
 }
 
 /***** binistream *****/
@@ -122,7 +123,7 @@ binistream::Int binistream::readInt(unsigned int size)
 
   // Check if 'size' doesn't exceed our system's biggest type.
   if(size > sizeof(Int)) {
-    err = Unsupported;
+    err |= Unsupported;
     return 0;
   }
 
@@ -179,7 +180,7 @@ binistream::Float binistream::readFloat(FType ft)
   }
 
   // User tried to read a (yet) unsupported floating-point type. Bail out.
-  err = Unsupported; return 0.0;
+  err |= Unsupported; return 0.0;
 }
 
 binistream::Float binistream::ieee_single2float(Byte *data)
@@ -198,14 +199,14 @@ binistream::Float binistream::ieee_single2float(Byte *data)
 #ifdef HUGE_VAL
       if(sign == -1) return -HUGE_VAL; else return HUGE_VAL;
 #else
-      err = Unsupported;
+      err |= Unsupported;
       if(sign == -1) return -1.0; else return 1.0;
 #endif
     } else {	  // Not a number (maybe unsupported on non-IEEE systems)
 #ifdef NAN
       return NAN;
 #else
-      err = Unsupported; return 0.0;
+      err |= Unsupported; return 0.0;
 #endif
     }
 
@@ -214,7 +215,7 @@ binistream::Float binistream::ieee_single2float(Byte *data)
   else		// Normalized float values
     return sign * pow(2, exp - 127) * (fract * pow(2, -23) + 1);
 
-  err = Fatal; return 0.0;
+  err |= Fatal; return 0.0;
 }
 
 binistream::Float binistream::ieee_double2float(Byte *data)
@@ -237,14 +238,14 @@ binistream::Float binistream::ieee_double2float(Byte *data)
 #ifdef HUGE_VAL
       if(sign == -1) return -HUGE_VAL; else return HUGE_VAL;
 #else
-      err = Unsupported;
+      err |= Unsupported;
       if(sign == -1) return -1.0; else return 1.0;
 #endif
     } else {	  // Not a number (maybe unsupported on non-IEEE systems)
 #ifdef NAN
       return NAN;
 #else
-      err = Unsupported; return 0.0;
+      err |= Unsupported; return 0.0;
 #endif
     }
 
@@ -253,7 +254,7 @@ binistream::Float binistream::ieee_double2float(Byte *data)
   else		// Normalized float values
     return sign * pow(2, exp - 1023) * (fract * pow(2, -52) + 1);
 
-  err = Fatal; return 0.0;
+  err |= Fatal; return 0.0;
 }
 
 #if !BINIO_WITH_MATH
@@ -283,7 +284,7 @@ unsigned long binistream::readString(char *str, unsigned long maxlen)
 
   for(i = 0; i < maxlen; i++) {
     str[i] = (char)getByte();
-    if(error()) { str[i] = '\0'; return i; }
+    if(err) { str[i] = '\0'; return i; }
   }
 
   return maxlen;
@@ -296,7 +297,7 @@ unsigned long binistream::readString(char *str, unsigned long maxlen,
 
   for(i = 0; i < maxlen; i++) {
     str[i] = (char)getByte();
-    if(str[i] == delim || error()) { str[i] = '\0'; return i; }
+    if(str[i] == delim || err) { str[i] = '\0'; return i; }
   }
 
   str[maxlen] = '\0';
@@ -318,6 +319,37 @@ std::string binistream::readString(char delim)
   return tempstr;
 }
 #endif
+
+binistream::Int binistream::peekInt(unsigned int size)
+{
+  Int val = readInt(size);
+  if(!err) seek(-size, Add);
+  return val;
+}
+
+binistream::Float binistream::peekFloat(FType ft)
+{
+  Float val = readFloat(ft);
+
+  if(!err)
+    switch(ft) {
+    case Single: seek(-4, Add); break;
+    case Double: seek(-8, Add); break;
+    }
+
+  return val;
+}
+
+bool binistream::ateof()
+{
+  Error	olderr = err;	// Save current error state
+  bool	eof_then;
+
+  peekInt(1);
+  eof_then = eof();	// Get error state of next byte
+  err = olderr;		// Restore original error state
+  return eof_then;
+}
 
 void binistream::ignore(unsigned long amount)
 {
@@ -342,7 +374,7 @@ void binostream::writeInt(Int val, unsigned int size)
   unsigned int	i;
 
   // Check if 'size' doesn't exceed our system's biggest type.
-  if(size > sizeof(Int)) { err = Unsupported; return; }
+  if(size > sizeof(Int)) { err |= Unsupported; return; }
 
   for(i = 0; i < size; i++) {
     if(getFlag(BigEndian))
@@ -392,7 +424,7 @@ void binostream::writeFloat(Float f, FType ft)
       out = buf;	// Make the value ready for writing
 #else
       // No necessary support routines to do the conversion, bail out!
-      err = Unsupported; return;
+      err |= Unsupported; return;
 #endif
     }
 
@@ -407,7 +439,7 @@ void binostream::writeFloat(Float f, FType ft)
   }
 
   // User tried to write an unsupported floating-point type. Bail out.
-  err = Unsupported;
+  err |= Unsupported;
 }
 
 #ifdef BINIO_WITH_MATH
@@ -590,7 +622,7 @@ unsigned long binostream::writeString(const char *str, unsigned long amount)
 
   for(i = 0; i < amount; i++) {
     putByte(str[i]);
-    if(error()) return i;
+    if(err) return i;
   }
 
   return amount;

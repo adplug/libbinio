@@ -40,14 +40,14 @@ void binsbase::seek(long p, Offset offs)
 
   // Seek before start of data
   if(spos < data) {
-    err = Fatal;
+    err |= Eof;
     spos = data;
     return;
   }
 
   // Seek after end of data
   if(spos - data >= length) {
-    err = Eof;
+    err |= Eof;
     spos = data + length - 1;
   }
 }
@@ -70,12 +70,14 @@ binisstream::~binisstream()
 
 binisstream::Byte binisstream::getByte()
 {
-  Byte in = *spos;
+  Byte in = 0;
 
   if(spos - data >= length)
-    err = Eof;
-  else
+    err |= Eof;
+  else {
+    in = *spos;
     spos++;
+  }
 
   return in;
 }
@@ -96,10 +98,8 @@ void binosstream::putByte(Byte b)
   *spos = b;
   spos++;
 
-  if(spos - data >= length) {
-    err = Eof;
+  if(spos - data >= length)
     spos = data + length - 1;
-  }
 }
 
 /***** binsstream *****/

@@ -25,26 +25,28 @@
 /***** binfbase *****/
 
 binfbase::binfbase()
-  : f(0)
+  : f(NULL)
 {
 }
 
 binfbase::~binfbase()
 {
-  if(f) close();
+  if(f != NULL) close();
 }
 
 void binfbase::close()
 {
-  if(f) {
-    if(fclose(f) == EOF) err = Fatal; else f = 0;
+  if(f != NULL) {
+    if(fclose(f) == EOF) err |= Fatal; else f = NULL;
   } else
-    err = NotOpen;
+    err |= NotOpen;
 }
 
 void binfbase::seek(long pos, Offset offs)
 {
   int error;
+
+  if(f == NULL) { err |= NotOpen; return; }
 
   switch(offs) {
   case Set: error = fseek(f, pos, SEEK_SET); break;
@@ -52,16 +54,19 @@ void binfbase::seek(long pos, Offset offs)
   case End: error = fseek(f, pos, SEEK_END); break;
   }
 
-  if(error == -1)
-    err = Fatal;
+  if(error == -1) err |= Fatal;
 }
 
 long binfbase::pos()
 {
-  long pos = ftell(f);
+  long pos;
+
+  if(f == NULL) { err |= NotOpen; return 0; }
+
+  pos = ftell(f);
 
   if(pos == -1) {
-    err = Fatal;
+    err |= Fatal;
     return 0;
   } else
     return pos;
@@ -93,14 +98,11 @@ void binifstream::open(const char *filename, const Mode mode)
 {
   f = fopen(filename, "rb");
 
-  if(!f)
+  if(f == NULL)
     switch(errno) {
-    case ENOENT:
-    case ENOTDIR:
-      err = NotOpen;
-      break;
-    case EACCES: err = Denied; break;
-    default: err = Fatal; break;
+    case ENOENT: err |= NotFound; break;
+    case EACCES: err |= Denied; break;
+    default: err |= NotOpen; break;
     }
 }
 
@@ -115,12 +117,12 @@ binifstream::Byte binifstream::getByte()
 {
   int read;
 
-  if(f) {
+  if(f != NULL) {
     read = fgetc(f);
-    if(read == EOF || feof(f)) err = Eof;
+    if(read == EOF) err |= Eof;
     return (Byte)read;
   } else {
-    err = NotOpen;
+    err |= NotOpen;
     return 0;
   }
 }
@@ -156,19 +158,15 @@ void binofstream::open(const char *filename, const Mode mode)
 
   f = fopen(filename, modestr);
 
-  if(!f)
+  if(f == NULL)
     switch(errno) {
     case EEXIST:
     case EACCES:
     case EROFS:
-      err = Denied;
+      err |= Denied;
       break;
-    case EISDIR:
-    case ENOTDIR:
-    case ENOENT:
-      err = NotOpen;
-      break;
-    default: err = Fatal; break;
+    case ENOENT: err |= NotFound; break;
+    default: err |= NotOpen; break;
     }
 }
 
@@ -181,8 +179,10 @@ void binofstream::open(const std::string &filename, const Mode mode)
 
 void binofstream::putByte(Byte b)
 {
+  if(f == NULL) { err |= NotOpen; return; }
+
   if(fputc(b, f) == EOF)
-    err = Fatal;
+    err |= Fatal;
 }
 
 /***** binfstream *****/
@@ -223,23 +223,20 @@ void binfstream::open(const char *filename, const Mode mode)
   f = fopen(filename, modestr);
 
   // NoCreate & append (emulated -- not possible with standard C fopen())
-  if(f && (mode & Append) && (mode & NoCreate))
+  if(f != NULL && (mode & Append) && (mode & NoCreate))
     ferror = fseek(f, 0, SEEK_END);
 
-  if(!f || ferror == -1)
+  if(f == NULL || ferror == -1) {
     switch(errno) {
     case EEXIST:
     case EACCES:
     case EROFS:
-      err = Denied;
+      err |= Denied;
       break;
-    case EISDIR:
-    case ENOTDIR:
-    case ENOENT:
-      err = NotOpen;
-      break;
-    default: err = Fatal; break;
+    case ENOENT: err |= NotFound; break;
+    default: err |= NotOpen; break;
     }
+  }
 }
 
 #if BINIO_ENABLE_STRING

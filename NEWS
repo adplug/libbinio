@@ -1,7 +1,23 @@
 This is a brief overview of user-visible changes in libbinio.
 
 Changes for version 1.1:
-- Removed unused config header file.
-- writeString() now reports number of characters written.
-- Changed behaviour of readString(): The delimiter doesn't default to '\0'
-  anymore. If no delimiter is given, always up to 'amount' characters are read.
+------------------------
+Removed unused config header file.
+
+writeString() now also reports number of characters written.
+
+Changed behaviour of readString(): The delimiter doesn't default to '\0'
+anymore. If no delimiter is given, always up to 'amount' characters are read.
+
+error() now returns a bit field of error flags instead of just one error value.
+Multiple errors can now occur at once.
+
+Added 'NotFound' error flag, indicating a file not found error.
+
+The 'Eof' error code is now set only when reading _past_ the end of a stream,
+not on the last byte.
+
+Added peekInt() and peekFloat() methods to peek an integer or a floating-point
+number in a stream, without extracting it.
+
+Added ateof() method that returns true when the stream is at the last byte.

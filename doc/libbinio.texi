@@ -119,7 +119,9 @@ C++ iostream facility before.
 @menu
 * Basics::
 * Files::
-* Binary stream I/O::
+* Reading and Writing::
+* Peeking::
+* Seeking::
 * Alien architectures::
 * Wrapping around iostream::
 * Errors::
@@ -192,9 +194,8 @@ method. It is always a good idea to do this explicitly, though not
 needed because the file automatically will be closed on object
 deconstruction.
 
-@node Binary stream I/O
-@section Binary stream I/O
-@cindex Binary stream I/O
+@node Reading and Writing
+@section Reading and Writing
 
 Every binary stream class offers the same set of binary I/O methods,
 inherited from one of the general stream base classes
@@ -247,8 +248,22 @@ data to be written as first argument, as in (for example)
 @code{writeInt(@var{value}, @var{size})}, @var{value} is the actual
 value to be written to the stream.
 
+@node Peeking
+@section Peeking
+
+Analogous to the @code{readInt()} and @code{readFloat()} methods are
+the @code{peekInt(@var{size})} and @code{peekFloat(@var{type})}
+methods, that take the same arguments and also read an integer or a
+floating-point number from the stream. Unlike their ``@code{read}''
+counterparts, they don't modify the stream position. The next ``real''
+access (i.e. with one of the @code{read} methods) to the stream will
+continue as if the @code{peek} methods have never been called.
+
+@node Seeking
+@section Seeking
 @cindex Seeking
 @cindex Positioning
+
 Sometimes, you need to reposition within your stream. To do this, you
 use the @code{seek(@var{position}, [@var{offset}])}
 method. @var{position} is the new position in the stream, counted
@@ -299,9 +314,8 @@ the flag should be set (the default) or erased.
 
 After you have set up all flags to sufficiently specify the alien
 architecture, you can proceed to do binary I/O, just as described in
-the previous chapter (@ref{Binary stream I/O}) and libbinio will do
-all the necessary conversion between your own and the alien
-architecture for you.
+the previous chapters and libbinio will do all the necessary
+conversion between your own and the alien architecture for you.
 
 If you ever happen to have binary data of multiple, incompatbile,
 alien architectures in a single stream (very unlikely), you can re-set
@@ -343,16 +357,18 @@ binary stream.
 @section Errors
 @cindex Errors
 
-When doing stream I/O, some unpredictable situations can occur at
-runtime. Binary streams are no exception to this phenomenon. To
-provide some sort of protection against this, all libbinio classes
-inherit an error reporting method called @code{error()}.
+When doing stream I/O, some unpredictable, erroneus situations can
+occur at runtime. Binary streams are no exception to this
+phenomenon. To provide some sort of protection against this, all
+libbinio stream classes inherit an error reporting method called
+@code{error()}.
 
 It is a good idea to check the error status of a stream once in a
 while to see if everything is still in place. @code{error()} returns a
-variable of type @code{Error}, which holds the actual error value for
-you to check. Refer to @ref{Reference} for information about the
-possible values of this variable and their meaning.
+variable of type @code{Error}, which is an integer that holds a bit
+field of error values for that stream. Refer to @ref{Reference} for
+information about the possible values of this variable and their
+meaning.
 
 A status of no error is always reported with a value of @samp{0}, so
 you can easily check if everything is still okay in a simple @code{if}
@@ -365,15 +381,25 @@ else
   // everything is still okay!
 @end example
 
-One convenience error reporting method is also included, that only
-checks for the @code{Eof} error status, indicating whether the end of
-the stream has already been reached. It is simply called @code{eof()}
-and returns a boolean value, indicating the end of the stream.
+Two convenience error reporting methods are also included:
 
-Whenever you call one of the @code{error()} or @code{eof()} methods,
-the internal error variable is reset to the ``no error'' state and a
-subsequent call to one of these methods will return @samp{NoError}
-again.
+@code{eof()} only checks for the @code{Eof} error status, indicating
+whether the end of the stream has just been passed. It returns a
+boolean value, indicating the past the end of the stream.
+
+@code{ateof()} is like @code{eof()} but returns true already when the
+stream pointer is at the last byte of the stream, not past it. This is
+useful when you want to read an entire file into memory in a
+@code{while(!ateof())} loop. This method is only defined on streams
+that support reading. On write-only streams, it is not defined and not
+useful.
+
+Whenever you call @code{error()}, the internal error variable is reset
+to the @code{NoError} state, indicating no error at all, and a
+subsequent call to any of the error reporting methods will return
+@samp{NoError} again. @code{eof()} and @code{ateof()} do not reset the
+internal error variable. The last error status of the stream is
+retained.
 
 @node Examples
 @section Examples
@@ -610,9 +636,11 @@ is always indicated with a value of @samp{0}, as to allow easy error
 checks with a simple @code{if} construct.
 
 @item bool eof()
-A convenience method, returning whether the current stream position is
-at the end of the stream. Synonymous to checking if the value of a
-call to @code{error()} equals @code{Eof}.
+Returns @samp{true} if the last access to the stream was unsuccessful
+because the stream pointer was already past the end of the
+stream. @samp{false} is returned otherwise. Synonymous to checking if
+the return value of a call to @code{error()} sets the @code{Eof} error
+code flag.
 
 @item virtual void seek(long, Offset = Set)
 Abstract virtual method for seeking into streams. Implemented by the
@@ -677,9 +705,9 @@ in this case.
 
 @end vtable
 
-@item enum Error
-Enumeration of all possible error values, returned from the
-@code{error()} method. This type defines the following values:
+@item enum ErrorCode
+Enumeration of all possible error values. This type defines the
+following values:
 
 @vtable @code
 @item NoError
@@ -692,7 +720,7 @@ something really strange happened (i.e. on internal logic errors in
 the library, or if something else, undefined happens, etc.). It is
 advised to immediately terminate any binary stream I/O activity and
 fail with an error message to the application user, maybe even
-terminate the application itself.
+terminate the application completely.
 
 @item Unsupported
 You tried to access stream data in an unsupported way. This error is
@@ -700,16 +728,21 @@ issued whenever an (explicit or implicit) conversion between two types
 of data storage is requested, that isn't supported by libbinio yet.
 
 @item NotOpen
-The stream, you tried to access, is not open yet.
+The stream you tried to access is not open yet.
 
 @item Denied
 Access to this stream is denied. This error is normally issued when
 you try to open a file on a filesystem, but you have insufficient
 rights to access it.
 
+@item NotFound
+The stream you tried to access was not found. This is mostly issued
+on a file not found error, when accessing normal files on a
+filesystem.
+
 @item Eof
-The end of the stream has been reached. Issued at the last byte in a
-stream.
+The end of the stream has been passed. Issued when you tried to read
+past the last byte of a stream.
 @end vtable
 
 @item enum Offset
@@ -742,6 +775,13 @@ Access a single precision floating-point number.
 @item Double
 Access a double precision floating-point number.
 @end vtable
+
+@item int Error
+This integer holds a bit field of all error values for a
+stream. Returned by @code{error()}. A status of ``no error'' is always
+indicated when the whole field is set to @samp{0} (zero), i.e. the
+integer is @samp{0}. Test for an error by binary or'ing this integer
+with one of the error values from @code{ErrorCode}.
 @end vtable
 
 @subheading Protected data types and variables:
@@ -831,6 +871,10 @@ delimiter character, explained above. Characters are always read until
 the delimiter character or the end of the stream is encountered. If
 @code{delim} is omitted, it defaults to @samp{\0}. It returns a
 @code{string} object, containing the final string.
+
+@item bool ateof()
+Returns @samp{true} if the current stream position is at the last byte
+of the stream. @samp{false} is returned otherwise.
 
 @item void ignore(unsigned long amount = 1)
 Reads and then immediately discards the specified amount of bytes from

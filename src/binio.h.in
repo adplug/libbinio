@@ -69,9 +69,19 @@ public:
     FloatIEEE	= 1 << 1
   } Flag;
 
-  typedef enum { NoError = 0, Fatal, Unsupported, NotOpen, Denied, Eof } Error;
+  typedef enum {
+    NoError	= 0,
+    Fatal	= 1 << 0,
+    Unsupported	= 1 << 1,
+    NotOpen	= 1 << 2,
+    Denied	= 1 << 3,
+    NotFound	= 1 << 4,
+    Eof		= 1 << 5
+  } ErrorCode;
+
   typedef enum { Set, Add, End } Offset;
   typedef enum { Single, Double } FType;
+  typedef int Error;
 
   binio();
   virtual ~binio();
@@ -88,9 +98,9 @@ public:
 protected:
   typedef @TYPE_INT@	Int;
   typedef @TYPE_FLOAT@	Float;
-  typedef unsigned char	Byte;
+  typedef unsigned char	Byte;	// has to be unsigned!
 
-  typedef unsigned int	Flags;
+  typedef int		Flags;
 
   Flags			my_flags;
   static const Flags	system_flags;
@@ -120,6 +130,10 @@ public:
   std::string readString(char delim);
 #endif
 
+  Int peekInt(unsigned int size);
+  Float peekFloat(FType ft);
+
+  bool ateof();
   void ignore(unsigned long amount = 1);
 
 protected:
