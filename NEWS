@@ -2,3 +2,6 @@ This is a brief overview of user-visible changes in libbinio.
 
 Changes for version 1.1:
 - Removed unused config header file.
+- writeString() now reports number of characters written.
+- Changed behaviour of readString(): The delimiter doesn't default to '\0'
+  anymore. If no delimiter is given, always up to 'amount' characters are read.

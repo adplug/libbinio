@@ -114,9 +114,10 @@ public:
 
   Int readInt(unsigned int size);
   Float readFloat(FType ft);
-  unsigned long readString(char *str, unsigned long maxlen, char delim = '\0');
+  unsigned long readString(char *str, unsigned long amount);
+  unsigned long readString(char *str, unsigned long maxlen, char delim);
 #if BINIO_ENABLE_STRING
-  std::string readString(char delim = '\0');
+  std::string readString(char delim);
 #endif
 
   void ignore(unsigned long amount = 1);
@@ -137,9 +138,9 @@ public:
 
   void writeInt(Int val, unsigned int size);
   void writeFloat(Float f, FType ft);
-  void writeString(const char *str);
+  unsigned long writeString(const char *str, unsigned long amount = 0);
 #if BINIO_ENABLE_STRING
-  void writeString(const std::string &str);
+  unsigned long writeString(const std::string &str);
 #endif
 
 protected:

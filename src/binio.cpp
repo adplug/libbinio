@@ -277,6 +277,18 @@ binio::Float binio::pow(Float base, signed int exp)
 }
 #endif
 
+unsigned long binistream::readString(char *str, unsigned long maxlen)
+{
+  unsigned long	i;
+
+  for(i = 0; i < maxlen; i++) {
+    str[i] = (char)getByte();
+    if(error()) { str[i] = '\0'; return i; }
+  }
+
+  return maxlen;
+}
+
 unsigned long binistream::readString(char *str, unsigned long maxlen,
 				     char delim)
 {
@@ -284,10 +296,7 @@ unsigned long binistream::readString(char *str, unsigned long maxlen,
 
   for(i = 0; i < maxlen; i++) {
     str[i] = (char)getByte();
-    if(str[i] == delim || error()) {
-      str[i] = '\0';
-      return i;
-    }
+    if(str[i] == delim || error()) { str[i] = '\0'; return i; }
   }
 
   str[maxlen] = '\0';
@@ -573,17 +582,23 @@ void binostream::float2ieee_double(Float num, Byte *bytes)
 
 #endif // BINIO_WITH_MATH
 
-void binostream::writeString(const char *str)
+unsigned long binostream::writeString(const char *str, unsigned long amount)
 {
   unsigned int i;
 
-  for(i=0;i<strlen(str);i++)
+  if(!amount) amount = strlen(str);
+
+  for(i = 0; i < amount; i++) {
     putByte(str[i]);
+    if(error()) return i;
+  }
+
+  return amount;
 }
 
 #if BINIO_ENABLE_STRING
-void binostream::writeString(const std::string &str)
+unsigned long binostream::writeString(const std::string &str)
 {
-  writeString(str.c_str());
+  return writeString(str.c_str());
 }
 #endif
