@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <title>libbinio - Binary I/O stream class library</title>
+  </head>
+
+  <body>
+    <h1>libbinio - Binary I/O stream class library</h1>
+
+    <p>The binary I/O stream class library presents a
+    platform-independent way to access binary data streams in C++.</p>
+
+    <p>The library is hardware independent in the form that it
+    transparently converts between the different forms of
+    machine-internal binary data representation.</p>
+
+    <p>It further employs no special I/O protocol and can be used on
+    arbitrary binary data sources.</p>
+
+    <h1>Download</h1>
+
+    <p>To download libbinio, please go to the <a
+    href="http://sourceforge.net/projects/libbinio">SourceForge
+    project page</a> and get your desired version from there.
+
+    <h1>Documentation</h1>
+
+    <p>Click <a href="">here</a> to view the latest documentation
+    online.</p>
+
+    <p align=right><font size=-1>Last modified on
+    <!--#echo var="LAST_MODIFIED" --><br>
+    Copyright &copy Simon Peter</font></p>
+
+  </body>
+</html>
