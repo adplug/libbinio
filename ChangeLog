@@ -1,3 +1,37 @@
+2004-08-18 21:55  dynamite
+
+	* INSTALL.unix, NEWS, README, doc/libbinio.texi: Updated to latest
+	autotools.
+
+2004-08-18 21:44  dynamite
+
+	* src/binio.cpp: Fixed variable type mismatch (underflow) on 64-bit
+	systems.
+
+2004-08-01 18:55  dynamite
+
+	* Makefile.am: Added depcomp to EXTRA_DIST
+
+2004-05-13 16:48  dynamite
+
+	* NEWS: Updated NEWS.
+
+2003-10-15 19:43  dynamite
+
+	* doc/libbinio.texi, src/binio.cpp, src/binio.h.in: Fixed bug
+	#822863.
+
+2003-03-08 17:02  dynamite
+
+	* Makefile.bt, NEWS, binio.spec, binio_mdk.spec, configure.in,
+	libbinio.qpg, doc/libbinio.texi, src/binfile.cpp, src/binfile.h,
+	src/binio.cpp, src/binio.h.in, src/binwrap.cpp, src/binwrap.h:
+	Bumped version number.
+
+2003-03-08 00:33  dynamite
+
+	* ChangeLog, Makefile.am: Release.
+
 2003-03-04 13:46  dynamite
 
 	* binio.spec: Fixed groups in redhat spec file.
