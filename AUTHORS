@@ -6,3 +6,5 @@ Additional Credits
 System floating-point to IEEE-754 single and double floating-point format
 conversion functions are copyright (C) 1989 - 1991 Ken Turkowski
 <turk@computer.org>. Used by permission.
+
+Thanks to Mike Gorchak <mike@malva.ua> for the QNX port and packaging!

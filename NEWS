@@ -2,7 +2,7 @@ This is a brief overview of user-visible changes in libbinio.
 
 Changes for version 1.2:
 ------------------------
-- None yet.
+- Ported to QNX.
 
 Changes for version 1.1:
 ------------------------
