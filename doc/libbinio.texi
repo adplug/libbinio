@@ -230,16 +230,19 @@ length of the string (@emph{not} including the final @samp{\0}) in
 at which libbinio would stop reading the string, even if it could read
 more characters. The delimiter is extracted from the stream and then
 discarded. It will not appear in the final string. If you do not
-supply a @var{delimiter}, it is @samp{\0} by default. The method
-returns the number of characters actually read from the stream.
+supply a @var{delimiter}, always up to @var{max-length} characters are
+read from the stream. The method returns the number of characters
+actually read from the stream.
 
 You can also read an @acronym{STL} @code{string} object from the
 stream, using an overloaded version of @code{readString()}. The syntax
-is @code{readString([@var{delimiter}])}. Again, you do not need to
-supply the @var{delimiter}, as it is @samp{\0} by default. The method
-returns a @code{string} object, containing all characters up to, but
-not including, @var{delimiter} or the end of the stream, whichever was
-encountered first.
+is @code{readString([@var{delimiter}])}. You also do not need to
+supply a @var{delimiter}, as it is set to @samp{\0} by default (to
+prevent you from reading a virtually unlimited number of characters
+and flood your memory, since you can't supply a @var{max-length}
+argument  this time). The method returns a @code{string} object,
+containing all characters up to, but not including, @var{delimiter} or
+the end of the stream, whichever was encountered first.
 
 @cindex Writing
 All the above mentioned ``read'' methods have a ``write'' equivalent,
@@ -850,7 +853,7 @@ an error will be issued in these cases. Refer to the list of public
 types of the @code{binio} class for information about what errors
 could be issued.
 
-@item unsigned long readString(char *str, unsigned long maxlen, char delim = '\0')
+@item unsigned long readString(char *str, unsigned long maxlen, char delim)
 @itemx std::string readString(char delim = '\0')
 Reads a character string from the stream. Both pre-allocated standard
 C @acronym{ASCIIZ} strings and @acronym{STL} @code{string} objects are
@@ -864,13 +867,23 @@ buffer). The optional argument @code{delim} is a delimiter
 character. If this character is encountered in the stream, no more
 characters will be read. The delimiter character itself is
 discarded. It will not appear in the final string. If the @code{delim}
-argument is omitted, it defaults to @samp{\0}.
+argument is omitted, always up to @code{maxlen} characters are read.
 
 The @code{string} object version just takes one optional argument, the
 delimiter character, explained above. Characters are always read until
 the delimiter character or the end of the stream is encountered. If
 @code{delim} is omitted, it defaults to @samp{\0}. It returns a
 @code{string} object, containing the final string.
+
+@item Int peekInt(unsigned int size)
+Like @code{readInt()}, but doesn't modify the stream position, so any
+later access to the stream will appear as if @code{peekInt()} has
+never been called.
+
+@item Float peekFloat(FType ft)
+Like @code{readFloat()}, but doesn't modify the stream position, so
+any later access to the stream will appear as if @code{peekFloat()}
+has never been called.
 
 @item bool ateof()
 Returns @samp{true} if the current stream position is at the last byte
@@ -922,13 +935,24 @@ architecture, @code{writeFloat()} tries to convert it. This is not
 always possible and an @code{Unsupported} error is issued if the
 conversion fails and nothing is written to the stream in this case.
 
-@item void writeString(const char *str);
-@itemx void writeString(const std::string &str);
+@item unsigned long writeString(const char *str, unsigned long amount = 0);
+@itemx unsigned long writeString(const std::string &str);
 Writes a character string to the stream. Both standard C
 @acronym{ASCIIZ} strings and @acronym{STL} @code{string} objects are
-supported. The only argument is either a pointer to the
-@acronym{ASCIIZ} string buffer, or the @code{string} object,
-containing the string to write.
+supported.
+
+The standard C version takes a pointer @code{str} to the
+@acronym{ASCIIZ} string to write as first argument and an optional
+second argument @code{amount}, which specifies the number of
+characters to write from that string. If it is omitted, the whole
+string is written to the stream.
+
+For the @code{string} object version, the only argument is the
+@code{string} object, containing the string to write.
+
+Both methods return the number of characters actually written to the
+stream (which should only differ from the value you wanted to write
+when an error occured).
 @end ftable
 
 @subheading Protected methods:
