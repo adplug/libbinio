@@ -28,7 +28,7 @@
 // If 'math.h' doesn't define HUGE_VAL, we try to use HUGE instead.
 #ifndef HUGE_VAL
 # define HUGE_VAL HUGE
-#endif HUGE_VAL
+#endif
 
 #endif
 
@@ -474,9 +474,9 @@ void binostream::writeFloat(Float f, FType ft)
 
 #ifdef applec	/* The Apple C compiler works */
 # define FloatToUnsigned(f)	((unsigned long)(f))
-#else applec
+#else
 # define FloatToUnsigned(f)	((unsigned long)(((long)((f) - 2147483648.0)) + 2147483647L + 1))
-#endif applec
+#endif
 
 #define SEXP_MAX	255
 #define SEXP_OFFSET	127
