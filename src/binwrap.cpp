@@ -21,8 +21,6 @@
 
 #if BINIO_WITH_IOSTREAM
 
-#include <iostream.h>
-
 /***** biniwstream *****/
 
 biniwstream::biniwstream(istream *istr)

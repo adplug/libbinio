@@ -34,6 +34,12 @@
 // C++ library to do this.
 #define BINIO_WITH_IOSTREAM	@WITH_IOSTREAM@
 
+// BINIO_ISO_STDLIB - Build with ISO C++ standard library compliance
+//
+// Set to 1 to build for the ISO standard C++ library (i.e. namespaces, STL and
+// templatized iostream). Set to 0 to build for the traditional C++ library.
+#define BINIO_ISO_STDLIB	@ISO_STDLIB@
+
 /***** Implementation *****/
 
 #if BINIO_WITH_STRING

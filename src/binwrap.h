@@ -24,7 +24,19 @@
 
 #if BINIO_WITH_IOSTREAM
 
+#if BINIO_ISO_STDLIB
+#include <iostream>
+
+using std::iostream;
+using std::ostream;
+using std::istream;
+using std::ios;
+using std::streambuf;
+#else
+
 #include <iostream.h>
+
+#endif
 
 class biniwstream: public binistream
 {

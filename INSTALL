@@ -28,11 +28,6 @@ autoreconf --install
 to generate the build cruft and get the configure script. You need recent
 versions of autoconf, automake and libtool to do this.
 
-CVS and DOS or Windows:
------------------------
-If you checked out from CVS and use DOS or Windows, you first have to copy
-the file 'binio.h.in' to 'binio.h' in the 'src' subdirectory.
-
 Extra setup for DOS and Windows builds:
 ---------------------------------------
 After you've done all steps from 'INSTALL.dos' or 'INSTALL.win32', you have
@@ -41,20 +36,10 @@ to copy the file 'binio.h.in' to 'binio.h' (maybe overwriting it) in the
 configuration section of the file to your preferred settings. All items are
 documented.
 
-Next, insert appropriately sized standard types for all remaining @TYPE_*@
-occurences. For example, for all systems based on i386 and up, this section
-looks like this:
-
-  typedef char		Byte;		// 8 bit
-  typedef short		Word;		// 16 bit
-  typedef int		DWord;		// 32 bit
-  typedef long long	QWord;		// 64 bit
-  typedef float		Float;		// 32 bit
-  typedef double	Double;		// 64 bit
-  typedef long double	LDouble;	// 96 bit
-
-This is most likely also what you want.
-
-If your system or compiler doesn't support any of the required types,
-insert 'void' instead. This will effectively disable all functionality for
-types of this size.
+Next, substitute the biggest (in size of bytes, as returned by the sizeof()
+operator) standard integer and floating-point types for @TYPE_INT@ and
+@TYPE_FLOAT@, respectively. Most of the time, you would just substitute 'long'
+for @TYPE_INT@ and 'double' for @TYPE_FLOAT@, but some compilers have even
+longer types, like 'long long' and 'long double'. If your compiler supports one
+of those, you can substitute them instead to be able to access even longer
+sections within your binary streams.

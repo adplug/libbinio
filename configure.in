@@ -19,10 +19,10 @@ AC_CHECK_TYPE(long double, AC_SUBST(TYPE_FLOAT,"long double"),
 		   AC_SUBST(TYPE_FLOAT,double))
 
 # Conditionally build iostream wrappers
-AC_ARG_WITH([iostream],AC_HELP_STRING([--with-iostream],
-	[Build iostream wrappers]))
+AC_ARG_WITH([iostream],AC_HELP_STRING([--without-iostream],
+	[Do not try to build iostream wrappers]))
 
-if test ${with_iostream:=no} = yes; then
+if test ${with_iostream:=yes} = yes; then
    AC_CHECK_LIB(stdc++,main,
 	AC_SUBST(WITH_IOSTREAM,1),
 	AC_MSG_ERROR([libstdc++ not installed - iostream wrappers disabled])
@@ -42,6 +42,21 @@ if test ${with_string:=yes} = yes; then
 	AC_SUBST(WITH_STRING,0))
 else
 	AC_SUBST(WITH_STRING,0)
+fi
+
+# Check if we are using the ISO standard C++ library
+AC_ARG_WITH([iso],AC_HELP_STRING([--with-iso],
+	[Build with ISO C++ standard library compliance]))
+
+if test x${with_iso} = xyes; then
+   AC_SUBST(ISO_STDLIB,1)
+elif test x${with_iso} = xno; then
+   AC_SUBST(ISO_STDLIB,0)
+else
+	AC_CHECK_TYPE([std::basic_istream<char>],
+		AC_SUBST(ISO_STDLIB,1),
+		AC_SUBST(ISO_STDLIB,0),
+		[#include <iostream>])
 fi
 
 AC_OUTPUT
