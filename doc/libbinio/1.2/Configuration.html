@@ -1,0 +1,76 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Configuration">Configuration</a>,
+Next:<a rel="next" accesskey="n" href="Base-classes.html#Base%20classes">Base classes</a>,
+Previous:<a rel="previous" accesskey="p" href="Concepts.html#Concepts">Concepts</a>,
+Up:<a rel="up" accesskey="u" href="Reference.html#Reference">Reference</a>
+<hr><br>
+</div>
+
+<h3 class="section">Configuration</h3>
+
+   <p>libbinio can be configured in various ways at compile time and some
+parts of the library can be disabled to save disk space and/or
+processing speed.
+
+   <p>In some cases, these configuration options directly change parts of
+the interface and must thus also be known by the library user.
+
+   <p>To make these options available to the library user, libbinio defines
+some C preprocessor macros in <code>binio.h</code>. These are:
+
+     <dl>
+<dt><code>BINIO_ENABLE_STRING</code>
+     <dd>If this macro expands to <code>1</code>, <small>STL</small> <code>string</code> object
+support is enabled and can be used instead of traditional C
+<small>ASCIIZ</small> pointers with all functions that expect a string
+somewhere. It expands to <code>0</code> otherwise. 
+<br><dt><code>BINIO_ENABLE_IOSTREAM</code>
+     <dd>If this macro expands to <code>1</code>, the iostream wrapper classes are
+enabled and can be used by the library user. It expands to <code>0</code>
+otherwise and no iostream wrapper classes are present in this case. 
+<br><dt><code>BINIO_ISO_STDLIB</code>
+     <dd>If this macro expands to <code>1</code>, libbinio's iostream wrapper classes
+are taylored for the <small>ISO</small> standard C++ library, instead of a
+"traditional" iostream implementation. It expands to <code>0</code>
+otherwise. This macro is merely for libbinio's internal use and should
+not be used by an application programmer. 
+<br><dt><code>BINIO_WITH_MATH</code>
+     <dd>This macro is for libbinio's internal use and should not be used by an
+application programmer. 
+</dl>
+
+   <p>All macros are <em>always</em> defined. The decision whether a feature
+is enabled in the library has to be based on the value of these
+macros, not whether they are defined or not.
+
+   </body></html>
+

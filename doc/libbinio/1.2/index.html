@@ -1,0 +1,129 @@
+   <html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<h1 class="settitle">Binary I/O stream class library 1.2</h1>
+
+<div class="contents">
+<h2>Table of Contents</h2>
+<ul>
+<li><a name="toc_Top" href="index.html#Top">Binary I/O stream class library</a>
+<li><a name="toc_Introduction" href="Introduction.html#Introduction">Introduction</a>
+<ul>
+<li><a href="Features.html#Features">Features</a>
+</li></ul>
+<li><a name="toc_Usage" href="Usage.html#Usage">Usage</a>
+<ul>
+<li><a href="Basics.html#Basics">Basics</a>
+<li><a href="Files.html#Files">Files</a>
+<li><a href="Reading-and-Writing.html#Reading%20and%20Writing">Reading and Writing</a>
+<li><a href="Peeking.html#Peeking">Peeking</a>
+<li><a href="Seeking.html#Seeking">Seeking</a>
+<li><a href="Alien-architectures.html#Alien%20architectures">Alien architectures</a>
+<li><a href="Wrapping-around-iostream.html#Wrapping%20around%20iostream">Wrapping around iostream</a>
+<li><a href="Errors.html#Errors">Errors</a>
+<li><a href="Examples.html#Examples">Examples</a>
+</li></ul>
+<li><a name="toc_Reference" href="Reference.html#Reference">Reference</a>
+<ul>
+<li><a href="Concepts.html#Concepts">Concepts</a>
+<li><a href="Configuration.html#Configuration">Configuration</a>
+<li><a href="Base-classes.html#Base%20classes">Base classes</a>
+<ul>
+<li><a href="binio.html#binio">binio</a>
+<li><a href="binistream.html#binistream">binistream</a>
+<li><a href="binostream.html#binostream">binostream</a>
+<li><a href="binstream.html#binstream">binstream</a>
+</li></ul>
+<li><a href="File-streams.html#File%20streams">File streams</a>
+<ul>
+<li><a href="binfbase.html#binfbase">binfbase</a>
+<li><a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+</li></ul>
+<li><a href="String-streams.html#String%20streams">String streams</a>
+<li><a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+</li></ul>
+<li><a name="toc_FAQ" href="FAQ.html#FAQ">FAQ</a>
+<li><a name="toc_Copying%20This%20Manual" href="Copying-This-Manual.html#Copying%20This%20Manual">Copying This Manual</a>
+<ul>
+<li><a href="GNU-Free-Documentation-License.html#GNU%20Free%20Documentation%20License">GNU Free Documentation License</a>
+<ul>
+<li><a href="GNU-Free-Documentation-License.html#GNU%20Free%20Documentation%20License">ADDENDUM: How to use this License for your documents</a>
+</li></ul>
+</li></ul>
+<li><a name="toc_Concept%20Index" href="Concept-Index.html#Concept%20Index">Concept Index</a>
+<li><a name="toc_Class%20Index" href="Class-Index.html#Class%20Index">Class Index</a>
+<li><a name="toc_Method%20Index" href="Method-Index.html#Method%20Index">Method Index</a>
+<li><a name="toc_Type%20Variable%20and%20Macro%20Index" href="Type-Variable-and-Macro-Index.html#Type%20Variable%20and%20Macro%20Index">Type, Variable and Macro Index</a>
+</li></ul>
+</div>
+
+
+<div class="node">
+<p>
+Node:<a name="Top">Top</a>,
+Next:<a rel="next" accesskey="n" href="Introduction.html#Introduction">Introduction</a>,
+Up:<a rel="up" accesskey="u" href="../index.html#dir">(dir)</a>
+<hr><br>
+</div>
+
+<h2 class="unnumbered">Binary I/O stream class library</h2>
+
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   
+<ul class="menu">
+<li><a accesskey="1" href="Introduction.html#Introduction">Introduction</a>:                 Introduction to the library. 
+<li><a accesskey="2" href="Usage.html#Usage">Usage</a>:                        A tutorial to libbinio. 
+<li><a accesskey="3" href="Reference.html#Reference">Reference</a>:                    The complete reference. 
+<li><a accesskey="4" href="FAQ.html#FAQ">FAQ</a>:                          Frequently asked questions. 
+<li><a accesskey="5" href="Copying-This-Manual.html#Copying%20This%20Manual">Copying This Manual</a>:          Your rights and freedoms.
+
+<p>
+</p><li><a accesskey="6" href="Concept-Index.html#Concept%20Index">Concept Index</a>: 
+<li><a accesskey="7" href="Class-Index.html#Class%20Index">Class Index</a>: 
+<li><a accesskey="8" href="Method-Index.html#Method%20Index">Method Index</a>: 
+<li><a accesskey="9" href="Type-Variable-and-Macro-Index.html#Type%20Variable%20and%20Macro%20Index">Type Variable and Macro Index</a>: 
+</ul>
+
+   </body></html>
+

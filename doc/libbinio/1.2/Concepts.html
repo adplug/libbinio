@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Concepts">Concepts</a>,
+Next:<a rel="next" accesskey="n" href="Configuration.html#Configuration">Configuration</a>,
+Up:<a rel="up" accesskey="u" href="Reference.html#Reference">Reference</a>
+<hr><br>
+</div>
+
+<h3 class="section">Concepts</h3>
+
+   <p>The libbinio stream classes can be divided into two layers of
+functionality:
+
+     <ol type=1 start=1>
+<li>The <dfn>conversion layer</dfn> provides methods for transparently
+converting the data, that has just been read from or is to be written
+to a stream, between the current and the alien architecture. The
+<code>binistream</code>, <code>binostream</code> and <code>binstream</code> classes
+belong to this layer. 
+<li>The <dfn>stream layer</dfn> faciliates functionality on the stream
+level. It provides methods for byte-by-byte access to the data,
+seeking, opening and closing a stream and anything else related to the
+maintenance of a stream. The <code>binfstream</code>, <code>binwstream</code> and
+<code>binsstream</code> related classes belong to this layer.
+        </ol>
+
+   <p>Additionally, there are some administrative and auxiliary classes
+provided, which do not belong to any of the above defined layers. The
+<code>binio</code> base class belongs here, for example.
+
+   </body></html>
+

@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Basics">Basics</a>,
+Next:<a rel="next" accesskey="n" href="Files.html#Files">Files</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Basics</h3>
+
+   <p>The binary stream class framework divides streams into
+<dfn>input-only</dfn>,
+<dfn>output-only</dfn> and
+<dfn>input/output</dfn> supporting
+streams. All derived classes also inherit this partition.
+
+   <p>All derived classes that come with the library follow a uniform naming
+scheme. You can identify what I/O facilities a stream provides, by
+looking at the class name. All class names of libbinio start with
+<code>bin</code> and end with a descriptive name of what they are meant
+for. In between is at most one character that describes what I/O
+functionality is provided. If this character is an <code>i</code>, the class
+provides input-only streams, <code>o</code> means output-only and no
+character indicates both input and output facilities.
+
+   <p>For example, <code>binifstream</code> is an input-only binary stream for
+standard file access. <code>binstream</code> is the general input and output
+supporting stream.
+
+   </body></html>
+

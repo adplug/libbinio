@@ -1,0 +1,105 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Method%20Index">Method Index</a>,
+Next:<a rel="next" accesskey="n" href="Type-Variable-and-Macro-Index.html#Type%20Variable%20and%20Macro%20Index">Type Variable and Macro Index</a>,
+Previous:<a rel="previous" accesskey="p" href="Class-Index.html#Class%20Index">Class Index</a>,
+Up:<a rel="up" accesskey="u" href="index.html#Top">Top</a>
+<hr><br>
+</div>
+
+<h2 class="unnumbered">Method Index</h2>
+
+<ul class="index-fn" compact>
+<li><code>binfbase()</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>binfstream()</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binfstream(const char *filename, const Mode mode = 0)</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binfstream(const std::string &amp;filename, const Mode mode = 0)</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binifstream()</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binifstream(const char *filename, const Mode mode = NoCreate)</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binifstream(const std::string &amp;filename, const Mode mode = NoCreate)</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binio()</code>: <a href="binio.html#binio">binio</a>
+<li><code>binisstream(void *str, unsigned long len)</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>binistream()</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>biniwstream(istream *istr)</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+<li><code>binofstream()</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binofstream(const char *filename, const Mode mode = 0)</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binofstream(const std::string &amp;filename, const Mode mode = 0)</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>binosstream(void *str, unsigned long len)</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>binostream()</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>binowstream(ostream *ostr)</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+<li><code>binsbase(void *str, unsigned long len)</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>binsstream(void *str, unsigned long len)</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>binwstream(iostream *str)</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+<li><code>bool ateof()</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>bool eof()</code>: <a href="binio.html#binio">binio</a>
+<li><code>bool getFlag(Flag f)</code>: <a href="binio.html#binio">binio</a>
+<li><code>Error error()</code>: <a href="binio.html#binio">binio</a>
+<li><code>Float peekFloat(FType ft)</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>Float pow(Float base, signed int exp)</code>: <a href="binio.html#binio">binio</a>
+<li><code>Float readFloat(FType ft)</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>Int peekInt(unsigned int size)</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>Int readInt(unsigned int size)</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>long pos()</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>std::string readString(char delim = '\0')</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>unsigned long readString(char *str, unsigned long maxlen, char delim)</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>unsigned long writeString(const char *str, unsigned long amount = 0);</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>unsigned long writeString(const std::string &amp;str);</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>virtual Byte getByte()</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>virtual long pos()</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>, <a href="String-streams.html#String%20streams">String streams</a>, <a href="binio.html#binio">binio</a>
+<li><code>virtual void open(const char *filename, const Mode mode)</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>virtual void open(const std::string &amp;filename, const Mode mode)</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>virtual void putByte(Byte)</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>virtual void seek(long pos, Offset offs = Set)</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>, <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>virtual void seek(long, Offset = Set)</code>: <a href="binio.html#binio">binio</a>
+<li><code>void close()</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>void ignore(unsigned long amount = 1)</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>void seek(long pos, Offset offs = Set)</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>void setFlag(Flag f, bool set = true)</code>: <a href="binio.html#binio">binio</a>
+<li><code>void writeFloat(Float f, FType ft);</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>void writeInt(Int val, unsigned int size);</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>~binfbase()</code>: <a href="binfbase.html#binfbase">binfbase</a>
+<li><code>~binfstream()</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>~binifstream()</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>~binio()</code>: <a href="binio.html#binio">binio</a>
+<li><code>~binisstream()</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>~binistream()</code>: <a href="binistream.html#binistream">binistream</a>
+<li><code>~biniwstream()</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+<li><code>~binofstream()</code>: <a href="File-stream-classes.html#File%20stream%20classes">File stream classes</a>
+<li><code>~binosstream()</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>~binostream()</code>: <a href="binostream.html#binostream">binostream</a>
+<li><code>~binowstream()</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+<li><code>~binsbase()</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>~binsstream()</code>: <a href="String-streams.html#String%20streams">String streams</a>
+<li><code>~binwstream()</code>: <a href="iostream-wrappers.html#iostream%20wrappers">iostream wrappers</a>
+   </ul>
+
+   </body></html>
+

@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="File%20stream%20classes">File stream classes</a>,
+Previous:<a rel="previous" accesskey="p" href="binfbase.html#binfbase">binfbase</a>,
+Up:<a rel="up" accesskey="u" href="File-streams.html#File%20streams">File streams</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">File stream classes</h4>
+
+   <p>The binary file streams consist of the classes <code>binifstream</code>,
+<code>binofstream</code> and <code>binfstream</code>. They all inherit the
+interface from both <code>binfbase</code> and <code>binistream</code> and/or
+<code>binostream</code>. Refer to the class reference of these classes for
+more information on the interface instead.
+
+   <p><code>binifstream</code> provides an input-only binary file stream. It is
+inherited from <code>binistream</code>. The <code>open()</code> method of this
+class ignores all passed <code>mode</code> arguments, the open mode is
+always <code>NoCreate</code>. The stream pointer is always positioned at the
+beginning of the stream and no files will ever be created, if they
+don't exist.
+
+   <p><code>binofstream</code> provides an output-only binary file stream. It is
+inherited from <code>binostream</code>. The default open mode is
+<code>0</code>. A file is truncated to zero length or created if it did not
+exist previously. The stream is positioned at the beginning of the
+file. The <code>NoCreate</code> mode flag has no effect with the
+<code>open()</code> method of this class. Only <code>Append</code> is honored,
+positioning the stream at the end of the file and not truncating
+it. The file is still created, if it did not exist.
+
+   <p><code>binfstream</code> provides an input and output supporting binary file
+stream. It is inherited from both <code>binifstream</code> and
+<code>binofstream</code>. The default open mode is <code>0</code>. A file is
+truncated to zero length or created if it did not exist
+previously. The stream is positioned at the beginning of the file. All
+<code>mode</code> arguments are valid with the <code>open()</code> method of this
+class. Refer to the list of public data types and variables of the
+<code>binfbase</code> class for more information on their meaning.
+
+   <p>All three classes define an extra convenience constructor that has the
+same syntax as the <code>open()</code> method and automatically open the
+specified file on object construction.
+
+   <p>For your information, here is a list of some important redefined
+methods of these classes, as explained above:
+
+<h4 class="subheading">Header file: <code>binfile.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>binifstream()</code>
+     <dd><dt><code>binofstream()</code>
+     <dd><dt><code>binfstream()</code>
+     <dd>All standard constructors.
+
+     <br><dt><code>~binifstream()</code>
+     <dd><dt><code>~binofstream()</code>
+     <dd><dt><code>~binfstream()</code>
+     <dd>All standard destructors. They all automatically close an eventually
+open stream, on object deconstruction.
+
+     <br><dt><code>binifstream(const char *filename, const Mode mode = NoCreate)</code>
+     <dd><dt><code>binifstream(const std::string &amp;filename, const Mode mode = NoCreate)</code>
+     <dd>Convenience constructors of the input-only stream class. Refer to the
+description of the <code>open()</code> method in the list of public methods
+of the <code>binfbase</code> class for syntax information.
+
+     <br><dt><code>binofstream(const char *filename, const Mode mode = 0)</code>
+     <dd><dt><code>binofstream(const std::string &amp;filename, const Mode mode = 0)</code>
+     <dd>Convenience constructors of the output-only stream class. Refer to the
+description of the <code>open()</code> method in the list of public methods
+of the <code>binfbase</code> class for syntax information.
+
+     <br><dt><code>binfstream(const char *filename, const Mode mode = 0)</code>
+     <dd><dt><code>binfstream(const std::string &amp;filename, const Mode mode = 0)</code>
+     <dd>Convenience constructors of the input and output supporting stream
+class. Refer to the description of the <code>open()</code> method in the
+list of public methods of the <code>binfbase</code> class for syntax
+information.
+
+   </dl>
+
+   </body></html>
+

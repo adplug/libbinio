@@ -1,0 +1,83 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.2</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.2">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.2. It was last updated on 3 March 2003.
+
+   <p>Copyright &copy; 2002 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="iostream%20wrappers">iostream wrappers</a>,
+Previous:<a rel="previous" accesskey="p" href="String-streams.html#String%20streams">String streams</a>,
+Up:<a rel="up" accesskey="u" href="Reference.html#Reference">Reference</a>
+<hr><br>
+</div>
+
+<h3 class="section">iostream wrappers</h3>
+
+   <p>The iostream wrapper classes provide a way to <dfn>wrap</dfn> around an
+already existing stream of the standard or traditional C++ iostream
+library, thus providing binary access to such a stream. The wrapper
+classes consist of <code>biniwstream</code>, <code>binowstream</code> and
+<code>binwstream</code>.
+
+   <p>The iostream wrapper classes do not provide any extra methods by
+themselves. They just inherit the interface of the general binary
+stream classes. Look there for reference. <code>biniwstream</code> inherits
+from <code>binistream</code>, <code>binowstream</code> inherits from
+<code>binostream</code> and <code>binwstream</code> inherits from both of them.
+
+   <p>Remember to <em>always</em> open the iostream stream with the
+<code>ios::bin</code> flag set, before you wrap it with a binary stream, or
+else you will get strange errors on some operating systems.
+
+   <p>All other flags you set on the iostream stream will also indirectly
+affect the wrapped binary stream, so be careful.
+
+<h4 class="subheading">Header file: <code>binwrap.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>biniwstream(istream *istr)</code>
+     <dd><dt><code>binowstream(ostream *ostr)</code>
+     <dd><dt><code>binwstream(iostream *str)</code>
+     <dd>The constructor. <code>istr</code>, <code>ostr</code> and <code>str</code> are pointers
+to an appropriate, already existing and open stream from the iostream
+library.
+
+     <br><dt><code>~biniwstream()</code>
+     <dd><dt><code>~binowstream()</code>
+     <dd><dt><code>~binwstream()</code>
+     <dd>The destructor.
+
+     <br><dt><code>virtual void seek(long pos, Offset offs = Set)</code>
+     <dd><dt><code>virtual long pos()</code>
+     <dd>Implementation of the abstract virtual methods, inherited from
+<code>binio</code>. Refer to the reference of that class for more
+information. 
+</dl>
+
+   </body></html>
+
