@@ -121,6 +121,10 @@ SOURCE=.\binio.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\binio.h.in
+# End Source File
+# Begin Source File
+
 SOURCE=.\binwrap.h
 # End Source File
 # End Group

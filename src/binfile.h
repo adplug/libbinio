@@ -24,6 +24,11 @@
 
 #include "binio.h"
 
+// Disable annoying multiple inheritance compiler warning on MSVC6
+#ifdef _MSC_VER
+#	pragma warning(disable: 4250)
+#endif
+
 class binfbase: virtual public binio
 {
 public:
@@ -52,21 +57,18 @@ protected:
 
 class binifstream: public binistream, virtual public binfbase
 {
-private:
-  static const Mode	default_mode = 0;
-
 public:
   binifstream();
-  binifstream(const char *filename, const Mode mode = default_mode);
+  binifstream(const char *filename, const Mode mode = 0);
 #if BINIO_WITH_STRING
-  binifstream(const std::string &filename, const Mode mode = default_mode);
+  binifstream(const std::string &filename, const Mode mode = 0);
 #endif
 
   virtual ~binifstream();
 
-  virtual void open(const char *filename, const Mode mode = default_mode);
+  virtual void open(const char *filename, const Mode mode = 0);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = default_mode);
+  virtual void open(const std::string &filename, const Mode mode = 0);
 #endif
 
 protected:
@@ -75,21 +77,18 @@ protected:
 
 class binofstream: public binostream, virtual public binfbase
 {
-private:
-  static const Mode	default_mode = NoCreate;
-
 public:
   binofstream();
-  binofstream(const char *filename, const Mode mode = default_mode);
+  binofstream(const char *filename, const Mode mode = NoCreate);
 #if BINIO_WITH_STRING
-  binofstream(const std::string &filename, const Mode mode = default_mode);
+  binofstream(const std::string &filename, const Mode mode = NoCreate);
 #endif
 
   virtual ~binofstream();
 
-  virtual void open(const char *filename, const Mode mode = default_mode);
+  virtual void open(const char *filename, const Mode mode = NoCreate);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = default_mode);
+  virtual void open(const std::string &filename, const Mode mode = NoCreate);
 #endif
 
 protected:
@@ -98,21 +97,18 @@ protected:
 
 class binfstream: public binifstream, public binofstream
 {
-private:
-  static const Mode	default_mode = 0;
-
 public:
   binfstream();
-  binfstream(const char *filename, const Mode mode = default_mode);
+  binfstream(const char *filename, const Mode mode = 0);
 #if BINIO_WITH_STRING
-  binfstream(const std::string &filename, const Mode mode = default_mode);
+  binfstream(const std::string &filename, const Mode mode = 0);
 #endif
 
   virtual ~binfstream();
 
-  virtual void open(const char *filename, const Mode mode = default_mode);
+  virtual void open(const char *filename, const Mode mode = 0);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = default_mode);
+  virtual void open(const std::string &filename, const Mode mode = 0);
 #endif
 };
 

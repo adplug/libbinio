@@ -81,7 +81,7 @@ void binio::setFlag(Flag f, bool set)
 
 bool binio::getFlag(Flag f)
 {
-  return (my_flags & f);
+  return my_flags & f;
 }
 
 binio::Error binio::error()
