@@ -25,6 +25,10 @@
 
 #include <math.h>
 
+#ifdef __QNXNTO__
+   #define pow std::powf
+#endif // __QNXNTO__
+
 // If 'math.h' doesn't define HUGE_VAL, we try to use HUGE instead.
 #ifndef HUGE_VAL
 # define HUGE_VAL HUGE
