@@ -27,16 +27,16 @@
          <QPG:Add permissions="0755" file="./src/.libs/libbinio.so.1" install="/opt/lib/"/>
          <QPG:Add filetype="symlink" file="libbinio.so" install="/opt/lib/" linkto="libbinio.so.1"/>
          <QPG:Add permissions="0644" file="./src/.libs/libbinio.a" install="/opt/lib/"/>
-         <QPG:Add permissions="0644" file="./AUTHORS" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./COPYING" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./ChangeLog" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./INSTALL" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./INSTALL.dos" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./INSTALL.unix" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./INSTALL.win32" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./NEWS" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./README" install="/usr/doc/"/>
-         <QPG:Add permissions="0644" file="./TODO" install="/usr/doc/"/>
+         <QPG:Add permissions="0644" file="./AUTHORS" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./COPYING" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./ChangeLog" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./INSTALL" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./INSTALL.dos" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./INSTALL.unix" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./INSTALL.win32" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./NEWS" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./README" install="/usr/doc/libbinio/"/>
+         <QPG:Add permissions="0644" file="./TODO" install="/usr/doc/libbinio/"/>
          <QPG:Add permissions="0644" file="./doc/libbinio.info" install="/opt/info/"/>
          <QPG:Add permissions="0644" file="./doc/libbinio.info-1" install="/opt/info/"/>
          <QPG:Add permissions="0644" file="./doc/libbinio.info-2" install="/opt/info/"/>
@@ -55,7 +55,7 @@
                <QPM:FileVersion>1.01</QPM:FileVersion>
             </QPM:PackageDescription>
             <QPM:ProductDescription>
-               <QPM:ProductName>libbinio v1.1</QPM:ProductName>
+               <QPM:ProductName>libbinio</QPM:ProductName>
                <QPM:ProductIdentifier>libbinio</QPM:ProductIdentifier>
                <QPM:ProductEmail>dn.tlp@gmx.net</QPM:ProductEmail>
                <QPM:VendorName>Public</QPM:VendorName>
@@ -75,7 +75,7 @@
                <QPM:ProductDescriptionEmbedURL/>
             </QPM:ProductDescription>
             <QPM:ReleaseDescription>
-               <QPM:ReleaseVersion>1.1</QPM:ReleaseVersion>
+               <QPM:ReleaseVersion>1.2</QPM:ReleaseVersion>
                <QPM:ReleaseUrgency>Medium</QPM:ReleaseUrgency>
                <QPM:ReleaseStability>Stable</QPM:ReleaseStability>
                <QPM:ReleaseNoteMinor/>

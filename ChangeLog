@@ -1,3 +1,16 @@
+2003-02-20 16:43  dynamite
+
+	* AUTHORS, NEWS: Updated auxiliary files.
+
+2003-02-20 15:17  dynamite
+
+	* libbinio.qpg, src/binio.cpp: QNX patches.
+
+2003-02-04 11:46  dynamite
+
+	* ChangeLog, Makefile.bt, NEWS, TODO, configure.in: Bumped version
+	number.
+
 2003-02-03 15:11  dynamite
 
 	* ChangeLog, src/binio.cpp: GCC 3.2 fixes. RC1.
