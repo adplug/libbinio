@@ -17,6 +17,8 @@
  * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
  */
 
+#include <stdio.h>
+
 #include <string.h>
 
 #include "binio.h"
@@ -30,13 +32,35 @@
 
 /***** binio *****/
 
-const binio::Flags binio::system_flags =
-#ifdef WORDS_BIGENDIAN
-BigEndian
-#else
-0
-#endif
-;
+const binio::Flags binio::system_flags = binio::detect_system_flags();
+
+const binio::Flags binio::detect_system_flags()
+{
+  Flags f = 0;
+
+  // Endian test
+  union {
+    int word;
+    Byte byte;
+  } endian_test;
+
+  endian_test.word = 1;
+  if(endian_test.byte != 1) f |= BigEndian;
+
+  // IEEE-754 floating-point test
+  float fl = 6.5;
+  Byte	*dat = (Byte *)&fl;
+
+  if(sizeof(float) == 4 && sizeof(double) == 8)
+    if(f & BigEndian) {
+      if(dat[0] == 0x40 && dat[1] == 0xD0 && !dat[2] && !dat[3])
+	f |= FloatIEEE;
+    } else
+      if(dat[3] == 0x40 && dat[2] == 0xD0 && !dat[1] && !dat[0])
+      f |= FloatIEEE;
+
+  return f;
+}
 
 binio::binio()
   : my_flags(system_flags), err(NoError)
@@ -47,7 +71,7 @@ binio::~binio()
 {
 }
 
-void binio::set_flag(Flag f, bool set)
+void binio::setFlag(Flag f, bool set)
 {
   if(set)
     my_flags |= f;
@@ -55,7 +79,7 @@ void binio::set_flag(Flag f, bool set)
     my_flags &= !f;
 }
 
-bool binio::get_flag(Flag f)
+bool binio::getFlag(Flag f)
 {
   return (my_flags & f);
 }
@@ -78,57 +102,150 @@ binistream::~binistream()
 {
 }
 
-binio::Byte binistream::readByte()
+binio::Int binistream::readInt(unsigned int size)
 {
-  return getByte();
+  unsigned int	i;
+  Int		val = 0, in;
+
+  // Check if 'size' doesn't exceed our system's biggest type.
+  if(size > sizeof(Int)) {
+    err = Unsupported;
+    return 0;
+  }
+
+  for(i = 0; i < size; i++) {
+    in = getByte();
+    if(getFlag(BigEndian))
+      val <<= 8;
+    else
+      in <<= i * 8;
+    val |= in;
+  }
+
+  return val;
 }
 
-binio::Word binistream::readWord()
+binio::Float binistream::readFloat(FType ft)
 {
-  Byte first, last;
+  if(getFlag(FloatIEEE)) {	// Read IEEE-754 floating-point value
+    unsigned int	i, size;
+    Byte		in[8];
+    bool		swap;
 
-  first = getByte(); last = getByte();
+    // Determine appropriate size for given type.
+    switch(ft) {
+    case Single: size = 4; break;
+    case Double: size = 8; break;
+    }
 
-  if(get_flag(BigEndian))
-    return ((Word)first << 8) | (last & 0xff);
-  else
-    return ((Word)last << 8) | (first & 0xff);
+    // Determine byte ordering, depending on what we do next
+    if(system_flags & FloatIEEE)
+      swap = getFlag(BigEndian) ^ (system_flags & BigEndian);
+    else
+      swap = !getFlag(BigEndian);
+
+    // Read the float byte by byte, converting endianess
+    for(i = 0; i < size; i++)
+      if(swap)
+	in[size - i - 1] = getByte();
+      else
+	in[i] = getByte();
+
+    if(system_flags & FloatIEEE) {
+      // Compatible system, let the hardware do the conversion
+      switch(ft) {
+      case Single: return *(float *)in; break;
+      case Double: return *(double *)in; break;
+      }
+    } else {	// Incompatible system, convert manually
+      switch(ft) {
+      case Single: return ieee_single2float(in);
+      case Double: return ieee_double2float(in);
+      }
+    }
+  }
+
+  // User tried to read a (yet) unsupported floating-point type. Bail out.
+  err = Unsupported; return 0.0;
 }
 
-binio::DWord binistream::readDWord()
+binio::Float binistream::ieee_single2float(Byte *data)
 {
-  Word first, last;
+  signed int	sign = data[0] >> 7 ? -1 : 1;
+  unsigned int	exp = ((data[0] << 1) & 0xff) | ((data[1] >> 7) & 1),
+    fracthi7 = data[1] & 0x7f;
+  Float		fract = fracthi7 * 65536.0 + data[2] * 256.0 + data[3];
 
-  first = readWord(); last = readWord();
+  // Signed and unsigned zero
+  if(!exp && !fracthi7 && !data[2] && !data[3]) return sign * 0.0;
 
-  if(get_flag(BigEndian))
-    return ((DWord)first << 16) | (last & 0xffff);
-  else
-    return ((DWord)last << 16) | (first & 0xffff);
+  // Signed and unsigned infinity
+  if(exp == 255)
+    if(!fracthi7 && !data[2] && !data[3]) {
+      if(sign == -1) return -1.0 / 0.0; else return 1.0 / 0.0;
+    } else {	  // Not a number
+#ifdef NAN
+      return NAN;
+#else
+      err = Unsupported; return 0.0;
+#endif
+    }
+
+  if(!exp)	// Unnormalized float values
+    return sign * pow(2, -126) * fract * pow(2, -23);
+  else		// Normalized float values
+    return sign * pow(2, exp - 127) * (fract * pow(2, -23) + 1);
+
+  err = Fatal; return 0.0;
 }
 
-binio::QWord binistream::readQWord()
+binio::Float binistream::ieee_double2float(Byte *data)
 {
-  DWord first, last;
+  signed int	sign = data[0] >> 7 ? -1 : 1;
+  unsigned int	exp = ((data[0] << 1) & 0xff) | ((data[1] >> 7) & 1),
+    fracthi7 = data[1] & 0x7f;
+  Float		fract = fracthi7 * 65536.0 + data[2] * 256.0 + data[3];
 
-  first = readDWord(); last = readDWord();
+  // Signed and unsigned zero
+  if(!exp && !fracthi7 && !data[2] && !data[3]) return sign * 0.0;
 
-  if(get_flag(BigEndian))
-    return ((QWord)first << 32) | (last & 0xffffffffll);
-  else
-    return ((QWord)last << 32) | (first & 0xffffffffll);
+  // Signed and unsigned infinity
+  if(exp == 255)
+    if(!fracthi7 && !data[2] && !data[3]) {
+      if(sign == -1) return -1.0 / 0.0; else return 1.0 / 0.0;
+    } else {	  // Not a number
+#ifdef NAN
+      return NAN;
+#else
+      err = Unsupported; return 0.0;
+#endif
+    }
+
+  if(!exp)	// Unnormalized float values
+    return (Float)sign * pow(2, -126) * pow(fract, -23);
+  else		// Normalized float values
+    return (Float)sign * pow(2, exp - 127) * (pow(fract, -23) + 1);
+
+  err = Fatal; return 0.0;
 }
 
-binio::Float binistream::readFloat()
+binio::Float binio::pow(Float base, signed int exp)
+/* Our own, stripped-down version of pow() for not having to depend on 'math.h'.
+ * This one handles float values for the base and an integer exponent, both
+ * positive and negative.
+ */
 {
-  DWord dw = readDWord();
-  return *(Float *)&dw;
-}
+  int	i;
+  Float	val = base;
 
-binio::Double binistream::readDouble()
-{
-  QWord qw = readQWord();
-  return *(Double *)&qw;
+  if(!exp) return 1.0;
+
+  for(i = 1; i < (exp < 0 ? -exp : exp); i++)
+    val *= base;
+
+  if(exp < 0) val = 1.0 / val;
+
+  return val;
 }
 
 unsigned long binistream::readString(char *str, unsigned long maxlen,
@@ -182,52 +299,51 @@ binostream::~binostream()
 {
 }
 
-void binostream::writeByte(Byte b)
+void binostream::writeInt(Int val, unsigned int size)
 {
-  putByte(b);
-}
+  unsigned int	i;
 
-void binostream::writeWord(Word w)
-{
-  if(get_flag(BigEndian)) {
-    putByte(w >> 8);
-    putByte(w & 0xff);
-  } else {
-    putByte(w & 0xff);
-    putByte(w >> 8);
+  // Check if 'size' doesn't exceed our system's biggest type.
+  if(size > sizeof(Int)) { err = Unsupported; return; }
+
+  for(i = 0; i < size; i++) {
+    if(getFlag(BigEndian))
+      putByte((val >> (size - i - 1) * 8) & 0xff);
+    else {
+      putByte(val & 0xff);
+      val >>= 8;
+    }
   }
 }
 
-void binostream::writeDWord(DWord dw)
+void binostream::writeFloat(Float f, FType ft)
 {
-  if(get_flag(BigEndian)) {
-    writeWord(dw >> 16);
-    writeWord(dw & 0xffff);
-  } else {
-    writeWord(dw & 0xffff);
-    writeWord(dw >> 16);
+  if(getFlag(FloatIEEE)) {	// Write IEEE-754 floating-point value
+    if(system_flags & FloatIEEE) {
+      // compatible system, let the hardware do the conversion
+      float		outf = f;
+      double	       	outd = f;
+      unsigned int	i, size;
+      Byte		*out;
+      bool		swap = getFlag(BigEndian) ^ (system_flags & BigEndian);
+
+      // Determine appropriate size for given type.
+      switch(ft) {
+      case Single: size = 4; out = (Byte *)&outf; break;
+      case Double: size = 8; out = (Byte *)&outd; break;
+      }
+
+      // Write the float byte by byte, converting endianess
+      if(swap) out += size - 1;
+      for(i = 0; i < size; i++) {
+	putByte(*out);
+	if(swap) out--; else out++;
+      }
+    }
   }
-}
 
-void binostream::writeQWord(QWord dw)
-{
-  if(get_flag(BigEndian)) {
-    writeDWord(dw >> 32);
-    writeDWord(dw & 0xffffffff);
-  } else {
-    writeDWord(dw & 0xffffffff);
-    writeDWord(dw >> 32);
-  }
-}
-
-void binostream::writeFloat(Float f)
-{
-  writeDWord(*(DWord *)&f);
-}
-
-void binostream::writeDouble(Double d)
-{
-  writeQWord(*(QWord *)&d);
+  // User tried to write a (yet) unsupported floating-point type. Bail out.
+  err = Unsupported;
 }
 
 void binostream::writeString(const char *str)

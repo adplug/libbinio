@@ -20,6 +20,8 @@
 #ifndef H_BINIO
 #define H_BINIO
 
+/***** Configuration *****/
+
 // BINIO_WITH_STRING - Build std::string supporting methods
 //
 // Set to 1 to build std::string supporting methods. You need the STL to
@@ -32,6 +34,8 @@
 // C++ library to do this.
 #define BINIO_WITH_IOSTREAM	@WITH_IOSTREAM@
 
+/***** Implementation *****/
+
 #if BINIO_WITH_STRING
 #include <string>
 #endif
@@ -40,27 +44,24 @@ class binio
 {
 public:
   typedef enum {
-    BigEndian	= 1 << 0
+    BigEndian	= 1 << 0,
+    FloatIEEE	= 1 << 1
   } Flag;
 
-  typedef enum { NoError = 0, Fatal, NotOpen, Denied, Eof } Error;
+  typedef enum { NoError = 0, Fatal, Unsupported, NotOpen, Denied, Eof } Error;
   typedef enum { Set, Add, End } Offset;
+  typedef enum { Single, Double } FType;
 
-  typedef @TYPE_INT8@		Byte;		// 8 bit
-  typedef @TYPE_INT16@		Word;		// 16 bit
-  typedef @TYPE_INT32@		DWord;		// 32 bit
-  typedef @TYPE_INT64@		QWord;		// 64 bit
-  typedef @TYPE_FLOAT32@	Float;		// 32 bit
-  typedef @TYPE_FLOAT64@	Double;		// 64 bit
-  typedef @TYPE_FLOAT96@	LDouble;	// 96 bit
-
+  typedef @TYPE_INT@	Int;
+  typedef @TYPE_FLOAT@	Float;
+  typedef unsigned char	Byte;
   typedef unsigned long	SeekP;
 
   binio();
   virtual ~binio();
 
-  void set_flag(Flag f, bool set = true);
-  bool get_flag(Flag f);
+  void setFlag(Flag f, bool set = true);
+  bool getFlag(Flag f);
 
   Error error();
 
@@ -69,13 +70,16 @@ public:
   virtual SeekP pos() = 0;
 
 protected:
-  typedef unsigned short Flags;
+  typedef unsigned int	Flags;
 
-  Flags my_flags;
-  Error err;
+  Flags			my_flags;
+  static const Flags	system_flags;
+  Error			err;
+
+  Float pow(Float base, signed int exp);
 
 private:
-  static const Flags system_flags;
+  static const Flags detect_system_flags();
 };
 
 class binistream: virtual public binio
@@ -84,13 +88,8 @@ public:
   binistream();
   virtual ~binistream();
 
-  Byte readByte();
-  Word readWord();
-  DWord readDWord();
-  QWord readQWord();
-  Float readFloat();
-  Double readDouble();
-
+  Int readInt(unsigned int size);
+  Float readFloat(FType ft);
   unsigned long readString(char *str, unsigned long maxlen, char delim = '\0');
 #if BINIO_WITH_STRING
   std::string readString(char delim = '\0');
@@ -100,6 +99,10 @@ public:
 
 protected:
   virtual Byte getByte() = 0;
+
+private:
+  Float ieee_single2float(Byte *data);
+  Float ieee_double2float(Byte *data);
 };
 
 class binostream: virtual public binio
@@ -108,13 +111,8 @@ public:
   binostream();
   virtual ~binostream();
 
-  void writeByte(Byte b);
-  void writeWord(Word w);
-  void writeDWord(DWord dw);
-  void writeQWord(QWord qw);
-  void writeFloat(Float f);
-  void writeDouble(Double d);
-
+  void writeInt(Int val, unsigned int size);
+  void writeFloat(Float f, FType ft);
   void writeString(const char *str);
 #if BINIO_WITH_STRING
   void writeString(const std::string &str);

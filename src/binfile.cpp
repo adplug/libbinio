@@ -121,7 +121,7 @@ binio::Byte binifstream::getByte()
     return (Byte)read;
   } else {
     err = NotOpen;
-    return (Byte)0;
+    return 0;
   }
 }
 
@@ -156,7 +156,6 @@ void binofstream::open(const char *filename, const Mode mode)
     case EEXIST:
     case EACCES:
     case EROFS:
-//    case ETXTBSY:
       err = Denied;
       break;
     case EISDIR:

@@ -12,64 +12,11 @@ AC_PROG_MAKE_SET
 AC_PROG_INSTALL
 AC_PROG_CXX
 
-# Check for system and compiler characteristics.
-AC_C_BIGENDIAN
-
-# Determine basic type sizes.
-AC_CHECK_SIZEOF(char)
-AC_CHECK_SIZEOF(short)
-AC_CHECK_SIZEOF(int)
-AC_CHECK_SIZEOF(long)
-AC_CHECK_SIZEOF(long long)
-AC_CHECK_SIZEOF(float)
-AC_CHECK_SIZEOF(double)
-AC_CHECK_SIZEOF(long double)
-
-# BINIO_SIZE_INT(SUBST, SIZE)
-# ---------------------------
-# Macro substitutes SUBST by the smallest integer type, which is at least
-# SIZE bytes long.
-AC_DEFUN([BINIO_SIZE_INT],[
-if expr ${ac_cv_sizeof_char} '>=' $2 > /dev/null ; then
-   AC_SUBST([$1],[char])
-elif expr ${ac_cv_sizeof_short} '>=' $2 > /dev/null ; then
-     AC_SUBST([$1],[short])
-elif expr ${ac_cv_sizeof_int} '>=' $2 > /dev/null ; then
-     AC_SUBST([$1],[int])
-elif expr ${ac_cv_sizeof_long} '>=' $2 > /dev/null ; then
-     AC_SUBST([$1],[long])
-elif expr ${ac_cv_sizeof_long_long} '>=' $2 > /dev/null ; then
-     AC_SUBST([$1],"long long")
-else
-	AC_SUBST([$1],[void])
-fi
-])
-
-# BINIO_SIZE_FLOAT(SUBST, SIZE)
-# -----------------------------
-# Macro substitutes SUBST by the smallest float type, which is at least
-# SIZE bytes long.
-AC_DEFUN([BINIO_SIZE_FLOAT],[
-if expr ${ac_cv_sizeof_float} '>=' $2 > /dev/null ; then
-   AC_SUBST([$1],[float])
-elif expr ${ac_cv_sizeof_double} '>=' $2 > /dev/null ; then
-   AC_SUBST([$1],[double])
-elif expr ${ac_cv_sizeof_long_double} '>=' $2 > /dev/null ; then
-   AC_SUBST([$1],"long double")
-else
-	AC_SUBST([$1],[void])
-fi
-])
-
-# substitute fixed-size abstract types for binio.h.
-BINIO_SIZE_INT(TYPE_INT8,1)
-BINIO_SIZE_INT(TYPE_INT16,2)
-BINIO_SIZE_INT(TYPE_INT32,4)
-BINIO_SIZE_INT(TYPE_INT64,8)
-
-BINIO_SIZE_FLOAT(TYPE_FLOAT32,4)
-BINIO_SIZE_FLOAT(TYPE_FLOAT64,8)
-BINIO_SIZE_FLOAT(TYPE_FLOAT96,12)
+# Check if 'long long' or 'long double' are available and use them instead.
+AC_CHECK_TYPE(long long, AC_SUBST(TYPE_INT,"long long"),
+		   AC_SUBST(TYPE_INT,long))
+AC_CHECK_TYPE(long double, AC_SUBST(TYPE_FLOAT,"long double"),
+		   AC_SUBST(TYPE_FLOAT,double))
 
 # Conditionally build iostream wrappers
 AC_ARG_WITH([iostream],AC_HELP_STRING([--with-iostream],

@@ -43,9 +43,9 @@ void biniwstream::seek(unsigned long pos, Offset offs)
   }
 }
 
-binio::Byte biniwstream::getByte()
+binio::Int biniwstream::getByte()
 {
-  return in->get();
+  return (Int)in->get();
 }
 
 /***** binowstream *****/
@@ -68,7 +68,7 @@ void binowstream::seek(unsigned long pos, Offset offs)
   }
 }
 
-void binowstream::putByte(binio::Byte b)
+void binowstream::putByte(binio::Int b)
 {
   out->put((char)b);
 }

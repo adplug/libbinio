@@ -36,7 +36,7 @@ public:
   virtual SeekP pos();
 
 protected:
-  virtual Byte getByte();
+  virtual Int getByte();
 
 private:
   istream *in;
@@ -52,7 +52,7 @@ public:
   virtual SeekP pos();
 
 protected:
-  virtual void putByte(Byte);
+  virtual void putByte(Int);
 
 private:
   ostream *out;
