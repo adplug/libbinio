@@ -1,5 +1,5 @@
 %define name binio
-%define version 1.2
+%define version 1.3
 %define release 1mdk
 %define libname %mklibname %name 1
 

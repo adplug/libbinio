@@ -14,7 +14,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * binio.cpp - Binary stream I/O classes
- * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
+ * Copyright (C) 2002, 2003 Simon Peter <dn.tlp@gmx.net>
  */
 
 #include <string.h>
