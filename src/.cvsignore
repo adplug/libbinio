@@ -16,3 +16,4 @@ Debug
 Release
 *.lib
 config.bat
+*.err

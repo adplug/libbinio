@@ -8,8 +8,8 @@ CXXFLAGS = -oi+
 
 OUTPUT = binio.lib
 
-OBJS = binio.obj binfile.obj binwrap.obj
+OBJS = binio.obj binfile.obj binwrap.obj binstr.obj
 
-include_INST = binio.h binfile.h binwrap.h
+include_INST = binio.h binfile.h binwrap.h binstr.h
 
 lib_INST = binio.lib
