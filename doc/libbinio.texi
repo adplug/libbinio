@@ -9,7 +9,7 @@
 This manual documents the binary I/O stream class library, version
 @value{VERSION}. It was last updated on @value{UPDATED}.
 
-Copyright @copyright{} 2002, 2003 Simon Peter
+Copyright @copyright{} 2002 - 2004 Simon Peter
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
