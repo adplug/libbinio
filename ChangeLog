@@ -1,3 +1,29 @@
+2003-01-30 18:54  dynamite
+
+	* NEWS, doc/libbinio.texi: Updated documentation.
+
+2003-01-23 17:25  dynamite
+
+	* NEWS, doc/libbinio.texi, src/binfile.cpp, src/binio.cpp,
+	src/binio.h.in, src/binstr.cpp, src/binwrap.cpp: Changed behaviour
+	of error() and eof(). Added peekInt(), peekFloat() and ateof()
+	methods to binistream class. Updated documentation.
+
+2003-01-19 00:45  dynamite
+
+	* NEWS, src/Makefile.am, src/binio.cpp, src/binio.h.in: Modified
+	readString() and writeString() behaviour. Removed the delimiter
+	default. writeString() does now report number of characters
+	written.
+
+2003-01-18 18:40  dynamite
+
+	* NEWS, configure.in: Removed bogus config header.
+
+2003-01-18 14:46  dynamite
+
+	* ChangeLog: RELEASE: Version 1.0
+
 2003-01-18 14:36  dynamite
 
 	* ChangeLog, doc/Makefile.am: Final UNIX build fixes. RC1.
