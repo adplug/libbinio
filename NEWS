@@ -3,6 +3,7 @@ This is a brief overview of user-visible changes in libbinio.
 Changes for version 1.2:
 ------------------------
 - Ported to QNX.
+- Red Hat & Mandrake .spec files.
 
 Changes for version 1.1:
 ------------------------

@@ -8,3 +8,6 @@ conversion functions are copyright (C) 1989 - 1991 Ken Turkowski
 <turk@computer.org>. Used by permission.
 
 Thanks to Mike Gorchak <mike@malva.ua> for the QNX port and packaging!
+
+Thanks to Goetz Waschk <waschk@informatik.uni-rostock.de> for the Red Hat
+and Mandrake RPM spec files and the Mandrake packaging!

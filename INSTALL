@@ -28,6 +28,9 @@ autoreconf --install
 to generate the build cruft and get the configure script. You need recent
 versions of autoconf, automake and libtool to do this.
 
+Also, you need to pass --enable-maintainer-mode to the configure script to
+generate some missing files.
+
 Extra setup for DOS and Windows builds:
 ---------------------------------------
 After you've done all steps from 'INSTALL.dos' or 'INSTALL.win32', you have

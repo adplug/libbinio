@@ -1,3 +1,12 @@
+2003-03-03 13:24  dynamite
+
+	* TODO, doc/libbinio.texi: Updated documentation.
+
+2003-02-24 11:42  dynamite
+
+	* ChangeLog, libbinio.qpg: Fixed placement of files in QNX
+	packaging file.
+
 2003-02-20 16:43  dynamite
 
 	* AUTHORS, NEWS: Updated auxiliary files.
