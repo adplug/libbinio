@@ -1,8 +1,7 @@
-AC_INIT(binio,1.0)
+AC_INIT(binio,1.1)
 AC_CONFIG_SRCDIR(src/binio.cpp)
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h])
 AM_INIT_AUTOMAKE
-AM_CONFIG_HEADER(src/config.h)
 AM_MAINTAINER_MODE
 AM_PROG_LIBTOOL
 AC_LANG(C++)
