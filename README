@@ -14,12 +14,3 @@ representation.
 
 It further employs no special I/O protocol and can be used on
 arbitrary binary data sources.
-
-CVS:
-----
-If you checked out from CVS, first run:
-
-autoreconf --install
-
-to generate the build cruft and get the configure script. You need recent
-versions of autoconf, automake and libtool to do this.

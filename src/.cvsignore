@@ -8,3 +8,9 @@ config.h.in
 *.lo
 *.la
 stamp-h1
+*.dsw
+*.ncb
+*.opt
+*.plg
+Debug
+Release

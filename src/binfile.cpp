@@ -156,7 +156,7 @@ void binofstream::open(const char *filename, const Mode mode)
     case EEXIST:
     case EACCES:
     case EROFS:
-    case ETXTBSY:
+//    case ETXTBSY:
       err = Denied;
       break;
     case EISDIR:
