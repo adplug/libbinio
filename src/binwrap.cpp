@@ -25,8 +25,8 @@
 
 /***** biniwstream *****/
 
-biniwstream::biniwstream(istream &istr)
-  : in(&istr)
+biniwstream::biniwstream(istream *istr)
+  : in(istr)
 {
 }
 
@@ -37,21 +37,28 @@ biniwstream::~biniwstream()
 void biniwstream::seek(unsigned long pos, Offset offs)
 {
   switch(offs) {
-  case Start: in->seekg(pos, ios::beg); break;
+  case Set: in->seekg(pos, ios::beg); break;
   case Add: in->seekg(pos, ios::cur); break;
   case End: in->seekg(pos, ios::end); break;
   }
 }
 
-binio::Int biniwstream::getByte()
+binio::Byte biniwstream::getByte()
 {
-  return (Int)in->get();
+  int i = in->get();
+  if(i == EOF || in->eof()) err = Eof;
+  return (Byte)i;
+}
+
+binio::SeekP biniwstream::pos()
+{
+  return (SeekP)in->tellg();
 }
 
 /***** binowstream *****/
 
-binowstream::binowstream(ostream &ostr)
-  : out(&ostr)
+binowstream::binowstream(ostream *ostr)
+  : out(ostr)
 {
 }
 
@@ -62,15 +69,55 @@ binowstream::~binowstream()
 void binowstream::seek(unsigned long pos, Offset offs)
 {
   switch(offs) {
-  case Start: out->seekp(pos, ios::beg); break;
+  case Set: out->seekp(pos, ios::beg); break;
   case Add: out->seekp(pos, ios::cur); break;
   case End: out->seekp(pos, ios::end); break;
   }
 }
 
-void binowstream::putByte(binio::Int b)
+void binowstream::putByte(binio::Byte b)
 {
   out->put((char)b);
+}
+
+binio::SeekP binowstream::pos()
+{
+  return (SeekP)out->tellp();
+}
+
+/***** binwstream *****/
+
+binwstream::binwstream(iostream *str)
+  : biniwstream(str), binowstream(str), io(str)
+{
+}
+
+binwstream::~binwstream()
+{
+}
+
+void binwstream::seek(unsigned long pos, Offset offs)
+{
+  biniwstream::seek(pos, offs);
+  binowstream::seek(pos, offs);
+}
+
+binio::SeekP binwstream::pos()
+{
+  return (SeekP)io->tellg();
+}
+
+binio::Byte binwstream::getByte()
+{
+  Byte in = biniwstream::getByte();
+  binowstream::seek(biniwstream::pos(), Set);	// sync stream position
+  return in;
+}
+
+void binwstream::putByte(binio::Byte b)
+{
+  binowstream::putByte(b);
+  biniwstream::seek(binowstream::pos(), Set);	// sync stream position
 }
 
 #endif

@@ -92,6 +92,11 @@ binio::Error binio::error()
   return e;
 }
 
+bool binio::eof()
+{
+  return (err == Eof);
+}
+
 /***** binistream *****/
 
 binistream::binistream()

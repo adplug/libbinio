@@ -32,7 +32,7 @@ public:
     NoCreate	= 1 << 1
   } ModeFlags;
 
-  typedef unsigned short Mode;
+  typedef int Mode;
 
   binfbase();
   virtual ~binfbase();
@@ -43,8 +43,7 @@ public:
 #endif
   void close();
 
-  virtual bool eof();
-  virtual void seek(SeekP pos, Offset offs);
+  virtual void seek(SeekP pos, Offset offs = Set);
   virtual SeekP pos();
 
 protected:
@@ -53,18 +52,21 @@ protected:
 
 class binifstream: public binistream, virtual public binfbase
 {
+private:
+  static const Mode	default_mode = 0;
+
 public:
   binifstream();
-  binifstream(const char *filename, const Mode mode = 0);
+  binifstream(const char *filename, const Mode mode = default_mode);
 #if BINIO_WITH_STRING
-  binifstream(const std::string &filename, const Mode mode = 0);
+  binifstream(const std::string &filename, const Mode mode = default_mode);
 #endif
 
   virtual ~binifstream();
 
-  virtual void open(const char *filename, const Mode mode = 0);
+  virtual void open(const char *filename, const Mode mode = default_mode);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = 0);
+  virtual void open(const std::string &filename, const Mode mode = default_mode);
 #endif
 
 protected:
@@ -73,18 +75,21 @@ protected:
 
 class binofstream: public binostream, virtual public binfbase
 {
+private:
+  static const Mode	default_mode = NoCreate;
+
 public:
   binofstream();
-  binofstream(const char *filename, const Mode mode = 0);
+  binofstream(const char *filename, const Mode mode = default_mode);
 #if BINIO_WITH_STRING
-  binofstream(const std::string &filename, const Mode mode = 0);
+  binofstream(const std::string &filename, const Mode mode = default_mode);
 #endif
 
   virtual ~binofstream();
 
-  virtual void open(const char *filename, const Mode mode = 0);
+  virtual void open(const char *filename, const Mode mode = default_mode);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = 0);
+  virtual void open(const std::string &filename, const Mode mode = default_mode);
 #endif
 
 protected:
@@ -93,18 +98,21 @@ protected:
 
 class binfstream: public binifstream, public binofstream
 {
+private:
+  static const Mode	default_mode = 0;
+
 public:
   binfstream();
-  binfstream(const char *filename, const Mode mode = 0);
+  binfstream(const char *filename, const Mode mode = default_mode);
 #if BINIO_WITH_STRING
-  binfstream(const std::string &filename, const Mode mode = 0);
+  binfstream(const std::string &filename, const Mode mode = default_mode);
 #endif
 
   virtual ~binfstream();
 
-  virtual void open(const char *filename, const Mode mode = 0);
+  virtual void open(const char *filename, const Mode mode = default_mode);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = 0);
+  virtual void open(const std::string &filename, const Mode mode = default_mode);
 #endif
 };
 

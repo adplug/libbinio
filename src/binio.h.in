@@ -64,8 +64,8 @@ public:
   bool getFlag(Flag f);
 
   Error error();
+  bool eof();
 
-  virtual bool eof() = 0;
   virtual void seek(SeekP, Offset = Set) = 0;
   virtual SeekP pos() = 0;
 
@@ -125,6 +125,8 @@ protected:
 class binstream: public binistream, public binostream
 {
 public:
+  binstream();
+  virtual ~binstream();
 };
 
 #endif

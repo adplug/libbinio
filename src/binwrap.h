@@ -29,14 +29,14 @@
 class biniwstream: public binistream
 {
 public:
-  biniwstream(istream &istr);
+  biniwstream(istream *istr);
   virtual ~biniwstream();
 
-  virtual void seek(SeekP pos, Offset offs);
+  virtual void seek(SeekP pos, Offset offs = Set);
   virtual SeekP pos();
 
 protected:
-  virtual Int getByte();
+  virtual Byte getByte();
 
 private:
   istream *in;
@@ -45,21 +45,34 @@ private:
 class binowstream: public binostream
 {
 public:
-  binowstream(ostream &ostr);
+  binowstream(ostream *ostr);
   virtual ~binowstream();
 
-  virtual void seek(SeekP pos, Offset offs);
+  virtual void seek(SeekP pos, Offset offs = Set);
   virtual SeekP pos();
 
 protected:
-  virtual void putByte(Int);
+  virtual void putByte(Byte b);
 
 private:
   ostream *out;
 };
 
-class binwstream
+class binwstream: public biniwstream, public binowstream
 {
+public:
+  binwstream(iostream *str);
+  virtual ~binwstream();
+
+  virtual void seek(SeekP pos, Offset offs = Set);
+  virtual SeekP pos();
+
+protected:
+  virtual Byte getByte();
+  virtual void putByte(Byte b);
+
+private:
+  iostream *io;
 };
 
 #endif

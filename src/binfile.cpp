@@ -44,11 +44,16 @@ void binfbase::close()
 
 void binfbase::seek(SeekP pos, Offset offs)
 {
+  int error;
+
   switch(offs) {
-  case Set: fseek(f, pos, SEEK_SET); break;
-  case Add: fseek(f, pos, SEEK_CUR); break;
-  case End: fseek(f, pos, SEEK_END); break;
+  case Set: error = fseek(f, pos, SEEK_SET); break;
+  case Add: error = fseek(f, pos, SEEK_CUR); break;
+  case End: error = fseek(f, pos, SEEK_END); break;
   }
+
+  if(error == -1)
+    err = Fatal;
 }
 
 binio::SeekP binfbase::pos()
@@ -60,11 +65,6 @@ binio::SeekP binfbase::pos()
     return 0;
   } else
     return pos;
-}
-
-bool binfbase::eof()
-{
-  return feof(f);
 }
 
 /***** binifstream *****/
@@ -117,7 +117,7 @@ binio::Byte binifstream::getByte()
 
   if(f) {
     read = fgetc(f);
-    if(read == EOF) err = Eof;
+    if(read == EOF || feof(f)) err = Eof;
     return (Byte)read;
   } else {
     err = NotOpen;
@@ -149,7 +149,12 @@ binofstream::~binofstream()
 
 void binofstream::open(const char *filename, const Mode mode)
 {
-  f = fopen(filename, "wb");
+  char *modestr = "wb";
+
+  // Check if append mode is desired
+  if(mode & Append) modestr = "ab";
+
+  f = fopen(filename, modestr);
 
   if(!f)
     switch(errno) {
@@ -182,4 +187,64 @@ void binofstream::putByte(Byte b)
 
 /***** binfstream *****/
 
-// TODO: Still needs to be implemented!
+binfstream::binfstream()
+{
+}
+
+binfstream::binfstream(const char *filename, const Mode mode)
+{
+  open(filename, mode);
+}
+
+#if BINIO_WITH_STRING
+binfstream::binfstream(const std::string &filename, const Mode mode)
+{
+  open(filename, mode);
+}
+#endif
+
+binfstream::~binfstream()
+{
+}
+
+void binfstream::open(const char *filename, const Mode mode)
+{
+  char	*modestr = "w+b";	// Create & at beginning
+  int	ferror = 0;
+
+  // Apply desired mode
+  if(mode & NoCreate) {
+    if(!(mode & Append))
+      modestr[0] = 'r';	// NoCreate & at beginning
+  } else
+    if(mode & Append)	// Create & append
+      modestr[0] = 'a';
+
+  f = fopen(filename, modestr);
+
+  // NoCreate & append (emulated -- not possible with standard C fopen())
+  if(f && (mode & Append) && (mode & NoCreate))
+    ferror = fseek(f, 0, SEEK_END);
+
+  if(!f || ferror == -1)
+    switch(errno) {
+    case EEXIST:
+    case EACCES:
+    case EROFS:
+      err = Denied;
+      break;
+    case EISDIR:
+    case ENOTDIR:
+    case ENOENT:
+      err = NotOpen;
+      break;
+    default: err = Fatal; break;
+    }
+}
+
+#if BINIO_WITH_STRING
+void binfstream::open(const std::string &filename, const Mode mode)
+{
+  open(filename.c_str(), mode);
+}
+#endif
