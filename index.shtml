@@ -29,8 +29,8 @@
 
     <h1>Documentation</h1>
 
-    <p>Click <a href="doc/libbinio/index.html">here</a> to view the
-    latest documentation online.</p>
+    <p>Click <a href="doc/latest/libbinio/index.html">here</a> to view
+    the latest documentation online.</p>
 
     <p align=right><font size=-1>Last modified on
     <!--#echo var="LAST_MODIFIED" --><br>
