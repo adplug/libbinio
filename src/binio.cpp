@@ -17,8 +17,6 @@
  * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
  */
 
-#include <stdio.h>
-
 #include <string.h>
 
 #include "binio.h"
@@ -139,8 +137,9 @@ binio::Float binistream::readFloat(FType ft)
 
     // Determine appropriate size for given type.
     switch(ft) {
-    case Single: size = 4; break;
-    case Double: size = 8; break;
+    case Single: size = 4; break;	// 32 bits
+    case Double: size = 8; break;	// 64 bits
+    case Extended: size = 12; break;	// 96 bits
     }
 
     // Determine byte ordering, depending on what we do next
@@ -159,13 +158,21 @@ binio::Float binistream::readFloat(FType ft)
     if(system_flags & FloatIEEE) {
       // Compatible system, let the hardware do the conversion
       switch(ft) {
-      case Single: return *(float *)in; break;
-      case Double: return *(double *)in; break;
+      case Single: return *(float *)in;
+      case Double: return *(double *)in;
+      case Extended:
+	// Check if our hardware really supports extended double floats
+	if(sizeof(Float) == size)
+	  return *(Float *)in;
+	else
+	  return ieee_extended2float(in);
+	break;
       }
     } else {	// Incompatible system, convert manually
       switch(ft) {
       case Single: return ieee_single2float(in);
       case Double: return ieee_double2float(in);
+      case Extended: return ieee_extended2float(in);
       }
     }
   }
@@ -202,6 +209,33 @@ binio::Float binistream::ieee_single2float(Byte *data)
 }
 
 binio::Float binistream::ieee_double2float(Byte *data)
+{
+  signed int	sign = data[0] >> 7 ? -1 : 1;
+  unsigned int	exp = ((data[0] << 1) & 0xff) | ((data[1] >> 7) & 1),
+    fracthi7 = data[1] & 0x7f;
+  Float		fract = fracthi7 * 65536.0 + data[2] * 256.0 + data[3];
+
+  // Signed and unsigned zero
+  if(!exp && !fracthi7 && !data[2] && !data[3]) return sign * 0.0;
+
+  // Signed and unsigned infinity
+  if(exp == 255)
+    if(!fracthi7 && !data[2] && !data[3]) {
+      err = Unsupported;
+      if(sign == -1) return -1.0; else return 1.0;
+    } else {	  // Not a number
+      err = Unsupported; return 0.0;
+    }
+
+  if(!exp)	// Unnormalized float values
+    return (Float)sign * pow(2, -126) * pow(fract, -23);
+  else		// Normalized float values
+    return (Float)sign * pow(2, exp - 127) * (pow(fract, -23) + 1);
+
+  err = Fatal; return 0.0;
+}
+
+binio::Float binistream::ieee_extended2float(Byte *data)
 {
   signed int	sign = data[0] >> 7 ? -1 : 1;
   unsigned int	exp = ((data[0] << 1) & 0xff) | ((data[1] >> 7) & 1),
@@ -322,14 +356,25 @@ void binostream::writeFloat(Float f, FType ft)
       // compatible system, let the hardware do the conversion
       float		outf = f;
       double	       	outd = f;
+      Float		oute = f;
       unsigned int	i, size;
       Byte		*out;
       bool		swap = getFlag(BigEndian) ^ (system_flags & BigEndian);
 
       // Determine appropriate size for given type.
       switch(ft) {
-      case Single: size = 4; out = (Byte *)&outf; break;
-      case Double: size = 8; out = (Byte *)&outd; break;
+      case Single: size = 4; out = (Byte *)&outf; break;	// 32 bits
+      case Double: size = 8; out = (Byte *)&outd; break;	// 64 bits
+      case Extended:						// 96 bits
+	size = 12;
+	// Check if our hardware really supports extended double floats
+	if(sizeof(Float) == size)
+	  out = (Byte *)&oute;
+	else {
+	  err = Unsupported;
+	  return;
+	  }
+	break;
       }
 
       // Write the float byte by byte, converting endianess
@@ -338,6 +383,9 @@ void binostream::writeFloat(Float f, FType ft)
 	putByte(*out);
 	if(swap) out--; else out++;
       }
+
+      // We're done.
+      return;
     }
   }
 

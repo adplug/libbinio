@@ -42,7 +42,7 @@ void binfbase::close()
     err = NotOpen;
 }
 
-void binfbase::seek(SeekP pos, Offset offs)
+void binfbase::seek(long pos, Offset offs)
 {
   int error;
 
@@ -56,7 +56,7 @@ void binfbase::seek(SeekP pos, Offset offs)
     err = Fatal;
 }
 
-binio::SeekP binfbase::pos()
+long binfbase::pos()
 {
   long pos = ftell(f);
 

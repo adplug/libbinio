@@ -17,8 +17,8 @@
  * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
  */
 
-#ifndef H_BINIO
-#define H_BINIO
+#ifndef H_BINIO_BINIO
+#define H_BINIO_BINIO
 
 /***** Configuration *****/
 
@@ -56,12 +56,7 @@ public:
 
   typedef enum { NoError = 0, Fatal, Unsupported, NotOpen, Denied, Eof } Error;
   typedef enum { Set, Add, End } Offset;
-  typedef enum { Single, Double } FType;
-
-  typedef @TYPE_INT@	Int;
-  typedef @TYPE_FLOAT@	Float;
-  typedef unsigned char	Byte;
-  typedef unsigned long	SeekP;
+  typedef enum { Single, Double, Extended } FType;
 
   binio();
   virtual ~binio();
@@ -72,10 +67,14 @@ public:
   Error error();
   bool eof();
 
-  virtual void seek(SeekP, Offset = Set) = 0;
-  virtual SeekP pos() = 0;
+  virtual void seek(long, Offset = Set) = 0;
+  virtual long pos() = 0;
 
 protected:
+  typedef @TYPE_INT@	Int;
+  typedef @TYPE_FLOAT@	Float;
+  typedef unsigned char	Byte;
+
   typedef unsigned int	Flags;
 
   Flags			my_flags;
@@ -109,6 +108,7 @@ protected:
 private:
   Float ieee_single2float(Byte *data);
   Float ieee_double2float(Byte *data);
+  Float ieee_extended2float(Byte *data);
 };
 
 class binostream: virtual public binio

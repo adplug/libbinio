@@ -32,7 +32,7 @@ biniwstream::~biniwstream()
 {
 }
 
-void biniwstream::seek(unsigned long pos, Offset offs)
+void biniwstream::seek(long pos, Offset offs)
 {
   switch(offs) {
   case Set: in->seekg(pos, ios::beg); break;
@@ -48,9 +48,9 @@ binio::Byte biniwstream::getByte()
   return (Byte)i;
 }
 
-binio::SeekP biniwstream::pos()
+long biniwstream::pos()
 {
-  return (SeekP)in->tellg();
+  return (long)in->tellg();
 }
 
 /***** binowstream *****/
@@ -64,7 +64,7 @@ binowstream::~binowstream()
 {
 }
 
-void binowstream::seek(unsigned long pos, Offset offs)
+void binowstream::seek(long pos, Offset offs)
 {
   switch(offs) {
   case Set: out->seekp(pos, ios::beg); break;
@@ -78,9 +78,9 @@ void binowstream::putByte(binio::Byte b)
   out->put((char)b);
 }
 
-binio::SeekP binowstream::pos()
+long binowstream::pos()
 {
-  return (SeekP)out->tellp();
+  return (long)out->tellp();
 }
 
 /***** binwstream *****/
@@ -94,15 +94,15 @@ binwstream::~binwstream()
 {
 }
 
-void binwstream::seek(unsigned long pos, Offset offs)
+void binwstream::seek(long pos, Offset offs)
 {
   biniwstream::seek(pos, offs);
   binowstream::seek(pos, offs);
 }
 
-binio::SeekP binwstream::pos()
+long binwstream::pos()
 {
-  return (SeekP)io->tellg();
+  return (long)io->tellg();
 }
 
 binio::Byte binwstream::getByte()

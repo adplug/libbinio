@@ -17,8 +17,8 @@
  * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
  */
 
-#ifndef H_BINWRAP
-#define H_BINWRAP
+#ifndef H_BINIO_BINWRAP
+#define H_BINIO_BINWRAP
 
 #include "binio.h"
 
@@ -44,8 +44,8 @@ public:
   biniwstream(istream *istr);
   virtual ~biniwstream();
 
-  virtual void seek(SeekP pos, Offset offs = Set);
-  virtual SeekP pos();
+  virtual void seek(long pos, Offset offs = Set);
+  virtual long pos();
 
 protected:
   virtual Byte getByte();
@@ -60,8 +60,8 @@ public:
   binowstream(ostream *ostr);
   virtual ~binowstream();
 
-  virtual void seek(SeekP pos, Offset offs = Set);
-  virtual SeekP pos();
+  virtual void seek(long pos, Offset offs = Set);
+  virtual long pos();
 
 protected:
   virtual void putByte(Byte b);
@@ -76,8 +76,8 @@ public:
   binwstream(iostream *str);
   virtual ~binwstream();
 
-  virtual void seek(SeekP pos, Offset offs = Set);
-  virtual SeekP pos();
+  virtual void seek(long pos, Offset offs = Set);
+  virtual long pos();
 
 protected:
   virtual Byte getByte();

@@ -17,8 +17,8 @@
  * Copyright (C) 2002 Simon Peter <dn.tlp@gmx.net>
  */
 
-#ifndef H_BINFILE
-#define H_BINFILE
+#ifndef H_BINIO_BINFILE
+#define H_BINIO_BINFILE
 
 #include <stdio.h>
 
@@ -48,8 +48,8 @@ public:
 #endif
   void close();
 
-  virtual void seek(SeekP pos, Offset offs = Set);
-  virtual SeekP pos();
+  virtual void seek(long pos, Offset offs = Set);
+  virtual long pos();
 
 protected:
   FILE *f;
@@ -59,16 +59,16 @@ class binifstream: public binistream, virtual public binfbase
 {
 public:
   binifstream();
-  binifstream(const char *filename, const Mode mode = 0);
+  binifstream(const char *filename, const Mode mode = NoCreate);
 #if BINIO_WITH_STRING
-  binifstream(const std::string &filename, const Mode mode = 0);
+  binifstream(const std::string &filename, const Mode mode = NoCreate);
 #endif
 
   virtual ~binifstream();
 
-  virtual void open(const char *filename, const Mode mode = 0);
+  virtual void open(const char *filename, const Mode mode = NoCreate);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = 0);
+  virtual void open(const std::string &filename, const Mode mode = NoCreate);
 #endif
 
 protected:
@@ -79,16 +79,16 @@ class binofstream: public binostream, virtual public binfbase
 {
 public:
   binofstream();
-  binofstream(const char *filename, const Mode mode = NoCreate);
+  binofstream(const char *filename, const Mode mode = 0);
 #if BINIO_WITH_STRING
-  binofstream(const std::string &filename, const Mode mode = NoCreate);
+  binofstream(const std::string &filename, const Mode mode = 0);
 #endif
 
   virtual ~binofstream();
 
-  virtual void open(const char *filename, const Mode mode = NoCreate);
+  virtual void open(const char *filename, const Mode mode = 0);
 #if BINIO_WITH_STRING
-  virtual void open(const std::string &filename, const Mode mode = NoCreate);
+  virtual void open(const std::string &filename, const Mode mode = 0);
 #endif
 
 protected:
