@@ -1,3 +1,15 @@
+2003-01-18 14:36  dynamite
+
+	* ChangeLog, doc/Makefile.am: Final UNIX build fixes. RC1.
+
+2003-01-18 14:35  dynamite
+
+	* .cvsignore: Polished .cvsignore file. RC1.
+
+2003-01-18 14:34  dynamite
+
+	* Makefile.bt: Final DOS build fixes. RC1.
+
 2003-01-18 13:11  dynamite
 
 	* doc/: .cvsignore, libbinio.texi: Documentation updates. RC1.
