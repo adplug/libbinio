@@ -2,11 +2,11 @@
 @c %**start of header
 @setfilename libbinio.info
 @include version.texi
-@settitle Binary I/O Streams Class Library @value{VERSION}
+@settitle Binary I/O stream class library @value{VERSION}
 @c %**end of header
 
 @copying
-This manual documents the binary I/O streams class library version
+This manual documents the binary I/O stream class library, version
 @value{VERSION}. It was last updated on @value{UPDATED}.
 
 Copyright @copyright{} 2002 Simon Peter
@@ -26,7 +26,7 @@ Software Foundation raise funds for GNU development.''
 @end copying
 
 @titlepage
-@title Binary I/O Streams Class Library
+@title Binary I/O stream class library
 @subtitle Version @value{VERSION}
 @subtitle Last updated on @value{UPDATED}
 @author Simon Peter
@@ -40,7 +40,7 @@ Software Foundation raise funds for GNU development.''
 
 @ifnottex
 @node Top
-@top Binary I/O Streams Class Library
+@top Binary I/O stream class library
 
 @insertcopying
 @end ifnottex
@@ -55,7 +55,15 @@ Software Foundation raise funds for GNU development.''
 @chapter Introduction
 @cindex Introduction
 
-This is the introduction...
+The binary I/O stream class library presents a platform-independent
+way to access binary data streams in C++.
+
+The library is hardware independent in the form that it transparently
+converts between the different forms of machine-internal binary data
+representation.
+
+It further employs no special I/O protocol and can be used on
+arbitrary binary data sources.
 
 @node Copying This Manual
 @appendix Copying This Manual

@@ -1,3 +1,4 @@
-Binary I/O streams library To Do List:
---------------------------------------
+libbinio to do list:
+--------------------
 - Implement strstream equivalent.
+- Write documentation.

@@ -1,0 +1,21 @@
+2002-12-21 13:51  dynamite
+
+	* .cvsignore, doc/.cvsignore, src/.cvsignore: Added .cvsignore
+	files.
+
+2002-12-21 13:44  dynamite
+
+	* AUTHORS, COPYING, ChangeLog, INSTALL, Makefile.am, NEWS, README,
+	TODO, configure.in, src/Makefile.am, src/binfile.cpp,
+	src/binfile.h, src/binio.cpp, src/binwrap.cpp, src/binwrap.h,
+	doc/Makefile.am, doc/fdl.texi, doc/libbinio.texi, src/binio.h.in:
+	Initial revision
+
+2002-12-21 13:44  dynamite
+
+	* AUTHORS, COPYING, ChangeLog, INSTALL, Makefile.am, NEWS, README,
+	TODO, configure.in, src/Makefile.am, src/binfile.cpp,
+	src/binfile.h, src/binio.cpp, src/binwrap.cpp, src/binwrap.h,
+	doc/Makefile.am, doc/fdl.texi, doc/libbinio.texi, src/binio.h.in:
+	Initial import.
+
