@@ -327,7 +327,7 @@ std::string binistream::readString(const char delim)
 binistream::Int binistream::peekInt(unsigned int size)
 {
   Int val = readInt(size);
-  if(!err) seek(-size, Add);
+  if(!err) seek(-(long)size, Add);
   return val;
 }
 
