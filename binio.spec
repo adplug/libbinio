@@ -9,7 +9,7 @@ Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
 URL:http://libbinio.sourceforge.net
 License: LGPL
-Group: System/Libraries
+Group: System Environment/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
 Prefix: %{_prefix}
 
@@ -27,7 +27,7 @@ arbitrary binary data sources.
 
 %package devel
 Summary: Development files for lib%name
-Group: Development/C++
+Group: Development/Libraries
 Requires: %name = %version-%release
 
 %description devel
