@@ -1,3 +1,15 @@
+2005-09-18 12:00  dynamite
+
+	* INSTALL.unix, Makefile.am, NEWS, README, binio.spec,
+	binio_mdk.spec, configure.in, libbinio.pc.in, libbinio.qpg,
+	src/Makefile.am, src/Makefile.bt, src/libbinio.dsp: Added
+	pkg-config script. Default install path for headers is now
+	$(pkgincludedir).
+
+2004-08-19 14:08  dynamite
+
+	* ChangeLog: Release 1.3
+
 2004-08-18 21:55  dynamite
 
 	* INSTALL.unix, NEWS, README, doc/libbinio.texi: Updated to latest
