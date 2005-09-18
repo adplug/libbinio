@@ -1,0 +1,98 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.4</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.4">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.4. It was last updated on 18 August 2004.
+
+   <p>Copyright &copy; 2002 - 2004 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="binostream">binostream</a>,
+Next:<a rel="next" accesskey="n" href="binstream.html#binstream">binstream</a>,
+Previous:<a rel="previous" accesskey="p" href="binistream.html#binistream">binistream</a>,
+Up:<a rel="up" accesskey="u" href="Base-classes.html#Base%20classes">Base classes</a>
+<hr><br>
+</div>
+
+<h4 class="subsection">binostream</h4>
+
+   <p><code>binostream</code> provides an output-only binary stream.
+
+<h4 class="subheading">Header file: <code>binio.h</code></h4>
+
+<h4 class="subheading">Public methods:</h4>
+
+     <dl>
+<dt><code>binostream()</code>
+     <dd>The constructor.
+
+     <br><dt><code>~binostream()</code>
+     <dd>The destructor.
+
+     <br><dt><code>void writeInt(Int val, unsigned int size);</code>
+     <dd>Writes the integer value <code>val</code> of size <code>size</code> (in bytes) to
+the stream.
+
+     <br><dt><code>void writeFloat(Float f, FType ft);</code>
+     <dd>Writes the floating-point value <code>f</code> of type <code>ft</code> to the
+stream. Refer to the list of public types of the <code>binio</code> class
+for information about what floating-point formats are supported.
+
+     <p>If the requested floating-point type is not supported by your
+architecture, <code>writeFloat()</code> tries to convert it. This is not
+always possible and an <code>Unsupported</code> error is issued if the
+conversion fails and nothing is written to the stream in this case.
+
+     <br><dt><code>unsigned long writeString(const char *str, unsigned long amount = 0);</code>
+     <dd><dt><code>unsigned long writeString(const std::string &amp;str);</code>
+     <dd>Writes a character string to the stream. Both standard C
+<small>ASCIIZ</small> strings and <small>STL</small> <code>string</code> objects are
+supported.
+
+     <p>The standard C version takes a pointer <code>str</code> to the
+<small>ASCIIZ</small> string to write as first argument and an optional
+second argument <code>amount</code>, which specifies the number of
+characters to write from that string. If it is omitted, the whole
+string is written to the stream.
+
+     <p>For the <code>string</code> object version, the only argument is the
+<code>string</code> object, containing the string to write.
+
+     <p>Both methods return the number of characters actually written to the
+stream (which should only differ from the value you wanted to write
+when an error occured). 
+</dl>
+
+<h4 class="subheading">Protected methods:</h4>
+
+     <dl>
+<dt><code>virtual void putByte(Byte)</code>
+     <dd>Abstract virtual method to insert exactly one byte (8 bits) into the
+stream and advance the stream pointer accordingly. The byte to be
+written is passed as the only argument. Implemented by the stream
+layer. 
+</dl>
+
+   </body></html>
+

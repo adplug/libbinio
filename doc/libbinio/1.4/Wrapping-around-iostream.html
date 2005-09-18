@@ -1,0 +1,66 @@
+<html lang="en">
+<head>
+<title>Binary I/O stream class library 1.4</title>
+<meta http-equiv="Content-Type" content="text/html">
+<meta name="description" content="Binary I/O stream class library 1.4">
+<meta name="generator" content="makeinfo 4.3">
+<link href="http://www.gnu.org/software/texinfo/" rel="generator-home">
+<!--
+This manual documents the binary I/O stream class library, version
+1.4. It was last updated on 18 August 2004.
+
+   <p>Copyright &copy; 2002 - 2004 Simon Peter
+
+   <blockquote>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+        <p>(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." 
+</blockquote>
+   -->
+</head>
+<body>
+<div class="node">
+<p>
+Node:<a name="Wrapping%20around%20iostream">Wrapping around iostream</a>,
+Next:<a rel="next" accesskey="n" href="Errors.html#Errors">Errors</a>,
+Previous:<a rel="previous" accesskey="p" href="Alien-architectures.html#Alien%20architectures">Alien architectures</a>,
+Up:<a rel="up" accesskey="u" href="Usage.html#Usage">Usage</a>
+<hr><br>
+</div>
+
+<h3 class="section">Wrapping around iostream</h3>
+
+   <p>libbinio provides a set of classes, called <code>binwstream</code>,
+<code>biniwstream</code> and <code>binowstream</code>, that can be wrapped around
+an already existing stream from the standard or traditional C++
+iostream library.
+
+   <p>To do this, you just have to pass a pointer to the original stream
+object from the iostream library to the constructor of the appropriate
+<code>binwstream</code> class. Of course, you have to match an input stream
+from the iostream library to an input stream from libbinio and
+analogous for the output-only streams. The class framework will
+prevent you from mismatching them. You can, however, wrap an
+unidirectional binary stream around a bidirectional stream from the
+iostream library.
+
+   <p>There is one important thing you have to remember: If you plan to wrap
+a binary stream around an iostream stream, always open the iostream
+stream with the <code>ios::bin</code> mode flag set! This will prevent some
+operating systems (namely, MS-DOS and Windows) from doing nasty
+implicit interpretation on the streams. This definitly will impose
+problems when you try to read or write the binary stream.
+
+   <p>All other flags, you set when opening the original iostream stream,
+can indirectly have effect on the operations you do on the wrapped
+binary stream.
+
+   </body></html>
+
