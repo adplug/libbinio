@@ -1,5 +1,12 @@
 This is a brief overview of user-visible changes in libbinio.
 
+Changes for version 1.4:
+------------------------
+- Support for pkg-config on UNIX systems.
+- Moved default header installation directory to $pkgincludedir
+  (aka $includedir/libbinio) to prevent filename clashes with other
+  libraries.
+
 Changes for version 1.3:
 ------------------------
 - Fixed a small interface bug.

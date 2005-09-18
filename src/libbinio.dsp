@@ -54,7 +54,7 @@ LIB32=link.exe -lib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
 PostBuild_Desc=Installing library and headers...
-PostBuild_Cmds=call vc6inst l "Release\binio.lib"	call vc6inst i *.h
+PostBuild_Cmds=call vc6inst l "Release\binio.lib"	call vc6inst i *.h libbinio
 # End Special Build Tool
 
 !ELSEIF  "$(CFG)" == "libbinio - Win32 Debug"
@@ -83,7 +83,7 @@ LIB32=link.exe -lib
 # Begin Special Build Tool
 SOURCE="$(InputPath)"
 PostBuild_Desc=Installing library and headers...
-PostBuild_Cmds=call vc6inst l "Debug\biniod.lib"	call vc6inst i *.h
+PostBuild_Cmds=call vc6inst l "Debug\biniod.lib"	call vc6inst i *.h libbinio
 # End Special Build Tool
 
 !ENDIF 
