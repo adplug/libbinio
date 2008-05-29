@@ -9,7 +9,7 @@
 This manual documents the binary I/O stream class library, version
 @value{VERSION}. It was last updated on @value{UPDATED}.
 
-Copyright @copyright{} 2002 - 2005 Simon Peter
+Copyright @copyright{} 2002 - 2005, 2008 Simon Peter
 
 @quotation
 Permission is granted to copy, distribute and/or modify this document
@@ -74,8 +74,8 @@ The library is hardware independent in the form that it transparently
 converts between the different forms of machine-internal binary data
 representation.
 
-It further employs no special I/O protocol and can be used on
-arbitrary binary data sources.
+It further employs no special I/O protocol or file format and can be
+used on arbitrary binary data sources.
 
 @menu
 * Features::
@@ -106,8 +106,8 @@ In addition, convenience methods for the @acronym{STL} @code{string}
 class can be enabled that support reading and writing of arbitrary
 length strings with dynamic memory allocation.
 
-libbinio should compile and run on as much systems as possible. If it
-doesn't work with your system/compiler combination, please tell me!
+libbinio should compile and run on as many systems as possible. If it
+does not work with your system/compiler combination, please tell me!
 
 @node Usage
 @chapter Usage
@@ -130,6 +130,7 @@ C++ iostream facility before.
 * Alien architectures::
 * Wrapping around iostream::
 * Errors::
+* Creating architecture-independent file formats::
 * Examples::
 @end menu
 
@@ -410,6 +411,50 @@ subsequent call to any of the error reporting methods will return
 @samp{NoError} again. @code{eof()} and @code{ateof()} do not reset the
 internal error variable. The last error status of the stream is
 retained.
+
+@node Creating architecture-independent file formats
+@section Creating architecture-independent file formats
+@cindex Creating architecture-independent file formats
+
+libbinio does not inherently support any specific file format. This is
+considered a feature, as it also does not impose any file format upon
+the user.
+
+It is, however, very easy to create your own architecture-independent
+file format or enhance a file format to make it architecture-independent
+on top of libbinio, by creating wrapper classes that you use to access
+your streams.
+
+Here is an example that inserts a two byte header in front of your file
+format to make it architecture-independent:
+
+@example
+class myifstream: public binifstream
+@{
+public:
+  void open(const char *filename, const Mode mode = NoCreate)
+  @{
+    binifstream::open(filename, mode);
+
+    setFlag(binio::BigEndian, getByte());
+    setFlag(binio::FloatIEEE, getByte());
+  @}
+@};
+
+class myofstream: public binofstream
+@{
+public:
+  void open(const char *filename, const Mode mode = NoCreate)
+  @{
+    binofstream::open(filename, mode);
+
+    putByte(getFlag(binio::BigEndian));
+    putByte(getFlag(binio::FloatIEEE));
+  @}
+@};
+@end example
+
+You can use these new classes as usual.
 
 @node Examples
 @section Examples
