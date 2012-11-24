@@ -3,6 +3,7 @@ AC_CONFIG_SRCDIR(src/binio.cpp)
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h libbinio.pc])
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
+#AM_DISABLE_SHARED
 AM_PROG_LIBTOOL
 AC_LANG(C++)
 

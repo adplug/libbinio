@@ -14,7 +14,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * binstr.cpp - Binary I/O on standard C strings in memory
- * Copyright (C) 2003 Simon Peter <dn.tlp@gmx.net>
+ * Copyright (C) 2003, 2010 Simon Peter <dn.tlp@gmx.net>
  */
 
 #include "binstr.h"
@@ -35,12 +35,11 @@ void binsbase::seek(long p, Offset offs)
   switch(offs) {
   case Set: spos = data + p; break;
   case Add: spos += p; break;
-  case End: spos = data + length - 1 + p; break;
+  case End: spos = data + length + p; break;
   }
 
   // Seek before start of data
   if(spos < data) {
-    err |= Eof;
     spos = data;
     return;
   }
@@ -48,7 +47,7 @@ void binsbase::seek(long p, Offset offs)
   // Seek after end of data
   if(spos - data >= length) {
     err |= Eof;
-    spos = data + length - 1;
+    spos = data + length;
   }
 }
 
@@ -95,11 +94,12 @@ binosstream::~binosstream()
 
 void binosstream::putByte(Byte b)
 {
-  *spos = b;
-  spos++;
-
-  if(spos - data >= length)
-    spos = data + length - 1;
+  if(spos - data >= length) {
+    err |= Eof;
+  } else {
+    *spos = b;
+    spos++;
+  }
 }
 
 /***** binsstream *****/
