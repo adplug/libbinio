@@ -60,18 +60,18 @@
                <QPM:ProductEmail>dn.tlp@gmx.net</QPM:ProductEmail>
                <QPM:VendorName>Public</QPM:VendorName>
                <QPM:VendorInstallName>public</QPM:VendorInstallName>
-               <QPM:VendorURL>http://libbinio.sourceforge.net</QPM:VendorURL>
+               <QPM:VendorURL>http://adplug.github.io/libbinio</QPM:VendorURL>
                <QPM:VendorEmbedURL/>
                <QPM:VendorEmail>dn.tlp@gmx.net</QPM:VendorEmail>
                <QPM:AuthorName>Simon Peter</QPM:AuthorName>
-               <QPM:AuthorURL>http://libbinio.sourceforge.net</QPM:AuthorURL>
+               <QPM:AuthorURL>http://adplug.github.io/libbinio</QPM:AuthorURL>
                <QPM:AuthorEmbedURL/>
                <QPM:AuthorEmail>dn.tlp@gmx.net</QPM:AuthorEmail>
                <QPM:ProductIconSmall/>
                <QPM:ProductIconLarge/>
                <QPM:ProductDescriptionShort>The binary I/O stream class library presents a platform-independent way to access binary data streams in C++.</QPM:ProductDescriptionShort>
                <QPM:ProductDescriptionLong>The binary I/O stream class library presents a platform-independent way to access binary data streams in C++. The library is hardware independent in the form that it transparently converts between the different forms of machine-internal binary data representation. It further employs no special I/O protocol and can be used on arbitrary binary data sources.</QPM:ProductDescriptionLong>
-               <QPM:ProductDescriptionURL>http://libbinio.sourceforge.net</QPM:ProductDescriptionURL>
+               <QPM:ProductDescriptionURL>http://adplug.github.io/libbinio</QPM:ProductDescriptionURL>
                <QPM:ProductDescriptionEmbedURL/>
             </QPM:ProductDescription>
             <QPM:ReleaseDescription>

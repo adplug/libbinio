@@ -7,7 +7,7 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
-URL:http://libbinio.sourceforge.net
+URL:http://adplug.github.io/libbinio
 License: LGPL
 Group: System Environment/Libraries
 BuildRoot: %{_tmppath}/%{name}-buildroot
