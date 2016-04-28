@@ -19,9 +19,9 @@ wmake /f Makefile.wat install
 
 Do this similary with any other 'wmake' target.
 
-CVS and UNIX:
+git and UNIX:
 -------------
-If you checked out from CVS and use UNIX, first run:
+If you checked out from git and use UNIX, first run:
 
 autoreconf --install
 
