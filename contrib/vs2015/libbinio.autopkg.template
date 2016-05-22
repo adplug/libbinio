@@ -1,0 +1,50 @@
+nuget {
+	nuspec {
+		id = libbinio;
+		// "@version" is replaced by the current Appveyor build number in the
+		// pre-deployment script.
+		version: @version;
+		title: libbinio;
+		authors: {Simon Peter};
+		owners: {Malvineous};
+		licenseUrl: "http://www.gnu.org/licenses/old-licenses/lgpl-2.1.en.html";
+		projectUrl: "https://github.com/adplug/libbinio";
+		iconUrl: "https://avatars2.githubusercontent.com/u/12982922?v=3&s=200";
+		copyright: "Copyright 2002-2016 Simon Peter";
+		requireLicenseAcceptance: false;
+		description: "Binary I/O stream class library providing platform-independent binary data streams in C++";
+		releaseNotes: "Package upstream git version.";
+		tags: {coapp, native, nativepackage, static};
+	}
+	files {
+		#defines {
+			SDK_ROOT = "../../";
+			SolutionDir = "./";
+		}
+		include: {
+			"${SDK_ROOT}src/*.h",
+			"${SolutionDir}libbinio/binio.h"
+		};
+		docs: {
+			"${SDK_ROOT}README",
+			"${SDK_ROOT}COPYING"
+		};
+		[x86,debug] {
+			lib: ${SolutionDir}Debug\${pkgname}.lib;
+			symbols: ${SolutionDir}Debug\${pkgname}.pdb;
+		}
+		[x86,release] {
+			lib: ${SolutionDir}Release\${pkgname}.lib;
+		}
+		[x64,debug] {
+			lib: ${SolutionDir}x64\Debug\${pkgname}.lib;
+			symbols: ${SolutionDir}x64\Debug\${pkgname}.pdb;
+		}
+		[x64,release] {
+			lib: ${SolutionDir}x64\Release\${pkgname}.lib;
+		}
+	}
+	targets {
+		Defines += HAS_LIBBINIO;
+	}
+}
