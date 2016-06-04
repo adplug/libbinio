@@ -1,3 +1,16 @@
+#define {
+	// Must match the PlatformToolset options in appveyor.yml
+	toolsets: "v140,v120_xp";
+}
+
+configurations {
+	UserPlatformToolset {
+		// Needed for VS2015 support
+		key = "PlatformToolset";
+		choices: ${toolsets};
+	};
+}
+
 nuget {
 	nuspec {
 		id = libbinio;
@@ -29,19 +42,11 @@ nuget {
 			"${SDK_ROOT}README",
 			"${SDK_ROOT}COPYING"
 		};
-		[x86,debug] {
-			lib: ${SolutionDir}Debug\${pkgname}.lib;
-			symbols: ${SolutionDir}Debug\${pkgname}.pdb;
-		}
-		[x86,release] {
-			lib: ${SolutionDir}Release\${pkgname}.lib;
-		}
-		[x64,debug] {
-			lib: ${SolutionDir}x64\Debug\${pkgname}.lib;
-			symbols: ${SolutionDir}x64\Debug\${pkgname}.pdb;
-		}
-		[x64,release] {
-			lib: ${SolutionDir}x64\Release\${pkgname}.lib;
+		(${toolsets}, "Win32,x64", "release,debug") => {
+			[${0},${1},${2}] {
+				lib: ${SolutionDir}${0}\${1}\${2}\${pkgname}.lib;
+				symbols: ${SolutionDir}${0}\${1}\${2}\${pkgname}.pdb;
+			}
 		}
 	}
 	targets {
