@@ -45,7 +45,7 @@ void binsbase::seek(long p, Offset offs)
   }
 
   // Seek after end of data
-  if(spos - data >= length) {
+  if(spos - data > length) {
     err |= Eof;
     spos = data + length;
   }
