@@ -1,3 +1,8 @@
+2019-08-07 15:58  malvineous
+	* Fix off-by-one error in memory stream.
+	* Move from SourceForge to GitHub.
+	* Documentation updates and support for more build environments.
+
 2005-09-18 12:00  dynamite
 
 	* INSTALL.unix, Makefile.am, NEWS, README, binio.spec,

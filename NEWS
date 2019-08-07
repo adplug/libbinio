@@ -1,5 +1,9 @@
 This is a brief overview of user-visible changes in libbinio.
 
+Changes for version 1.5:
+------------------------
+- Fix off-by-one error in memory streams.
+
 Changes for version 1.4:
 ------------------------
 - Support for pkg-config on UNIX systems.

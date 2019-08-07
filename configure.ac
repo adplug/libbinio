@@ -1,4 +1,4 @@
-AC_INIT(binio,1.4,[dn.tlp@gmx.net],libbinio)
+AC_INIT(binio,1.5,[dn.tlp@gmx.net],libbinio)
 AC_CONFIG_SRCDIR(src/binio.cpp)
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h libbinio.pc])
 AM_INIT_AUTOMAKE
