@@ -47,7 +47,7 @@
 
 const binio::Flags binio::system_flags = binio::detect_system_flags();
 
-const binio::Flags binio::detect_system_flags()
+binio::Flags binio::detect_system_flags()
 {
   Flags f = 0;
 
@@ -68,9 +68,10 @@ const binio::Flags binio::detect_system_flags()
     if(f & BigEndian) {
       if(dat[0] == 0x40 && dat[1] == 0xD0 && !dat[2] && !dat[3])
 	f |= FloatIEEE;
-    } else
+    } else {
       if(dat[3] == 0x40 && dat[2] == 0xD0 && !dat[1] && !dat[0])
-      f |= FloatIEEE;
+        f |= FloatIEEE;
+    }
 
   return f;
 }
