@@ -49,6 +49,7 @@ void binfbase::seek(long pos, Offset offs)
   if(f == NULL) { err |= NotOpen; return; }
 
   switch(offs) {
+  default: error = -1; break;
   case Set: error = fseek(f, pos, SEEK_SET); break;
   case Add: error = fseek(f, pos, SEEK_CUR); break;
   case End: error = fseek(f, pos, SEEK_END); break;
