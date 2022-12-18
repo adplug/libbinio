@@ -54,3 +54,6 @@ doc/libbinio.cps
 doc/libbinio.cp
 doc/libbinio.aux
 doc/libbinio.tps
+CMakeUserPresets.json
+/out/
+/.vs/
