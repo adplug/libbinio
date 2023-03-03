@@ -1,10 +1,10 @@
-AC_INIT(binio,1.5,[dn.tlp@gmx.net],libbinio)
+AC_INIT([binio],[1.5],[dn.tlp@gmx.net],[libbinio])
 AC_CONFIG_SRCDIR(src/binio.cpp)
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h libbinio.pc])
 AM_INIT_AUTOMAKE
 AM_MAINTAINER_MODE
-#AM_DISABLE_SHARED
-AM_PROG_LIBTOOL
+#AC_DISABLE_SHARED([])
+LT_INIT
 AC_LANG(C++)
 
 # Check for a sane C/C++ build environment.
@@ -19,7 +19,7 @@ AC_CHECK_TYPE(long double, AC_SUBST(TYPE_FLOAT,"long double"),
 		   AC_SUBST(TYPE_FLOAT,double))
 
 # Conditionally build iostream wrappers
-AC_ARG_ENABLE([iostream], AC_HELP_STRING([--disable-iostream],
+AC_ARG_ENABLE([iostream], AS_HELP_STRING([--disable-iostream],
 	[Do not build iostream wrapper streams]))
 
 if test ${enable_iostream:=yes} = yes; then
@@ -30,7 +30,7 @@ else
 fi
 
 # Conditionally build std::string methods
-AC_ARG_ENABLE([string], AC_HELP_STRING([--disable-string],
+AC_ARG_ENABLE([string], AS_HELP_STRING([--disable-string],
 	[Do not build std::string methods]))
 
 if test ${enable_string:=yes} = yes; then
@@ -41,7 +41,7 @@ else
 fi
 
 # Check if we are using the ISO standard C++ library
-AC_ARG_WITH([iso],AC_HELP_STRING([--with-iso],
+AC_ARG_WITH([iso],AS_HELP_STRING([--with-iso],
 	[Force ISO C++ standard library compliance]))
 
 if test x${with_iso} = xyes; then
@@ -56,7 +56,7 @@ else
 fi
 
 # Conditionally build with 'math.h' (and maybe library) dependencies
-AC_ARG_WITH([math],AC_HELP_STRING([--without-math],
+AC_ARG_WITH([math],AS_HELP_STRING([--without-math],
 	[Do not build routines depending on 'math.h']))
 
 if test ${with_math:=yes} = yes; then
