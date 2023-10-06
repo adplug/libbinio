@@ -28,14 +28,15 @@ and gettext), texinfo, and pkg-config.
 Steps to build:
 
 autoreconf --install
-./configure --enable-maintainer-mode
+./configure
 make
 make install
 
 Notes:
 
---enable-maintainer-mode generates some missing files, and is
-  currently recommended by the dev team.
+./configure automatically implies `--enable-maintainer-mode` which
+generates some missing files, and is currently recommended by the dev
+team.
 
 Extra setup for DOS and Windows builds:
 ---------------------------------------
