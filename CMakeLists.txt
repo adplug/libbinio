@@ -45,6 +45,7 @@ endif()
 if(DEFINED libbinio_BUILD_SHARED_LIBS)
   set(BUILD_SHARED_LIBS "${libbinio_BUILD_SHARED_LIBS}")
 endif ()
+set(libbinio_BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS}")
 
 if(BUILD_SHARED_LIBS AND NOT DEFINED CMAKE_INTERPROCEDURAL_OPTIMIZATION)
   message(STATUS "Enabling interprocedural optimization")
