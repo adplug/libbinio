@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Files (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Files (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Files (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Reading-and-Writing.html" rel="next" title="Reading and Writing">
+<link href="Basics.html" rel="prev" title="Basics">
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Files">
+<div class="nav-panel">
+<p>
+Next: <a href="Reading-and-Writing.html" accesskey="n" rel="next">Reading and Writing</a>, Previous: <a href="Basics.html" accesskey="p" rel="prev">Basics</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Files-1">2.2 Files</h3>
+<a class="index-entry-id" id="index-Files"></a>
+
+<p>For the most part, you will want to use libbinio to access normal
+binary files on your filesystem.
+</p>
+<p>This is what the <code class="code">binfstream</code> related classes are for. To use
+them, you first have to include the file <samp class="file">binfile.h</samp> within your
+code.
+</p>
+<p>This file contains four class declarations &ndash; <code class="code">binfbase</code>,
+<code class="code">binifstream</code>, <code class="code">binofstream</code> and
+<code class="code">binfstream</code>. <code class="code">binfbase</code> is a base class for the others and
+normally not used by an ordinary libbinio user. This leaves us with
+three usable classes.
+</p>
+<p>To create a binary stream on a file, just instantiate one of the three
+classes, according to what I/O facilities the stream should provide
+(see <a class="ref" href="Basics.html">Basics</a> for information on the class naming conventions).
+</p>
+<a class="index-entry-id" id="index-Opening-files"></a>
+<a class="index-entry-id" id="index-File-open-mode"></a>
+<a class="index-entry-id" id="index-Appending-to-files"></a>
+<p>To open a file, you use the <code class="code">open(<var class="var">filename</var>, [<var class="var">mode</var>])</code>
+method of one of the classes. <var class="var">filename</var> is a string (both C style
+<abbr class="acronym">ASCIIZ</abbr> strings and <abbr class="acronym">STL</abbr> <code class="code">string</code> objects can
+be passed, if supported by your compiler) containing the name of the
+file to open. Additionally, you can pass a <var class="var">mode</var> argument to
+specify a special way to open the file &ndash; this is described
+later. There&rsquo;s also a special constructor, provided for convenience,
+that opens up a file automatically when the object is created. It has
+exactly the same syntax as <code class="code">open()</code>.
+</p>
+<a class="index-entry-id" id="index-Closing-files"></a>
+<p>After usage, you can explicitly close the file with the <code class="code">close()</code>
+method. It is always a good idea to do this explicitly, though not
+needed because the file automatically will be closed on object
+deconstruction.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Reading-and-Writing.html">Reading and Writing</a>, Previous: <a href="Basics.html">Basics</a>, Up: <a href="Usage.html">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

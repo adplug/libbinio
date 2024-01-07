@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Errors (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Errors (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Errors (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Creating-architecture_002dindependent-file-formats.html" rel="next" title="Creating architecture-independent file formats">
+<link href="Wrapping-around-iostream.html" rel="prev" title="Wrapping around iostream">
+<style type="text/css">
+<!--
+div.example {margin-left: 3.2em}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Errors">
+<div class="nav-panel">
+<p>
+Next: <a href="Creating-architecture_002dindependent-file-formats.html" accesskey="n" rel="next">Creating architecture-independent file formats</a>, Previous: <a href="Wrapping-around-iostream.html" accesskey="p" rel="prev">Wrapping around iostream</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Errors-1">2.8 Errors</h3>
+<a class="index-entry-id" id="index-Errors"></a>
+
+<p>When doing stream I/O, some unpredictable, erroneus situations can
+occur at runtime. Binary streams are no exception to this
+phenomenon. To provide some sort of protection against this, all
+libbinio stream classes inherit an error reporting method called
+<code class="code">error()</code>.
+</p>
+<p>It is a good idea to check the error status of a stream once in a
+while to see if everything is still in place. <code class="code">error()</code> returns a
+variable of type <code class="code">Error</code>, which is an integer that holds a bit
+field of error values for that stream. Refer to <a class="ref" href="Reference.html">Reference</a> for
+information about the possible values of this variable and their
+meaning.
+</p>
+<a class="index-entry-id" id="index-Simple-error-checking"></a>
+<p>A status of no error is always reported with a value of &lsquo;<samp class="samp">0</samp>&rsquo;, so
+you can easily check if everything is still okay in a simple <code class="code">if</code>
+construct, like this:
+</p>
+<div class="example">
+<pre class="example-preformatted">if(mystream.error())
+  // an error occured, do something to cure it...
+else
+  // everything is still okay!
+</pre></div>
+
+<p>Two convenience error reporting methods are also included:
+</p>
+<a class="index-entry-id" id="index-End-of-file-error-checking"></a>
+<p><code class="code">eof()</code> only checks for the <code class="code">Eof</code> error status, indicating
+whether the end of the stream has just been passed. It returns a
+boolean value, indicating the past the end of the stream.
+</p>
+<p><code class="code">ateof()</code> is like <code class="code">eof()</code> but returns true already when the
+stream pointer is at the last byte of the stream, not past it. This is
+useful when you want to read an entire file into memory in a
+<code class="code">while(!ateof())</code> loop. This method is only defined on streams
+that support reading. On write-only streams, it is not defined and not
+useful.
+</p>
+<p>Whenever you call <code class="code">error()</code>, the internal error variable is reset
+to the <code class="code">NoError</code> state, indicating no error at all, and a
+subsequent call to any of the error reporting methods will return
+&lsquo;<samp class="samp">NoError</samp>&rsquo; again. <code class="code">eof()</code> and <code class="code">ateof()</code> do not reset the
+internal error variable. The last error status of the stream is
+retained.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Creating-architecture_002dindependent-file-formats.html">Creating architecture-independent file formats</a>, Previous: <a href="Wrapping-around-iostream.html">Wrapping around iostream</a>, Up: <a href="Usage.html">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

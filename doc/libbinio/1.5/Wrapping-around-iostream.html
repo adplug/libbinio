@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Wrapping around iostream (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Wrapping around iostream (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Wrapping around iostream (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Errors.html" rel="next" title="Errors">
+<link href="Alien-architectures.html" rel="prev" title="Alien architectures">
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Wrapping-around-iostream">
+<div class="nav-panel">
+<p>
+Next: <a href="Errors.html" accesskey="n" rel="next">Errors</a>, Previous: <a href="Alien-architectures.html" accesskey="p" rel="prev">Alien architectures</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Wrapping-around-iostream-1">2.7 Wrapping around iostream</h3>
+<a class="index-entry-id" id="index-Wrapping-around-iostream"></a>
+<a class="index-entry-id" id="index-iostream-wrappers"></a>
+
+<p>libbinio provides a set of classes, called <code class="code">binwstream</code>,
+<code class="code">biniwstream</code> and <code class="code">binowstream</code>, that can be wrapped around
+an already existing stream from the standard or traditional C++
+iostream library.
+</p>
+<p>To do this, you just have to pass a pointer to the original stream
+object from the iostream library to the constructor of the appropriate
+<code class="code">binwstream</code> class. Of course, you have to match an input stream
+from the iostream library to an input stream from libbinio and
+analogous for the output-only streams. The class framework will
+prevent you from mismatching them. You can, however, wrap an
+unidirectional binary stream around a bidirectional stream from the
+iostream library.
+</p>
+<p>There is one important thing you have to remember: If you plan to wrap
+a binary stream around an iostream stream, always open the iostream
+stream with the <code class="code">ios::bin</code> mode flag set! This will prevent some
+operating systems (namely, MS-DOS and Windows) from doing nasty
+implicit interpretation on the streams. This definitly will impose
+problems when you try to read or write the binary stream.
+</p>
+<p>All other flags, you set when opening the original iostream stream,
+can indirectly have effect on the operations you do on the wrapped
+binary stream.
+</p>
+</div>
+
+
+
+</body>
+</html>

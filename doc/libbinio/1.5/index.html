@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Top (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Top (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Top (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="#Top" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Introduction.html" rel="next" title="Introduction">
+<style type="text/css">
+<!--
+ul.toc-numbered-mark {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+
+
+
+
+
+<div class="top-level-extent" id="Top">
+<div class="nav-panel">
+<p>
+Next: <a href="Introduction.html" accesskey="n" rel="next">Introduction</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h1 class="top" id="Binary-I_002fO-stream-class-library">Binary I/O stream class library</h1>
+
+<p>This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+</p>
+<p>Copyright &copy; 2002 - 2005, 2008 Simon Peter
+</p>
+<blockquote class="quotation">
+<p>Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being &ldquo;A GNU Manual,&rdquo;
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled &ldquo;GNU Free Documentation License.&rdquo;
+</p>
+<p>(a) The FSF&rsquo;s Back-Cover Text is: &ldquo;You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development.&rdquo;
+</p></blockquote>
+
+
+<div class="element-contents" id="SEC_Contents">
+<h2 class="contents-heading">Table of Contents</h2>
+
+<div class="contents">
+
+<ul class="toc-numbered-mark">
+  <li><a id="toc-Introduction-1" href="Introduction.html">1 Introduction</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Features-1" href="Features.html">1.1 Features</a></li>
+  </ul></li>
+  <li><a id="toc-Usage-1" href="Usage.html">2 Usage</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Basics-1" href="Basics.html">2.1 Basics</a></li>
+    <li><a id="toc-Files-1" href="Files.html">2.2 Files</a></li>
+    <li><a id="toc-Reading-and-Writing-1" href="Reading-and-Writing.html">2.3 Reading and Writing</a></li>
+    <li><a id="toc-Peeking-1" href="Peeking.html">2.4 Peeking</a></li>
+    <li><a id="toc-Seeking-1" href="Seeking.html">2.5 Seeking</a></li>
+    <li><a id="toc-Alien-architectures-1" href="Alien-architectures.html">2.6 Alien architectures</a></li>
+    <li><a id="toc-Wrapping-around-iostream-1" href="Wrapping-around-iostream.html">2.7 Wrapping around iostream</a></li>
+    <li><a id="toc-Errors-1" href="Errors.html">2.8 Errors</a></li>
+    <li><a id="toc-Creating-architecture_002dindependent-file-formats-1" href="Creating-architecture_002dindependent-file-formats.html">2.9 Creating architecture-independent file formats</a></li>
+    <li><a id="toc-Examples-1" href="Examples.html">2.10 Examples</a></li>
+  </ul></li>
+  <li><a id="toc-Reference-1" href="Reference.html">3 Reference</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-Concepts-1" href="Concepts.html">3.1 Concepts</a></li>
+    <li><a id="toc-Configuration-1" href="Configuration.html">3.2 Configuration</a></li>
+    <li><a id="toc-Base-classes-1" href="Base-classes.html">3.3 Base classes</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-binio-1" href="binio.html">3.3.1 binio</a></li>
+      <li><a id="toc-binistream-1" href="binistream.html">3.3.2 binistream</a></li>
+      <li><a id="toc-binostream-1" href="binostream.html">3.3.3 binostream</a></li>
+      <li><a id="toc-binstream-1" href="binstream.html">3.3.4 binstream</a></li>
+    </ul></li>
+    <li><a id="toc-File-streams-1" href="File-streams.html">3.4 File streams</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-binfbase-1" href="binfbase.html">3.4.1 binfbase</a></li>
+      <li><a id="toc-File-stream-classes-1" href="File-stream-classes.html">3.4.2 File stream classes</a></li>
+    </ul></li>
+    <li><a id="toc-String-streams-1" href="String-streams.html">3.5 String streams</a></li>
+    <li><a id="toc-iostream-wrappers-1" href="iostream-wrappers.html">3.6 iostream wrappers</a></li>
+  </ul></li>
+  <li><a id="toc-FAQ-1" href="FAQ.html">Appendix A FAQ</a></li>
+  <li><a id="toc-Copying-This-Manual-1" href="Copying-This-Manual.html">Appendix B Copying This Manual</a>
+  <ul class="toc-numbered-mark">
+    <li><a id="toc-GNU-Free-Documentation-License-1" href="GNU-Free-Documentation-License.html">B.1 GNU Free Documentation License</a>
+    <ul class="toc-numbered-mark">
+      <li><a id="toc-ADDENDUM_003a-How-to-use-this-License-for-your-documents" href="GNU-Free-Documentation-License.html#ADDENDUM_003a-How-to-use-this-License-for-your-documents">B.1.1 ADDENDUM: How to use this License for your documents</a></li>
+    </ul></li>
+  </ul></li>
+  <li><a id="toc-Concept-Index-1" href="Concept-Index.html" rel="index">Concept Index</a></li>
+  <li><a id="toc-Class-Index-1" href="Class-Index.html" rel="index">Class Index</a></li>
+  <li><a id="toc-Method-Index-1" href="Method-Index.html" rel="index">Method Index</a></li>
+  <li><a id="toc-Type_002c-Variable-and-Macro-Index" href="Type-Variable-and-Macro-Index.html" rel="index">Type, Variable and Macro Index</a></li>
+</ul>
+</div>
+</div>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Introduction.html" accesskey="n" rel="next">Introduction</a> &nbsp; [<a href="#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

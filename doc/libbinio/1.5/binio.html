@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>binio (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="binio (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="binio (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Base-classes.html" rel="up" title="Base classes">
+<link href="binistream.html" rel="next" title="binistream">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection-level-extent" id="binio">
+<div class="nav-panel">
+<p>
+Next: <a href="binistream.html" accesskey="n" rel="next">binistream</a>, Up: <a href="Base-classes.html" accesskey="u" rel="up">Base classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="binio-1">3.3.1 binio</h4>
+<a class="index-entry-id" id="index-binio"></a>
+
+<p><code class="code">binio</code> is the general base class, containing important method,
+type and variable declarations. As a user, you normally do not need it
+directly, except for scoping types and variables to it.
+</p>
+<h4 class="subheading" id="Header-file_003a-binio_002eh">Header file: <samp class="file">binio.h</samp></h4>
+
+<h4 class="subheading" id="Public-methods_003a">Public methods:</h4>
+
+<dl class="ftable">
+<dt id='index-binio_0028_0029'><span><code class="code">binio()</code><a class="copiable-link" href='#index-binio_0028_0029'> &para;</a></span></dt>
+<dd><p>The constructor.
+</p>
+</dd>
+<dt id='index-_007ebinio_0028_0029'><span><code class="code">~binio()</code><a class="copiable-link" href='#index-_007ebinio_0028_0029'> &para;</a></span></dt>
+<dd><p>The destructor.
+</p>
+</dd>
+<dt id='index-void-setFlag_0028Flag-f_002c-bool-set-_003d-true_0029'><span><code class="code">void setFlag(Flag f, bool set = true)</code><a class="copiable-link" href='#index-void-setFlag_0028Flag-f_002c-bool-set-_003d-true_0029'> &para;</a></span></dt>
+<dd><p>Is used to set or erase flags to change the behaviour of the
+stream. Available flags and their meaning are listed in the types
+table for this class, below. The optional argument <code class="code">set</code> is used
+to set or erase the specified flag. If it is not specified, it
+defaults to <code class="code">true</code>, setting (activating) the specified flag.
+</p>
+</dd>
+<dt id='index-bool-getFlag_0028Flag-f_0029'><span><code class="code">bool getFlag(Flag f)</code><a class="copiable-link" href='#index-bool-getFlag_0028Flag-f_0029'> &para;</a></span></dt>
+<dd><p>Returns whether the specified flag is set (active) or not. Refer to
+<code class="code">setFlag</code>, above, for more information.
+</p>
+</dd>
+<dt id='index-Error-error_0028_0029'><span><code class="code">Error error()</code><a class="copiable-link" href='#index-Error-error_0028_0029'> &para;</a></span></dt>
+<dd><p>Returns the current error status of the stream. A status of no error
+is always indicated with a value of &lsquo;<samp class="samp">0</samp>&rsquo;, as to allow easy error
+checks with a simple <code class="code">if</code> construct.
+</p>
+</dd>
+<dt id='index-bool-eof_0028_0029'><span><code class="code">bool eof()</code><a class="copiable-link" href='#index-bool-eof_0028_0029'> &para;</a></span></dt>
+<dd><p>Returns &lsquo;<samp class="samp">true</samp>&rsquo; if the last access to the stream was unsuccessful
+because the stream pointer was already past the end of the
+stream. &lsquo;<samp class="samp">false</samp>&rsquo; is returned otherwise. Synonymous to checking if
+the return value of a call to <code class="code">error()</code> sets the <code class="code">Eof</code> error
+code flag.
+</p>
+</dd>
+<dt id='index-virtual-void-seek_0028long_002c-Offset-_003d-Set_0029'><span><code class="code">virtual void seek(long, Offset = Set)</code><a class="copiable-link" href='#index-virtual-void-seek_0028long_002c-Offset-_003d-Set_0029'> &para;</a></span></dt>
+<dd><p>Abstract virtual method for seeking into streams. Implemented by the
+stream layer. The first argument specifies the relative position to
+seek to. Use a negative value to seek backwards. The optional second
+argument specifies from where to start seeking. <code class="code">Set</code> specifies
+the beginning of a stream, <code class="code">Add</code> specifies the current position
+and <code class="code">End</code> specifies the end of the stream. If it is omitted, it
+defaults to <code class="code">Set</code>, seeking from the beginning of the stream.
+</p>
+</dd>
+<dt id='index-virtual-long-pos_0028_0029'><span><code class="code">virtual long pos()</code><a class="copiable-link" href='#index-virtual-long-pos_0028_0029'> &para;</a></span></dt>
+<dd><p>Abstract virtual method that returns the current position inside the
+stream. Implemented by the stream layer.
+</p></dd>
+</dl>
+
+<h4 class="subheading" id="Protected-methods_003a">Protected methods:</h4>
+
+<dl class="ftable">
+<dt id='index-Float-pow_0028Float-base_002c-signed-int-exp_0029'><span><code class="code">Float pow(Float base, signed int exp)</code><a class="copiable-link" href='#index-Float-pow_0028Float-base_002c-signed-int-exp_0029'> &para;</a></span></dt>
+<dd><p>Is a stripped-down version of the <code class="code">pow()</code> function from the
+<samp class="file">math.h</samp> standard C math library include file. It is used during
+conversion between floating-point formats and can calculate powers of
+a floating-point base argument, using a signed integer exponent.
+</p></dd>
+</dl>
+
+<h4 class="subheading" id="Public-data-types-and-variables_003a">Public data types and variables:</h4>
+
+<dl class="vtable">
+<dt id='index-enum-Flag'><span><code class="code">enum Flag</code><a class="copiable-link" href='#index-enum-Flag'> &para;</a></span></dt>
+<dd><p>Enumeration of all defined stream flags that can be set using the
+<code class="code">setFlag()</code> and <code class="code">getFlag()</code> methods. This type defines the
+following values:
+</p>
+<dl class="vtable">
+<dt id='index-BigEndian'><span><code class="code">BigEndian</code><a class="copiable-link" href='#index-BigEndian'> &para;</a></span></dt>
+<dd><p>If set, sets the stream&rsquo;s byte-ordering to big endian
+notation. Otherwise, little endian notation is used.
+</p>
+</dd>
+<dt id='index-FloatIEEE'><span><code class="code">FloatIEEE</code><a class="copiable-link" href='#index-FloatIEEE'> &para;</a></span></dt>
+<dd><p>If set, all floating-point access to the stream will assume
+<abbr class="acronym">IEEE-754</abbr> standardized floating-point numbers. Only this type
+of data is expected from and written to the stream.
+</p>
+<p>If your architecture does not support <abbr class="acronym">IEEE-754</abbr>
+floating-point numbers, the value will be converted. Various
+conversion errors can occur and sometimes the conversion is not
+possible at all. In this case, the <code class="code">Unsupported</code> error is issued
+and a specific value is returned. The following table summarizes all
+possible return codes for certain problematic values:
+</p>
+<table class="multitable">
+<tbody><tr><td>Real value</td><td>Return value</td></tr>
+<tr><td>&lsquo;<samp class="samp">Infinity</samp>&rsquo;</td><td>&lsquo;<samp class="samp">1.0</samp>&rsquo;</td></tr>
+<tr><td>&lsquo;<samp class="samp">-Infinity</samp>&rsquo;</td><td>&lsquo;<samp class="samp">-1.0</samp>&rsquo;</td></tr>
+<tr><td>&lsquo;<samp class="samp">Not a Number (NaN)</samp>&rsquo;</td><td>&lsquo;<samp class="samp">0.0</samp>&rsquo;</td></tr>
+</tbody>
+</table>
+
+<p>Both positive and negative zero (&lsquo;<samp class="samp">0</samp>&rsquo;) are mapped to the same zero
+value, if your architecture does not support both positive and
+negative zeroes. There is no way to distinguish between the two values
+in this case.
+</p>
+</dd>
+</dl>
+
+</dd>
+<dt id='index-enum-ErrorCode'><span><code class="code">enum ErrorCode</code><a class="copiable-link" href='#index-enum-ErrorCode'> &para;</a></span></dt>
+<dd><p>Enumeration of all possible error values. This type defines the
+following values:
+</p>
+<dl class="vtable">
+<dt id='index-NoError'><span><code class="code">NoError</code><a class="copiable-link" href='#index-NoError'> &para;</a></span></dt>
+<dd><p>No error at all. This is always mapped to an integer value of
+&lsquo;<samp class="samp">0</samp>&rsquo;.
+</p>
+</dd>
+<dt id='index-Fatal'><span><code class="code">Fatal</code><a class="copiable-link" href='#index-Fatal'> &para;</a></span></dt>
+<dd><p>An unspecified, fatal error occured. This error is issued only if
+something really strange happened (i.e. on internal logic errors in
+the library, or if something else, undefined happens, etc.). It is
+advised to immediately terminate any binary stream I/O activity and
+fail with an error message to the application user, maybe even
+terminate the application completely.
+</p>
+</dd>
+<dt id='index-Unsupported'><span><code class="code">Unsupported</code><a class="copiable-link" href='#index-Unsupported'> &para;</a></span></dt>
+<dd><p>You tried to access stream data in an unsupported way. This error is
+issued whenever an (explicit or implicit) conversion between two types
+of data storage is requested, that isn&rsquo;t supported by libbinio yet.
+</p>
+</dd>
+<dt id='index-NotOpen'><span><code class="code">NotOpen</code><a class="copiable-link" href='#index-NotOpen'> &para;</a></span></dt>
+<dd><p>The stream you tried to access is not open yet.
+</p>
+</dd>
+<dt id='index-Denied'><span><code class="code">Denied</code><a class="copiable-link" href='#index-Denied'> &para;</a></span></dt>
+<dd><p>Access to this stream is denied. This error is normally issued when
+you try to open a file on a filesystem, but you have insufficient
+rights to access it.
+</p>
+</dd>
+<dt id='index-NotFound'><span><code class="code">NotFound</code><a class="copiable-link" href='#index-NotFound'> &para;</a></span></dt>
+<dd><p>The stream you tried to access was not found. This is mostly issued
+on a file not found error, when accessing normal files on a
+filesystem.
+</p>
+</dd>
+<dt id='index-Eof'><span><code class="code">Eof</code><a class="copiable-link" href='#index-Eof'> &para;</a></span></dt>
+<dd><p>The end of the stream has been passed. Issued when you tried to read
+past the last byte of a stream.
+</p></dd>
+</dl>
+
+</dd>
+<dt id='index-enum-Offset'><span><code class="code">enum Offset</code><a class="copiable-link" href='#index-enum-Offset'> &para;</a></span></dt>
+<dd><p>Specifies the position inside a stream, from where a seek is started
+with the <code class="code">seek()</code> method. This type defines the following values:
+</p>
+<dl class="vtable">
+<dt id='index-Set'><span><code class="code">Set</code><a class="copiable-link" href='#index-Set'> &para;</a></span></dt>
+<dd><p>Start seeking at the beginning of the stream.
+</p>
+</dd>
+<dt id='index-Add'><span><code class="code">Add</code><a class="copiable-link" href='#index-Add'> &para;</a></span></dt>
+<dd><p>Start seeking from the current position in the stream.
+</p>
+</dd>
+<dt id='index-End'><span><code class="code">End</code><a class="copiable-link" href='#index-End'> &para;</a></span></dt>
+<dd><p>Start seeking from the end of the stream.
+</p></dd>
+</dl>
+
+</dd>
+<dt id='index-enum-FType'><span><code class="code">enum FType</code><a class="copiable-link" href='#index-enum-FType'> &para;</a></span></dt>
+<dd><p>Specifies what type of floating-point number is to be accessed next,
+using the <code class="code">readFloat()</code> or <code class="code">writeFloat()</code> methods. Most
+floating-point formats specify multiple data types to support a
+broader range of precision. libbinio generalizes the idea by
+categorizing them only into single and double precision numbers. This
+type defines the following values:
+</p>
+<dl class="vtable">
+<dt id='index-Single'><span><code class="code">Single</code><a class="copiable-link" href='#index-Single'> &para;</a></span></dt>
+<dd><p>Access a single precision floating-point number.
+</p>
+</dd>
+<dt id='index-Double'><span><code class="code">Double</code><a class="copiable-link" href='#index-Double'> &para;</a></span></dt>
+<dd><p>Access a double precision floating-point number.
+</p></dd>
+</dl>
+
+</dd>
+<dt id='index-int-Error'><span><code class="code">int Error</code><a class="copiable-link" href='#index-int-Error'> &para;</a></span></dt>
+<dd><p>This integer holds a bit field of all error values for a
+stream. Returned by <code class="code">error()</code>. A status of &ldquo;no error&rdquo; is always
+indicated when the whole field is set to &lsquo;<samp class="samp">0</samp>&rsquo; (zero), i.e. the
+integer is &lsquo;<samp class="samp">0</samp>&rsquo;. Test for an error by binary or&rsquo;ing this integer
+with one of the error values from <code class="code">ErrorCode</code>.
+</p></dd>
+</dl>
+
+<h4 class="subheading" id="Protected-data-types-and-variables_003a">Protected data types and variables:</h4>
+
+<dl class="vtable">
+<dt id='index-Int'><span><code class="code">Int</code><a class="copiable-link" href='#index-Int'> &para;</a></span></dt>
+<dd><p>The largest integer type supported by the architecture.
+</p>
+</dd>
+<dt id='index-Float'><span><code class="code">Float</code><a class="copiable-link" href='#index-Float'> &para;</a></span></dt>
+<dd><p>The largest floating-point type supported by the architecture.
+</p>
+</dd>
+<dt id='index-Byte'><span><code class="code">Byte</code><a class="copiable-link" href='#index-Byte'> &para;</a></span></dt>
+<dd><p>This type is always one byte (8 bits) wide.
+</p>
+</dd>
+<dt id='index-Flags-1'><span><code class="code">Flags</code><a class="copiable-link" href='#index-Flags-1'> &para;</a></span></dt>
+<dd><p>Type to hold a flag variable, containing the status of all flags of a
+stream.
+</p>
+</dd>
+<dt id='index-Flags-my_005fflags'><span><code class="code">Flags my_flags</code><a class="copiable-link" href='#index-Flags-my_005fflags'> &para;</a></span></dt>
+<dd><p>This variable holds the current status of all flags for the stream.
+</p>
+</dd>
+<dt id='index-static-const-Flags-system_005fflags'><span><code class="code">static const Flags system_flags</code><a class="copiable-link" href='#index-static-const-Flags-system_005fflags'> &para;</a></span></dt>
+<dd><p>This variable holds the status of the flags, defining the standard
+behaviour of the system. This is determined once at runtime, at
+startup of the library.
+</p>
+</dd>
+<dt id='index-Error-err'><span><code class="code">Error err</code><a class="copiable-link" href='#index-Error-err'> &para;</a></span></dt>
+<dd><p>This variable holds the error status of a stream.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="binistream.html">binistream</a>, Up: <a href="Base-classes.html">Base classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

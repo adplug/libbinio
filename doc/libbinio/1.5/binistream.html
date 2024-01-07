@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>binistream (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="binistream (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="binistream (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Base-classes.html" rel="up" title="Base classes">
+<link href="binostream.html" rel="next" title="binostream">
+<link href="binio.html" rel="prev" title="binio">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection-level-extent" id="binistream">
+<div class="nav-panel">
+<p>
+Next: <a href="binostream.html" accesskey="n" rel="next">binostream</a>, Previous: <a href="binio.html" accesskey="p" rel="prev">binio</a>, Up: <a href="Base-classes.html" accesskey="u" rel="up">Base classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="binistream-1">3.3.2 binistream</h4>
+<a class="index-entry-id" id="index-binistream"></a>
+
+<p><code class="code">binistream</code> provides an input-only binary stream.
+</p>
+<h4 class="subheading" id="Header-file_003a-binio_002eh-1">Header file: <samp class="file">binio.h</samp></h4>
+
+<h4 class="subheading" id="Public-methods_003a-1">Public methods:</h4>
+
+<dl class="ftable">
+<dt id='index-binistream_0028_0029'><span><code class="code">binistream()</code><a class="copiable-link" href='#index-binistream_0028_0029'> &para;</a></span></dt>
+<dd><p>The constructor.
+</p>
+</dd>
+<dt id='index-_007ebinistream_0028_0029'><span><code class="code">~binistream()</code><a class="copiable-link" href='#index-_007ebinistream_0028_0029'> &para;</a></span></dt>
+<dd><p>The destructor.
+</p>
+</dd>
+<dt id='index-Int-readInt_0028unsigned-int-size_0029'><span><code class="code">Int readInt(unsigned int size)</code><a class="copiable-link" href='#index-Int-readInt_0028unsigned-int-size_0029'> &para;</a></span></dt>
+<dd><p>Reads an integer of size <code class="code">size</code> (in bytes) from the stream and
+returns it. The return value is undefined if an error occured. The
+maximum number of bytes that can be read at once equals the size (in
+bytes) of the largest integer type, supported by the system.
+</p>
+</dd>
+<dt id='index-Float-readFloat_0028FType-ft_0029'><span><code class="code">Float readFloat(FType ft)</code><a class="copiable-link" href='#index-Float-readFloat_0028FType-ft_0029'> &para;</a></span></dt>
+<dd><p>Reads a floating-point number from the stream and returns it. Takes
+the floating-point format to read as the argument <code class="code">ft</code>. Refer to
+the list of public types of the <code class="code">binio</code> class for information
+about what floating-point formats are supported. The return value is
+undefined if an error occured. The value from the stream is always
+rendered to the biggest floating-point type, supported by the system.
+</p>
+<p>If your architecture is incompatible with the floating-point number
+that has just been read, <code class="code">readFloat()</code> tries to convert it. This
+is sometimes not possible or not as accurate as the original value and
+an error will be issued in these cases. Refer to the list of public
+types of the <code class="code">binio</code> class for information about what errors
+could be issued.
+</p>
+</dd>
+<dt id='index-unsigned-long-readString_0028char-_002astr_002c-unsigned-long-maxlen_002c-const-char-delim_0029'><span><code class="code">unsigned long readString(char *str, unsigned long maxlen, const char delim)</code><a class="copiable-link" href='#index-unsigned-long-readString_0028char-_002astr_002c-unsigned-long-maxlen_002c-const-char-delim_0029'> &para;</a></span></dt>
+<dt id='index-std_003a_003astring-readString_0028const-char-delim-_003d-_0027_005c0_0027_0029'><span><code class="code">std::string readString(const char delim = '\0')</code><a class="copiable-link" href='#index-std_003a_003astring-readString_0028const-char-delim-_003d-_0027_005c0_0027_0029'> &para;</a></span></dt>
+<dd><p>Reads a character string from the stream. Both pre-allocated standard
+C <abbr class="acronym">ASCIIZ</abbr> strings and <abbr class="acronym">STL</abbr> <code class="code">string</code> objects are
+supported.
+</p>
+<p>The <abbr class="acronym">ASCIIZ</abbr> version takes a pointer to the pre-allocated
+string buffer as the <code class="code">str</code> argument. <code class="code">maxlen</code> specifies the
+maximum number of characters to be read from the stream (<em class="emph">not</em>
+including the trailing &lsquo;<samp class="samp">\0</samp>&rsquo; that is always appended to the string
+buffer). The optional argument <code class="code">delim</code> is a delimiter
+character. If this character is encountered in the stream, no more
+characters will be read. The delimiter character itself is
+discarded. It will not appear in the final string. If the <code class="code">delim</code>
+argument is omitted, always up to <code class="code">maxlen</code> characters are read.
+</p>
+<p>The <code class="code">string</code> object version just takes one optional argument, the
+delimiter character, explained above. Characters are always read until
+the delimiter character or the end of the stream is encountered. If
+<code class="code">delim</code> is omitted, it defaults to &lsquo;<samp class="samp">\0</samp>&rsquo;. It returns a
+<code class="code">string</code> object, containing the final string.
+</p>
+</dd>
+<dt id='index-Int-peekInt_0028unsigned-int-size_0029'><span><code class="code">Int peekInt(unsigned int size)</code><a class="copiable-link" href='#index-Int-peekInt_0028unsigned-int-size_0029'> &para;</a></span></dt>
+<dd><p>Like <code class="code">readInt()</code>, but doesn&rsquo;t modify the stream position, so any
+later access to the stream will appear as if <code class="code">peekInt()</code> has
+never been called.
+</p>
+</dd>
+<dt id='index-Float-peekFloat_0028FType-ft_0029'><span><code class="code">Float peekFloat(FType ft)</code><a class="copiable-link" href='#index-Float-peekFloat_0028FType-ft_0029'> &para;</a></span></dt>
+<dd><p>Like <code class="code">readFloat()</code>, but doesn&rsquo;t modify the stream position, so
+any later access to the stream will appear as if <code class="code">peekFloat()</code>
+has never been called.
+</p>
+</dd>
+<dt id='index-bool-ateof_0028_0029'><span><code class="code">bool ateof()</code><a class="copiable-link" href='#index-bool-ateof_0028_0029'> &para;</a></span></dt>
+<dd><p>Returns &lsquo;<samp class="samp">true</samp>&rsquo; if the current stream position is at the last byte
+of the stream. &lsquo;<samp class="samp">false</samp>&rsquo; is returned otherwise.
+</p>
+</dd>
+<dt id='index-void-ignore_0028unsigned-long-amount-_003d-1_0029'><span><code class="code">void ignore(unsigned long amount = 1)</code><a class="copiable-link" href='#index-void-ignore_0028unsigned-long-amount-_003d-1_0029'> &para;</a></span></dt>
+<dd><p>Reads and then immediately discards the specified amount of bytes from
+the stream. If the optional argument <code class="code">amount</code> is omitted, it
+defaults to &lsquo;<samp class="samp">1</samp>&rsquo;, ignoring exactly 1 byte from the stream.
+</p></dd>
+</dl>
+
+<h4 class="subheading" id="Protected-methods_003a-1">Protected methods:</h4>
+
+<dl class="ftable">
+<dt id='index-virtual-Byte-getByte_0028_0029'><span><code class="code">virtual Byte getByte()</code><a class="copiable-link" href='#index-virtual-Byte-getByte_0028_0029'> &para;</a></span></dt>
+<dd><p>Abstract virtual method to extract exactly one byte (8 bits) from the
+stream and advance stream pointer accordingly. The byte is
+returned. Implemented by the stream layer.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="binostream.html">binostream</a>, Previous: <a href="binio.html">binio</a>, Up: <a href="Base-classes.html">Base classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

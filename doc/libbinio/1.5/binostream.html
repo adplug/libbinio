@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>binostream (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="binostream (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="binostream (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Base-classes.html" rel="up" title="Base classes">
+<link href="binstream.html" rel="next" title="binstream">
+<link href="binistream.html" rel="prev" title="binistream">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="subsection-level-extent" id="binostream">
+<div class="nav-panel">
+<p>
+Next: <a href="binstream.html" accesskey="n" rel="next">binstream</a>, Previous: <a href="binistream.html" accesskey="p" rel="prev">binistream</a>, Up: <a href="Base-classes.html" accesskey="u" rel="up">Base classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h4 class="subsection" id="binostream-1">3.3.3 binostream</h4>
+<a class="index-entry-id" id="index-binostream"></a>
+
+<p><code class="code">binostream</code> provides an output-only binary stream.
+</p>
+<h4 class="subheading" id="Header-file_003a-binio_002eh-2">Header file: <samp class="file">binio.h</samp></h4>
+
+<h4 class="subheading" id="Public-methods_003a-2">Public methods:</h4>
+
+<dl class="ftable">
+<dt id='index-binostream_0028_0029'><span><code class="code">binostream()</code><a class="copiable-link" href='#index-binostream_0028_0029'> &para;</a></span></dt>
+<dd><p>The constructor.
+</p>
+</dd>
+<dt id='index-_007ebinostream_0028_0029'><span><code class="code">~binostream()</code><a class="copiable-link" href='#index-_007ebinostream_0028_0029'> &para;</a></span></dt>
+<dd><p>The destructor.
+</p>
+</dd>
+<dt id='index-void-writeInt_0028Int-val_002c-unsigned-int-size_0029_003b'><span><code class="code">void writeInt(Int val, unsigned int size);</code><a class="copiable-link" href='#index-void-writeInt_0028Int-val_002c-unsigned-int-size_0029_003b'> &para;</a></span></dt>
+<dd><p>Writes the integer value <code class="code">val</code> of size <code class="code">size</code> (in bytes) to
+the stream.
+</p>
+</dd>
+<dt id='index-void-writeFloat_0028Float-f_002c-FType-ft_0029_003b'><span><code class="code">void writeFloat(Float f, FType ft);</code><a class="copiable-link" href='#index-void-writeFloat_0028Float-f_002c-FType-ft_0029_003b'> &para;</a></span></dt>
+<dd><p>Writes the floating-point value <code class="code">f</code> of type <code class="code">ft</code> to the
+stream. Refer to the list of public types of the <code class="code">binio</code> class
+for information about what floating-point formats are supported.
+</p>
+<p>If the requested floating-point type is not supported by your
+architecture, <code class="code">writeFloat()</code> tries to convert it. This is not
+always possible and an <code class="code">Unsupported</code> error is issued if the
+conversion fails and nothing is written to the stream in this case.
+</p>
+</dd>
+<dt id='index-unsigned-long-writeString_0028const-char-_002astr_002c-unsigned-long-amount-_003d-0_0029_003b'><span><code class="code">unsigned long writeString(const char *str, unsigned long amount = 0);</code><a class="copiable-link" href='#index-unsigned-long-writeString_0028const-char-_002astr_002c-unsigned-long-amount-_003d-0_0029_003b'> &para;</a></span></dt>
+<dt id='index-unsigned-long-writeString_0028const-std_003a_003astring-_0026str_0029_003b'><span><code class="code">unsigned long writeString(const std::string &amp;str);</code><a class="copiable-link" href='#index-unsigned-long-writeString_0028const-std_003a_003astring-_0026str_0029_003b'> &para;</a></span></dt>
+<dd><p>Writes a character string to the stream. Both standard C
+<abbr class="acronym">ASCIIZ</abbr> strings and <abbr class="acronym">STL</abbr> <code class="code">string</code> objects are
+supported.
+</p>
+<p>The standard C version takes a pointer <code class="code">str</code> to the
+<abbr class="acronym">ASCIIZ</abbr> string to write as first argument and an optional
+second argument <code class="code">amount</code>, which specifies the number of
+characters to write from that string. If it is omitted, the whole
+string is written to the stream.
+</p>
+<p>For the <code class="code">string</code> object version, the only argument is the
+<code class="code">string</code> object, containing the string to write.
+</p>
+<p>Both methods return the number of characters actually written to the
+stream (which should only differ from the value you wanted to write
+when an error occured).
+</p></dd>
+</dl>
+
+<h4 class="subheading" id="Protected-methods_003a-2">Protected methods:</h4>
+
+<dl class="ftable">
+<dt id='index-virtual-void-putByte_0028Byte_0029'><span><code class="code">virtual void putByte(Byte)</code><a class="copiable-link" href='#index-virtual-void-putByte_0028Byte_0029'> &para;</a></span></dt>
+<dd><p>Abstract virtual method to insert exactly one byte (8 bits) into the
+stream and advance the stream pointer accordingly. The byte to be
+written is passed as the only argument. Implemented by the stream
+layer.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="binstream.html">binstream</a>, Previous: <a href="binistream.html">binistream</a>, Up: <a href="Base-classes.html">Base classes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

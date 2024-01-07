@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>FAQ (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="FAQ (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="FAQ (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Copying-This-Manual.html" rel="next" title="Copying This Manual">
+<link href="Reference.html" rel="prev" title="Reference">
+<style type="text/css">
+<!--
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="appendix-level-extent" id="FAQ">
+<div class="nav-panel">
+<p>
+Next: <a href="Copying-This-Manual.html" accesskey="n" rel="next">Copying This Manual</a>, Previous: <a href="Reference.html" accesskey="p" rel="prev">Reference</a>, Up: <a href="index.html" accesskey="u" rel="up">Binary I/O stream class library</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h2 class="appendix" id="FAQ-1">Appendix A FAQ</h2>
+<a class="index-entry-id" id="index-FAQ"></a>
+
+<ul class="itemize mark-bullet">
+<li>Q: Why don&rsquo;t you supply general data block I/O methods, taking
+<code class="code">void</code> pointers as arguments, so i can read all my data into a
+<code class="code">struct</code> at once?
+</li><li>A: This, in general, is a broken idea. It only makes sense if
+you plan to write your program for only one architecture and want a
+fast way to read your whole data into memory. This is not what
+libbinio was meant for, so such methods will never be
+implemented. libbinio cannot know what data types your <code class="code">struct</code>
+is made of and thus cannot do any transparent data conversion. And
+there&rsquo;s even more: Most compilers align their <code class="code">struct</code>s to a
+special multiple of bytes (mostly the current architecture&rsquo;s data word
+size). libbinio doesn&rsquo;t (and cannot) know about all this and would
+just read the data byte by byte, completely ignoring the alignment and
+causing you to be unable to read any of your data.
+
+</li><li>Q: Why haven&rsquo;t you implemented error reporting using exceptions,
+instead of this darn <code class="code">error()</code> method polling?
+</li><li>A: Because exceptions aren&rsquo;t supported on all compiler
+platforms.
+</li></ul>
+
+</div>
+
+
+
+</body>
+</html>

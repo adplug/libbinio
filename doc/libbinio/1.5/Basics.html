@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Basics (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Basics (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Basics (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Files.html" rel="next" title="Files">
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Basics">
+<div class="nav-panel">
+<p>
+Next: <a href="Files.html" accesskey="n" rel="next">Files</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Basics-1">2.1 Basics</h3>
+<a class="index-entry-id" id="index-Basics"></a>
+
+<p>The binary stream class framework divides streams into
+<a class="index-entry-id" id="index-input_002donly"></a>
+<em class="dfn">input-only</em>,
+<a class="index-entry-id" id="index-output_002donly"></a>
+<em class="dfn">output-only</em> and
+<a class="index-entry-id" id="index-input_002foutput"></a>
+<em class="dfn">input/output</em> supporting
+streams. All derived classes also inherit this partition.
+</p>
+<p>All derived classes that come with the library follow a uniform naming
+scheme. You can identify what I/O facilities a stream provides, by
+looking at the class name. All class names of libbinio start with
+&lsquo;<samp class="samp">bin</samp>&rsquo; and end with a descriptive name of what they are meant
+for. In between is at most one character that describes what I/O
+functionality is provided. If this character is an &lsquo;<samp class="samp">i</samp>&rsquo;, the class
+provides input-only streams, &lsquo;<samp class="samp">o</samp>&rsquo; means output-only and no
+character indicates both input and output facilities.
+</p>
+<p>For example, <code class="code">binifstream</code> is an input-only binary stream for
+standard file access. <code class="code">binstream</code> is the general input and output
+supporting stream.
+</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Creating architecture-independent file formats (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Creating architecture-independent file formats (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Creating architecture-independent file formats (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Examples.html" rel="next" title="Examples">
+<link href="Errors.html" rel="prev" title="Errors">
+<style type="text/css">
+<!--
+div.example {margin-left: 3.2em}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Creating-architecture_002dindependent-file-formats">
+<div class="nav-panel">
+<p>
+Next: <a href="Examples.html" accesskey="n" rel="next">Examples</a>, Previous: <a href="Errors.html" accesskey="p" rel="prev">Errors</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Creating-architecture_002dindependent-file-formats-1">2.9 Creating architecture-independent file formats</h3>
+<a class="index-entry-id" id="index-Creating-architecture_002dindependent-file-formats"></a>
+
+<p>libbinio does not inherently support any specific file format. This is
+considered a feature, as it also does not impose any file format upon
+the user.
+</p>
+<p>It is, however, very easy to create your own architecture-independent
+file format or enhance a file format to make it architecture-independent
+on top of libbinio, by creating wrapper classes that you use to access
+your streams.
+</p>
+<p>Here is an example that inserts a two byte header in front of your file
+format to make it architecture-independent:
+</p>
+<div class="example">
+<pre class="example-preformatted">class myifstream: public binifstream
+{
+public:
+  void open(const char *filename, const Mode mode = NoCreate)
+  {
+    binifstream::open(filename, mode);
+
+    setFlag(binio::BigEndian, getByte());
+    setFlag(binio::FloatIEEE, getByte());
+  }
+};
+
+class myofstream: public binofstream
+{
+public:
+  void open(const char *filename, const Mode mode = NoCreate)
+  {
+    binofstream::open(filename, mode);
+
+    putByte(getFlag(binio::BigEndian));
+    putByte(getFlag(binio::FloatIEEE));
+  }
+};
+</pre></div>
+
+<p>You can use these new classes as usual.
+</p>
+</div>
+
+
+
+</body>
+</html>

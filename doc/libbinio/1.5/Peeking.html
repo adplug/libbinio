@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Peeking (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Peeking (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Peeking (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Seeking.html" rel="next" title="Seeking">
+<link href="Reading-and-Writing.html" rel="prev" title="Reading and Writing">
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Peeking">
+<div class="nav-panel">
+<p>
+Next: <a href="Seeking.html" accesskey="n" rel="next">Seeking</a>, Previous: <a href="Reading-and-Writing.html" accesskey="p" rel="prev">Reading and Writing</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Peeking-1">2.4 Peeking</h3>
+
+<p>Analogous to the <code class="code">readInt()</code> and <code class="code">readFloat()</code> methods are
+the <code class="code">peekInt(<var class="var">size</var>)</code> and <code class="code">peekFloat(<var class="var">type</var>)</code>
+methods, that take the same arguments and also read an integer or a
+floating-point number from the stream. Unlike their &ldquo;<code class="code">read</code>&rdquo;
+counterparts, they don&rsquo;t modify the stream position. The next &ldquo;real&rdquo;
+access (i.e. with one of the <code class="code">read</code> methods) to the stream will
+continue as if the <code class="code">peek</code> methods have never been called.
+</p>
+</div>
+
+
+
+</body>
+</html>

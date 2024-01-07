@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>String streams (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="String streams (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="String streams (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Reference.html" rel="up" title="Reference">
+<link href="iostream-wrappers.html" rel="next" title="iostream wrappers">
+<link href="File-streams.html" rel="prev" title="File streams">
+<style type="text/css">
+<!--
+a.copiable-link {visibility: hidden; text-decoration: none; line-height: 0em}
+span:hover a.copiable-link {visibility: visible}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="String-streams">
+<div class="nav-panel">
+<p>
+Next: <a href="iostream-wrappers.html" accesskey="n" rel="next">iostream wrappers</a>, Previous: <a href="File-streams.html" accesskey="p" rel="prev">File streams</a>, Up: <a href="Reference.html" accesskey="u" rel="up">Reference</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="String-streams-1">3.5 String streams</h3>
+<a class="index-entry-id" id="index-String-streams"></a>
+<a class="index-entry-id" id="index-binisstream"></a>
+<a class="index-entry-id" id="index-binosstream"></a>
+<a class="index-entry-id" id="index-binsstream"></a>
+<a class="index-entry-id" id="index-binsbase"></a>
+
+<p>The string stream classes provide a means of turning arbitrary strings
+(or &ldquo;blocks&rdquo;) in memory into a binary stream, similary to what
+<code class="code">strstream</code> does in the iostream library.
+</p>
+<p>Unlike <code class="code">strstream</code> from the iostream library, these streams
+<em class="emph">do not</em> support automatic enlarging of the memory area. If the
+user tries to write beyond the end of the stream, nothing is actually
+written and an <code class="code">Eof</code> error is issued.
+</p>
+<h4 class="subheading" id="Header-file_003a-binstr_002eh">Header file: <samp class="file">binstr.h</samp></h4>
+
+<h4 class="subheading" id="Public-methods_003a-5">Public methods:</h4>
+
+<dl class="ftable">
+<dt id='index-binsbase_0028void-_002astr_002c-unsigned-long-len_0029'><span><code class="code">binsbase(void *str, unsigned long len)</code><a class="copiable-link" href='#index-binsbase_0028void-_002astr_002c-unsigned-long-len_0029'> &para;</a></span></dt>
+<dt id='index-binisstream_0028void-_002astr_002c-unsigned-long-len_0029'><span><code class="code">binisstream(void *str, unsigned long len)</code><a class="copiable-link" href='#index-binisstream_0028void-_002astr_002c-unsigned-long-len_0029'> &para;</a></span></dt>
+<dt id='index-binosstream_0028void-_002astr_002c-unsigned-long-len_0029'><span><code class="code">binosstream(void *str, unsigned long len)</code><a class="copiable-link" href='#index-binosstream_0028void-_002astr_002c-unsigned-long-len_0029'> &para;</a></span></dt>
+<dt id='index-binsstream_0028void-_002astr_002c-unsigned-long-len_0029'><span><code class="code">binsstream(void *str, unsigned long len)</code><a class="copiable-link" href='#index-binsstream_0028void-_002astr_002c-unsigned-long-len_0029'> &para;</a></span></dt>
+<dd><p>All constructors take two arguments. <code class="code">str</code> is a pointer to a
+previously initialized data string in memory. <code class="code">len</code> specifies the
+length in bytes of the string.
+</p>
+</dd>
+<dt id='index-_007ebinsbase_0028_0029'><span><code class="code">~binsbase()</code><a class="copiable-link" href='#index-_007ebinsbase_0028_0029'> &para;</a></span></dt>
+<dt id='index-_007ebinisstream_0028_0029'><span><code class="code">~binisstream()</code><a class="copiable-link" href='#index-_007ebinisstream_0028_0029'> &para;</a></span></dt>
+<dt id='index-_007ebinosstream_0028_0029'><span><code class="code">~binosstream()</code><a class="copiable-link" href='#index-_007ebinosstream_0028_0029'> &para;</a></span></dt>
+<dt id='index-_007ebinsstream_0028_0029'><span><code class="code">~binsstream()</code><a class="copiable-link" href='#index-_007ebinsstream_0028_0029'> &para;</a></span></dt>
+<dd><p>All deconstructors.
+</p>
+</dd>
+<dt id='index-virtual-void-seek_0028long-pos_002c-Offset-offs-_003d-Set_0029'><span><code class="code">virtual void seek(long pos, Offset offs = Set)</code><a class="copiable-link" href='#index-virtual-void-seek_0028long-pos_002c-Offset-offs-_003d-Set_0029'> &para;</a></span></dt>
+<dt id='index-virtual-long-pos_0028_0029-1'><span><code class="code">virtual long pos()</code><a class="copiable-link" href='#index-virtual-long-pos_0028_0029-1'> &para;</a></span></dt>
+<dd><p>Implementation of the abstract virtual methods, inherited from
+<code class="code">binio</code>. Refer to the reference of that class for more
+information.
+</p></dd>
+</dl>
+
+<h4 class="subheading" id="Protected-data-types-and-variables-in-binsbase_003a">Protected data types and variables in <code class="code">binsbase</code>:</h4>
+
+<dl class="vtable">
+<dt id='index-Byte-_002adata'><span><code class="code">Byte *data</code><a class="copiable-link" href='#index-Byte-_002adata'> &para;</a></span></dt>
+<dd><p>This pointer is always pointing to the beginning of the initialized
+data string in memory, passed to the constructor.
+</p></dd>
+<dt id='index-Byte-_002aspos'><span><code class="code">Byte *spos</code><a class="copiable-link" href='#index-Byte-_002aspos'> &para;</a></span></dt>
+<dd><p>This pointer points to the current position in the string stream.
+</p></dd>
+<dt id='index-long-length'><span><code class="code">long length</code><a class="copiable-link" href='#index-long-length'> &para;</a></span></dt>
+<dd><p>Holds the length in bytes for the whole data string in memory, as
+passed to the constructor.
+</p></dd>
+</dl>
+
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="iostream-wrappers.html">iostream wrappers</a>, Previous: <a href="File-streams.html">File streams</a>, Up: <a href="Reference.html">Reference</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

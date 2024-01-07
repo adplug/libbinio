@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Alien architectures (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Alien architectures (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Alien architectures (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Usage.html" rel="up" title="Usage">
+<link href="Wrapping-around-iostream.html" rel="next" title="Wrapping around iostream">
+<link href="Seeking.html" rel="prev" title="Seeking">
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Alien-architectures">
+<div class="nav-panel">
+<p>
+Next: <a href="Wrapping-around-iostream.html" accesskey="n" rel="next">Wrapping around iostream</a>, Previous: <a href="Seeking.html" accesskey="p" rel="prev">Seeking</a>, Up: <a href="Usage.html" accesskey="u" rel="up">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Alien-architectures-1">2.6 Alien architectures</h3>
+<a class="index-entry-id" id="index-Alien-architectures"></a>
+
+<p>All the above mentioned procedures expect the data to be in the format
+of your machine&rsquo;s own idea of how the data has to be stored. However,
+there are situations where you have to read and even write binary data
+for some other, incompatible architecture.
+</p>
+<a class="index-entry-id" id="index-Other-Architectures"></a>
+<p>All architectures that are incompatible with the architecture,
+libbinio is currently running on, are called <em class="dfn">alien</em>
+architectures.
+</p>
+<a class="index-entry-id" id="index-Data-conversion"></a>
+<a class="index-entry-id" id="index-Converting-from-other-architectures"></a>
+<p>libbinio makes the process of converting between your architecture&rsquo;s
+and the alien architecture&rsquo;s idea of binary storage completely
+transparent to you. All you have to do is to specify some
+characteristics about the stream&rsquo;s binary format, after you have
+opened it. All newly created streams are initialized with the current
+system&rsquo;s binary characteristics, so you don&rsquo;t have to do anything if
+you just want to access data of your own architecture.
+</p>
+<a class="index-entry-id" id="index-Setting-flags"></a>
+<a class="index-entry-id" id="index-Reading-flags"></a>
+<a class="index-entry-id" id="index-Flags"></a>
+<p>You use the <code class="code">setFlag(<var class="var">flag</var>, [<var class="var">set</var>])</code> and
+<code class="code">getFlag(<var class="var">flag</var>)</code> methods to set and read a stream&rsquo;s
+characteristics. <var class="var">flag</var> specifies the flag to be set or read
+(refer to <a class="ref" href="Reference.html">Reference</a> for information on what flags are available
+and their meaning). The optional argument <var class="var">set</var> specifies whether
+the flag should be set (the default) or erased.
+</p>
+<p>After you have set up all flags to sufficiently specify the alien
+architecture, you can proceed to do binary I/O, just as described in
+the previous chapters and libbinio will do all the necessary
+conversion between your own and the alien architecture for you.
+</p>
+<p>If you ever happen to have binary data of multiple, incompatbile,
+alien architectures in a single stream (very unlikely), you can re-set
+any of the flags to any other value, in between any of the other
+stream access method calls. The stream will adhere to the new flag
+values instantly with the next data access.
+</p>
+</div>
+<hr>
+<div class="nav-panel">
+<p>
+Next: <a href="Wrapping-around-iostream.html">Wrapping around iostream</a>, Previous: <a href="Seeking.html">Seeking</a>, Up: <a href="Usage.html">Usage</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

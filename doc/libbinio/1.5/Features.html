@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<!-- Created by GNU Texinfo 7.0.3, https://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- This manual documents the binary I/O stream class library, version
+1.5. It was last updated on 26 February 2023.
+
+Copyright © 2002 - 2005, 2008 Simon Peter
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.1 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, with the Front-Cover texts being "A GNU Manual,"
+and with the Back-Cover Texts as in (a) below.  A copy of the license is
+included in the section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have freedom to copy and modify
+this GNU Manual, like GNU software.  Copies published by the Free
+Software Foundation raise funds for GNU development." -->
+<title>Features (Binary I/O stream class library 1.5)</title>
+
+<meta name="description" content="Features (Binary I/O stream class library 1.5)">
+<meta name="keywords" content="Features (Binary I/O stream class library 1.5)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="makeinfo">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="index.html" rel="start" title="Top">
+<link href="Concept-Index.html" rel="index" title="Concept Index">
+<link href="index.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Introduction.html" rel="up" title="Introduction">
+<style type="text/css">
+<!--
+ul.mark-bullet {list-style-type: disc}
+-->
+</style>
+
+
+</head>
+
+<body lang="en">
+<div class="section-level-extent" id="Features">
+<div class="nav-panel">
+<p>
+Up: <a href="Introduction.html" accesskey="u" rel="up">Introduction</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Concept-Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<h3 class="section" id="Features-1">1.1 Features</h3>
+<a class="index-entry-id" id="index-Features"></a>
+
+<p>libbinio implements a generalized binary stream class framework, with
+the following features:
+</p>
+<ul class="itemize mark-bullet">
+<li>The ability to read arbitrary-sized integers, as long as the
+underlying system can hold the final value.
+</li><li>Conversion between Big- and Little-Endian storage.
+</li><li>Reading and writing of <abbr class="acronym">IEEE-754</abbr> single and double
+precision floating-point numbers and the conversion to/from any
+system-internal floating-point representation.
+</li></ul>
+
+<p>libbinio provides classes for streaming access to normal files,
+arbitrary data strings in memory and a wrapper around standard
+iostreams from either the <abbr class="acronym">ISO</abbr> standard C++ library, or a
+&ldquo;traditional&rdquo; iostream implementation.
+</p>
+<p>In addition, convenience methods for the <abbr class="acronym">STL</abbr> <code class="code">string</code>
+class can be enabled that support reading and writing of arbitrary
+length strings with dynamic memory allocation.
+</p>
+<p>libbinio should compile and run on as many systems as possible. If it
+does not work with your system/compiler combination, please tell me!
+</p>
+</div>
+
+
+
+</body>
+</html>
