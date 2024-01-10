@@ -1,0 +1,31 @@
+name: Build
+
+on: [ push, pull_request ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'windows-latest', 'ubuntu-latest', 'macos-latest' ]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Get cmake and ninja
+      uses: lukka/get-cmake@latest
+
+    - name: Find MSVC (on Windows)
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Build
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: shared
+        buildPreset: shared
+
