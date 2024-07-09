@@ -1,5 +1,12 @@
 This is a brief overview of user-visible changes in libbinio.
 
+Changes for version 1.6:
+------------------------
+- Updates in autoconf files
+- Added initial support for CMake
+- Fix various warnings in the code
+- Fix building shared library with mingw
+
 Changes for version 1.5:
 ------------------------
 - Fix off-by-one error in memory streams.
