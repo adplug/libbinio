@@ -1,0 +1,33 @@
+name: libbinio CMake CI
+
+on: [ push, pull_request, workflow_dispatch ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'windows-latest', 'ubuntu-latest', 'macos-latest' ]
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+    - name: Get cmake and ninja
+      uses: lukka/get-cmake@latest
+
+    - name: Find MSVC (on Windows)
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Checkout libbinio repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Build libbinio
+      uses: lukka/run-cmake@v10
+      env:
+        VCPKG_ROOT:
+        # workaround for https://github.com/lukka/run-cmake/issues/142
+      with:
+        configurePreset: shared
+        buildPreset: shared

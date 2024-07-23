@@ -1,4 +1,4 @@
-name: libbinio CI
+name: libbinio autotools CI
 
 on:
   - push
@@ -19,12 +19,6 @@ jobs:
             os: ubuntu-latest
           - compiler: djgpp-2.0.5-gcc-4.8.5 # To test compatibility for Adplay - DOS
             os: ubuntu-latest
-          - compiler: cmake
-            os: ubuntu-latest
-          - compiler: cmake
-            os: macos-latest
-          - compiler: cmake
-            os: windows-latest
 
       fail-fast: false
 
@@ -33,8 +27,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install packages (autotools, Linux)
-      if: ${{ runner.os == 'Linux' && matrix.compiler != 'cmake'}}
+    - name: Install packages (Linux)
+      if: ${{ runner.os == 'Linux' }}
       run: |
         sudo apt update
         sudo apt install -y texlive-latex-base texinfo
@@ -69,8 +63,8 @@ jobs:
           fi
         fi
 
-    - name: Install packages (autotools, macOS)
-      if: ${{ runner.os == 'macOS' && matrix.compiler != 'cmake'}}
+    - name: Install packages (macOS)
+      if: ${{ runner.os == 'macOS' }}
       run: |
         # Allow core dumps
         sudo sh -c 'touch /cores/test && rm /cores/test && chmod -R 0777 /cores'
@@ -79,39 +73,37 @@ jobs:
         #brew install --cask mactex-no-gui
         brew install automake libtool texinfo
 
-    - name: Install LLVM and Clang (autotools)
+    - name: Install LLVM and Clang
       if: ${{ matrix.compiler == 'clang' && runner.os != 'macOS'}}
       uses: KyleMayes/install-llvm-action@v1
       with:
         version: "10.0"
 
-    - name: Set GCC-4.8 environment (autotools)
+    - name: Set GCC-4.8 environment
       if: ${{ matrix.compiler == 'gcc-4.8' }}
       run: echo 'compile_opts=CC=gcc-4.8 CXX=g++-4.8' >> $GITHUB_ENV
 
-    - name: Set GCC environment (autotools)
+    - name: Set GCC environment
       if: ${{ matrix.compiler == 'gcc' && runner.os == 'macOS' }}
       run: echo 'compile_opts=CC=gcc CXX=g++' >> $GITHUB_ENV
 
-    - name: Set Clang environment (autotools)
+    - name: Set Clang environment
       if: ${{ matrix.compiler == 'clang' }}
       run: echo 'compile_opts=CC=clang CXX=clang++' >> $GITHUB_ENV
 
-    - name: Set DJGPP environment (autotools)
+    - name: Set DJGPP environment
       if: ${{ startsWith(matrix.compiler, 'djgpp') }}
       run: |
         echo 'compile_opts=--host=i586-pc-msdosdjgpp --prefix=/usr/local/djgpp CXXFLAGS=-Wno-deprecated CPPFLAGS=-Wno-deprecated PKG_CONFIG_PATH=/usr/local/djgpp/lib/pkgconfig' >> $GITHUB_ENV
         echo 'usr/local//djgpp/bin/' >> $GITHUB_PATH
 
-    - name: autoreconf (autotools)
-      if: ${{matrix.compiler != 'cmake'}}
+    - name: autoreconf
       run: autoreconf -i
-    - name: configure (autotools)
-      if: ${{matrix.compiler != 'cmake'}}
+
+    - name: configure
       run: ./configure ${{ env.compile_opts }} || cat config.log
 
-    - name: make (autotools)
-      if: ${{matrix.compiler != 'cmake'}} 
+    - name: make
       run: |
         ulimit -c unlimited -S
         if [[ ${{ runner.os }} == "macOS" ]]; then
@@ -131,30 +123,6 @@ jobs:
           make distcheck ${{ env.compile_opts }}
         fi
 
-    - name: Prepare test results (autotools, Linux)
-      if: ${{ runner.os == 'Linux' && !startsWith(matrix.compiler, 'djgpp') && matrix.compiler != 'cmake'}}
+    - name: Prepare test results (Linux)
+      if: ${{ runner.os == 'Linux' && !startsWith(matrix.compiler, 'djgpp') }}
       run: make check
-
-    - name: Get cmake and ninja (cmake)
-      if: ${{matrix.compiler == 'cmake'}}
-      uses: lukka/get-cmake@latest
-
-    - name: Find MSVC (cmake on Windows)
-      if: ${{matrix.compiler == 'cmake'}}
-      uses: ilammy/msvc-dev-cmd@v1
-
-    - name: Checkout repository (cmake)
-      if: ${{matrix.compiler == 'cmake'}}
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Build (cmake)
-      if: ${{matrix.compiler == 'cmake'}}
-      uses: lukka/run-cmake@v10
-      env:
-        VCPKG_ROOT:
-        # workaround for https://github.com/lukka/run-cmake/issues/142
-      with:
-        configurePreset: shared
-        buildPreset: shared
