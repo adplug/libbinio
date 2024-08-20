@@ -1,4 +1,7 @@
-AC_INIT([binio],[1.5],[dn.tlp@gmx.net],[libbinio])
+AC_INIT([binio],[1.6],[dn.tlp@gmx.net],[libbinio])
+# Version used for SO/DLL file(s). See https://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning
+AC_SUBST([VERSION_INFO],"1:0:0")
+
 AC_CONFIG_SRCDIR(src/binio.cpp)
 AC_CONFIG_FILES([Makefile src/Makefile doc/Makefile src/binio.h libbinio.pc])
 AC_CONFIG_MACRO_DIRS([m4])

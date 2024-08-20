@@ -1,4 +1,32 @@
+2024-07-09 22:15  mywave82
+
+	* ChangeLog: Release 1.6
+
+2024-02-05 10:36  mnhauke
+
+	* When compiling shared library with mingw, LD needs parameter "-no-undefined"
+
+2023-10-07 00:22  mywave82
+
+	* Put m4 macro files inside m4 directory when possible
+	* Enable maintainer-mode by default in ./configure.
+	* `autoupdate` to update deprecated macros in configure.ac
+
+2022-04-30 21:29  mywave82
+
+	* Fix some compiler warnings (g++ version 11.2.0 used for testing)
+
+2020-11-17 02:32  miller-alex
+	* Don't convert string constants to char *
+	* Remove useless const on binio::detect_system_flags() return type
+
+2020-07-25 24:08  cxong
+
+	* Add CMake files
+
 2019-08-07 15:58  malvineous
+
+	* ChangeLog: Release 1.5
 	* Fix off-by-one error in memory stream.
 	* Move from SourceForge to GitHub.
 	* Documentation updates and support for more build environments.
