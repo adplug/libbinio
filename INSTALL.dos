@@ -6,13 +6,13 @@ These instructions assume that Watcom is the default compiler of this software
 package. If this software supports additional compilers, aside from Watcom, it
 is very likely that this build system is not the default. In this case, it may
 well be possible that some files have different names than assumed in these
-instructions. Please consult the software ditribution's documentation for more
+instructions. Please consult the software distribution's documentation for more
 information on this topic.
 
 Configuration
 -------------
 Before you can compile anything, create a file called CONFIG.MIF in the
-distribution's base directory. It is best to copy the template below out of
+distribution's base directory. It is best to copy the template below from
 this file and modify it to fit your setup.
 
 In most cases, you just want to change the installation target directories
@@ -54,7 +54,7 @@ CONFIG.MIF file:
 debug = yes
 
 This will recompile all source files with source-level debugging enabled and
-instructs the linker to include debugging information. Be careful with the
+instruct the linker to include debugging information. Be careful with the
 SYSTEM setting in your CONFIG.MIF file, though. Only some extenders are
 supported by the Watcom debugger. Some distributions may have defined a
 non-compatible extender by default, which you must override by specifying

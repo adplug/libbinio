@@ -11,8 +11,8 @@ Basic Installation
 ==================
 
 Briefly, the shell commands `./configure; make; make install' should
-configure, build, and install this package.  The following
-more-detailed instructions are generic; see the `README' file for
+configure, build, and install this package.  The following,
+more detailed instructions are generic; see the `README' file for
 instructions specific to this package.
 
    The `configure' shell script attempts to guess correct values for
@@ -86,7 +86,7 @@ Compiling For Multiple Architectures
 ====================================
 
 You can compile the package for more than one kind of computer at the
-same time, by placing the object files for each architecture in their
+same time by placing the object files for each architecture in their
 own directory.  To do this, you can use GNU `make'.  `cd' to the
 directory where you want the object files and executables to go and run
 the `configure' script.  `configure' automatically checks for the
@@ -111,7 +111,7 @@ pass the option `--exec-prefix=PREFIX' to `configure', the package uses
 PREFIX as the prefix for installing programs and libraries.
 Documentation and other data files still use the regular prefix.
 
-   In addition, if you use an unusual directory layout you can give
+   In addition, if you use an unusual directory layout, you can give
 options like `--bindir=DIR' to specify different values for particular
 kinds of files.  Run `configure --help' for a list of the directories
 you can set and what kinds of files go in them.
@@ -160,7 +160,7 @@ need to know the machine type.
 use the option `--target=TYPE' to select the type of system they will
 produce code for.
 
-   If you want to _use_ a cross compiler, that generates code for a
+   If you want to _use_ a cross compiler that generates code for a
 platform different from the build platform, you should specify the
 "host" platform (i.e., that on which the generated programs will
 eventually be run) with `--host=TYPE'.
@@ -226,7 +226,7 @@ an Autoconf bug.  Until the bug is fixed you can use this workaround:
      messages will still be shown).
 
 `--srcdir=DIR'
-     Look for the package's source code in directory DIR.  Usually
+     Look for the package's source code in directory DIR.  Usually,
      `configure' can determine that directory automatically.
 
 `configure' also accepts some other, not widely useful, options.  Run
